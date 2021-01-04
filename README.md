@@ -1,3 +1,4 @@
-# MultipleMemberships
+# Tools
 
-This short Admidio plugin recognizes multiple (role) memberships and shows them in the form of a list on the screen. The member's profile can be opened via a link and incorrect (role) memberships can be corrected.
+Tools provides a platform for smaller Admidio plugins.  Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
+
