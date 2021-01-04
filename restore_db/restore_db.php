@@ -3,10 +3,6 @@
  ***********************************************************************************************
  * restore_db
  * 
- * Version 1.0
- * 
- * Stand 03.01.2021
- * 
  * This plugin for Admidio restores a backup made with "Admidio-Backup".
  *
  * Autor: rmb

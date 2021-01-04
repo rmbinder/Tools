@@ -3,10 +3,6 @@
  ***********************************************************************************************
  * multiple_memperships
  *
- * Version 2.1
- * 
- * Stand 03.01.2021
- *
  * This plugin for Admidio recognizes multiple role memberships.
  * 
  * Autor: rmb
