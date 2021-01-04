@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_TOOLS_DESC">Tools recognized the following plugins:\n\n</string>
+    <string name="PLG_TOOLS_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_TOOLS_PLUGIN_NAME">Tools</string>    
+</resources>
