@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_RESTORE_DB_BACK_TO_HOMEPAGE">Back to the homepage</string> 
+    <string name="PLG_RESTORE_DB_CHOOSE_BACKUPFILE">Select a backup file:</string> 
+    <string name="PLG_RESTORE_DB_CHOOSE_BACKUPFILE_DESC">The backup file for restoration is selected here.\n\nATTENTION The plug-in does not check whether the version of the backup file matches the installed Admidio version. Restoring an unsuitable version can cause Admidio to crash.</string> 
+    <string name="PLG_RESTORE_DB_DESC">This plugin restores the Admidio database.</string>
+    <string name="PLG_RESTORE_DB_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_RESTORE_DB_NO_BACKUPFILE">There are no backup files.</string>    
+    <string name="PLG_RESTORE_DB_PLUGIN_NAME">RESTORE_DB</string>
+    <string name="PLG_RESTORE_DB_RESTORE">Restore</string>
+    <string name="PLG_RESTORE_DB_RESTORE_ERROR">The recovery process ended with the following errors:\n\n</string> 
+    <string name="PLG_RESTORE_DB_RESTORE_OK">The Admidio database is restored.</string>
+    <string name="PLG_RESTORE_DB_RESTORE_PROCESS">The recovery process is in progress.\n\nATTENTION: This process must not be canceled.</string> 
+</resources>
