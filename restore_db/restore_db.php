@@ -94,7 +94,7 @@ if ($getMode == 'start')     //Default
     
     if (sizeof($existingBackupFiles) > 0)
     {
-        $form = new HtmlForm('choose_db_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS .'/tools/restore_db/restore_db.php', array('mode' => 'restore')), $page);
+        $form = new HtmlForm('choose_db_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/restore_db.php', array('mode' => 'restore')), $page);
         $form->addSelectBox('backup_file', $gL10n->get('PLG_RESTORE_DB_CHOOSE_BACKUPFILE'), $existingBackupFiles, array('property' => HtmlForm::FIELD_REQUIRED , 'helpTextIdInline' => 'PLG_RESTORE_DB_CHOOSE_BACKUPFILE_DESC'));
         $form->addSubmitButton('btn_restore', $gL10n->get('PLG_RESTORE_DB_RESTORE'), array('icon' => 'fa-undo', 'class' => 'offset-sm-3'));
 
