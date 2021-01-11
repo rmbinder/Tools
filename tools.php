@@ -3,11 +3,11 @@
  ***********************************************************************************************
  * tools
  *
- * Version 3.0
+ * Version 3.0.1
  *
  * (Version 1 and 2 were released under the original name MultipleMemberships.)
  * 
- * Stand 04.01.2021
+ * Stand 11.01.2021
  * 
  * Tools provides a platform for smaller Admidio plugins.
  * Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
