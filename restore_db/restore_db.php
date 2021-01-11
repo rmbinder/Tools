@@ -197,8 +197,10 @@ elseif ($getMode == 'restore')
 
     if ($error == '')
     {
+        $buttonURL = ADMIDIO_URL . '/adm_program/system/logout.php';
         echo '<p>'.$gL10n->get('PLG_RESTORE_DB_RESTORE_OK').'</p>
-            <button class="btn btn-primary" onclick="window.location.href=\''.$gHomepage.'\'"> '.$gL10n->get('PLG_RESTORE_DB_BACK_TO_HOMEPAGE').'</button>';
+              <p>'.$gL10n->get('PLG_RESTORE_DB_LOGOUT_DESC').'</p>
+              <button class="btn btn-primary" onclick="window.location.href=\''.$buttonURL.'\'"> '.$gL10n->get('PLG_RESTORE_DB_LOGOUT').'</button>';
     }
     else
     {
