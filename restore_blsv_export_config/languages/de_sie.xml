@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_NAME">Restore von BLSV_Export-config.php</string> 
+    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_ORIG_FILE_RESTORED">Die Originaldatei config.php wurde wieder hergestellt, die config_save.php wurde gelöscht.\n\n</string> 
+    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_NO_SAVE_FILE">Die Originaldatei braucht nicht wiederhergestellt werden, da keine config_save.php existiert.\n\n</string> 
+    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_ORIG_FILE_CREATED">Die Originaldatei wurde erstmalig angelegt.\n\n</string>     
+</resources>
