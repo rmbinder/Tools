@@ -44,6 +44,8 @@ if (!(StringUtils::strContains($gNavigation->getUrl(), 'tools.php') || StringUti
     }
 }
 
+$user = new User($gDb, $gProfileFields);
+
 $gNavigation->addUrl(CURRENT_URL);
 
 $headline = $gL10n->get('PLG_MULTIPLE_MEMBERSHIPS_NAME');
@@ -91,8 +93,9 @@ $table->addRowHeadingByArray($columnValues);
 
 while ($row = $statement->fetch())
 {
+    $user->readDataById($row['mem_usr_id']);
     $columnValues = array();
-    $columnValues[] = '<a href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_MODULES . '/profile/profile.php', array('user_id' => $row['mem_usr_id'])).'">'.$row['last_name'].', '.$row['first_name']. '</a>';
+    $columnValues[] = '<a href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_MODULES . '/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$row['last_name'].', '.$row['first_name']. '</a>';
     $columnValues[] = $row['rol_name'];
     
     // date must be formated

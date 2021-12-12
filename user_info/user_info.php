@@ -44,6 +44,8 @@ if (!(StringUtils::strContains($gNavigation->getUrl(), 'tools.php') || StringUti
     }
 }
 
+$user = new User($gDb, $gProfileFields);
+
 $gNavigation->addUrl(CURRENT_URL);
 
 $headline = $gL10n->get('PLG_USER_INFO_NAME');
@@ -136,11 +138,12 @@ $table->addRowHeadingByArray($columnHeading);
 
 while ($row = $statement->fetch())
 {
+    $user->readDataById($row['usr_id']);
     $columnValues = array();
     
    // 1. spalte name
    // Add "Lastname" and "Firstname"
-    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $row['usr_id'])).'">'.$row['name'].'</a>';
+    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $user->getValue('usr_uuid'))).'">'.$row['name'].'</a>';
     
     // 2. spalte
     // Add "Loginname"
@@ -238,7 +241,7 @@ while ($row = $statement->fetch())
     //login as
     if ($gCurrentUser->isAdministrator() && ($gCurrentUser->getValue('usr_id') !== $row['usr_id']))
     {
-        $targetUrl = SecurityUtils::encodeUrl('login_as.php', array('usr_id' =>  $row['usr_id']));
+        $targetUrl = SecurityUtils::encodeUrl('login_as.php', array('user_uuid' => $user->getValue('usr_uuid')));
         $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="fas fa-sign-in-alt" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
     }
     else

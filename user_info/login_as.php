@@ -20,13 +20,14 @@ require_once(__DIR__ . '/../../../adm_program/system/common.php');
 global $gCurrentUser, $gMenu, $gDb, $gL10n, $gCurrentOrganization, $gProfileFields, $gCurrentSession,  $gSettingsManager,  $gSessionId;
 
 // Initialize and check the parameters
-$getUsrId = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
+$getUserUuid = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 
 // remove all menu entries
 $gMenu->initialize();
 
 // create user object
-$gCurrentUser = new User($gDb, $gProfileFields, (int) $getUsrId);
+$gCurrentUser = new User($gDb, $gProfileFields);
+$gCurrentUser->readDataByUuid($getUserUuid);
 
 $gCurrentSession->setValue('ses_usr_id', (int) $gCurrentUser->getValue('usr_id'));
 $gCurrentSession->save();
