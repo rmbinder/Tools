@@ -12,11 +12,11 @@
  * Tools provides a platform for smaller Admidio plugins.
  * Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
  *
- * Autor: rmb
+ * Author: rmb
  *
  * Compatible with Admidio version 4.1
  *
- * @copyright 2020-2021 rmb
+ * @copyright 2020-2022 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
