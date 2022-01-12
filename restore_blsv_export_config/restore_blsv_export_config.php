@@ -5,7 +5,7 @@
  *
  * This plugin for Admidio restores the config.php from plugin restore_db.
  * 
- * Autor: rmb
+ * Author: rmb
  *
  * Compatible with Admidio version 4
  *

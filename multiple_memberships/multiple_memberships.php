@@ -5,7 +5,7 @@
  *
  * This plugin for Admidio recognizes multiple role memberships.
  * 
- * Autor: rmb
+ * Author: rmb
  *
  * Compatible with Admidio version 4
  *

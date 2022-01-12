@@ -5,7 +5,7 @@
  *
  * This plugin for Admidio shows information about registered users and offers the possibility to log in under the user's account.
  * 
- * Autor: rmb
+ * Author: rmb
  *
  * Compatible with Admidio version 4
  *

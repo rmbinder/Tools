@@ -5,7 +5,7 @@
  *
  * "login as" procedure for the admidio plugin user_info
  * 
- * Autor: rmb
+ * Author: rmb
  *
  * Compatible with Admidio version 4
  *
@@ -33,7 +33,8 @@ $gCurrentSession->save();
 $gCurrentUser->setValue('usr_last_session_id', null);
 
 // set cookie for session id
-Session::setCookie(COOKIE_PREFIX . '_SESSION_ID', $gSessionId);
+$gCurrentSession->regenerateId();
+Session::setCookie(COOKIE_PREFIX . '_SESSION_ID', $gCurrentSession->getValue('ses_session_id'));
 
 // count logins and update login dates
 $gCurrentUser->saveChangesWithoutRights();

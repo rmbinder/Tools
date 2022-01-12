@@ -5,12 +5,13 @@
  * 
  * This plugin for Admidio updates the current preferences with the default preferences.
  *
- * Autor: rmb
+ * Author: rmb
  *  
  * Compatible with Admidio version 4
  *
  * @copyright 2020-2022 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
+ * 
  ***********************************************************************************************
  */
 
