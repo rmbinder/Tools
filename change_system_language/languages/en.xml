@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_DESC">With the help of this plugin you can switch to another system language without administrator rights.</string>
+    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_HELPTEXT">Select the new system language.</string>    
+    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_DESC">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_PLUGIN_NAME">CHANGE_SYSTEM_LANGUAGE</string>
+</resources>
