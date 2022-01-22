@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>   
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_CREATED">Sicherungsdatei erzeugt.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_DELETED">Sicherungsdatei gelöscht.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_OBSOLETE">Mindestens eine Sicherungsdatei (#VAR1#) wurde nicht mit der aktuellen Admidioversion (#VAR2#) erstellt. Es wird dringend empfohlen veraltete Sicherungsdateien nicht zurückzusichern.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_RESTORED">Originaldatei wiederhergestellt.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_RESTORE">Eine Sicherungsdatei zurücksichern oder löschen.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_CREATE">Erzeugen</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_DELETE">Diese Datei löschen</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_DESC">Dieses Plugin ersetzt die mit Admidio 4.1 eingeführte, genderspezifische Sprache (z.B. Benutzer:innen) durch ihre ursprünglichen Bezeichnungen.</string>  
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT">Hiermit kann die Ersetzungsdatei replacements.php des Plugins editiert werden. Nach dem Betätigen des Speichern-Buttons wird zuerst, zur Sicherheit, eine Kopie der replacements.php erzeugt (replacements_save.php). Anschließend werden die neuen Daten geschrieben und danach die Ersetzungsdatei erneut eingelesen.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT_INFO">* * * ACHTUNG * * * Syntaxfehler können zum Absturz des Plugins führen.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT_REPLACEMENTS">Ersetzungsdatei bearbeiten</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EXECUTE">Ausführen</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_INFO_CHANGE_TEXT">Nachdem die ursprünglichen Sprachausdrücke wiederhergestellt worden sind, sollte Admidio neu gestartet werden.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_MAX_FILES">Es können maximal 3 Sicherungen erzeugt werden. Bereits vorhandene Dateien werden überschrieben.\n\nNachdem eine Sicherung wiederhergestellt wurde, sollte Admidio neu gestartet werden.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>    
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">ERSETZEN</string>  
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Ersetzen</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Ersetzen stellt die ursprünglichen Bezeichnungen wieder her.</string>   
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_RESTORE">Diese Datei zurücksichern</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE">SICHERN</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE_DESC">Eine neue Sicherungsdatei erzeugen.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_UPDATED">Die ursprünglichen Bezeichnungen wurden wiederhergestellt.</string>
+</resources>

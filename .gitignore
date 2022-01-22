@@ -1,0 +1,4 @@
+# Backup files may not be committed
+/remove_gender_language/de*.xml
+/remove_gender_language/replacements_save.php
+

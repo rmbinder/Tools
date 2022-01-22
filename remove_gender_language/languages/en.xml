@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_CREATED">Backup file created.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_DELETED">Backup file deleted.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_OBSOLETE">At least one backup file (#VAR1#) was not created with the current Admidio version (#VAR2#). It is strongly recommended not to restore outdated backup files.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_RESTORED">Original file restored.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_BACKUP_RESTORE">Restore or delete a backup file.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_CREATE">Create</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_DELETE">Delete this file</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_DESC">This plugin replaces the german gender-specific language (e.g. Benutzer:innen) introduced with Admidio 4.1 with their original expressions.</string>  
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT">With this the replacement file replacements.php of the plugin can be edited. After pressing the save button, a copy of replacements.php is first created for security reasons (replacements_save.php). The new data is then written and then the replacement file is read in again.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT_INFO">* * * ATTENTION * * * Syntax errors can cause the plugin to crash.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EDIT_REPLACEMENTS">Edit replacement file</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_EXECUTE">Execute</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_INFO_CHANGE_TEXT">After the original language expressions have been restored, Admidio should be restarted.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_MAX_FILES">A maximum of 3 backups can be created. Already existing files will be overwritten.\n\nAfter a backup has been restored, Admidio should be restarted.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_MENU_URL_ERROR">The plugin authorization check failed. No menu item could be uniquely identified with this URL.\n\n=> #VAR1_BOLD#</string>    
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">REPLACE</string>  
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Replace</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Replace restores the original expressions.</string>   
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_RESTORE">Restore this file</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE">SAVE</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE_DESC">Create a new backup file.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_UPDATED">The original expressions have been restored.</string> 
+</resources>
