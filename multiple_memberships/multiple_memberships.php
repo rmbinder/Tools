@@ -53,12 +53,12 @@ $headline = $gL10n->get('PLG_MULTIPLE_MEMBERSHIPS_NAME');
 // create html page object
 $page = new HtmlPage('plg-multiple_memberships', $headline);
 
-$sql = 'SELECT '.TBL_MEMBERS.'.mem_rol_id, '.TBL_MEMBERS.'.mem_usr_id, '.TBL_MEMBERS.'.mem_begin, '.TBL_MEMBERS.'.mem_end , rol_name,last_name.usd_value AS last_name, first_name.usd_value AS first_name FROM `adm_members`
+$sql = 'SELECT '.TBL_MEMBERS.'.mem_rol_id, '.TBL_MEMBERS.'.mem_usr_id, '.TBL_MEMBERS.'.mem_begin, '.TBL_MEMBERS.'.mem_end , rol_name,last_name.usd_value AS last_name, first_name.usd_value AS first_name FROM '.TBL_MEMBERS.'
      LEFT JOIN '.TBL_USER_DATA.' AS last_name
             ON last_name.usd_usr_id = mem_usr_id
            AND last_name.usd_usf_id = ? -- $gProfileFields->getProperty(\'LAST_NAME\', \'usf_id\')
      LEFT JOIN ' . TBL_USER_DATA . ' AS first_name
-            ON first_name.usd_usr_id = `mem_usr_id`
+            ON first_name.usd_usr_id = mem_usr_id
            AND first_name.usd_usf_id = ? -- $gProfileFields->getProperty(\'FIRST_NAME\', \'usf_id\')
      LEFT JOIN ' . TBL_ROLES . ' AS rol_name
             ON rol_name.rol_id = mem_rol_id    
