@@ -106,7 +106,6 @@ while ($row = $statement->fetch())
 }
 
 $table->setDatatablesGroupColumn(1);
-$table->setDatatablesRowsPerPage(10);
 
 $page->addHtml($table->show(false));
 $page->show();

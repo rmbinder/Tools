@@ -252,8 +252,6 @@ while ($row = $statement->fetch())
     $table->addRowByArray($columnValues);
 }
 
-$table->setDatatablesRowsPerPage(10);
-
 $page->addHtml($table->show(false));
 
 $page->show();
