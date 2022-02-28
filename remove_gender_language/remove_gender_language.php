@@ -91,7 +91,13 @@ $page->addJavascript('
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
-                    formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                    if (data === "replace_error_open") {
+                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN').' ");
+                    } else if (data === "replace_error_save") {
+                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE').' ");
+                    } else {
+                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                    } 
                 }
             }
         });

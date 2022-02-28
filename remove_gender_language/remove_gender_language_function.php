@@ -110,44 +110,61 @@ try
         case 'replace':
             include( ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php');
             
-            $languageFile = '';
             $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES .'/de.xml';
         
+            $use_errors = libxml_use_internal_errors(true);
             try
             {
-                $languageFile = FileSystemUtils::readFile($languageFilePath);
+                $xmlLanguageObjects = new \SimpleXMLElement($languageFilePath, 0, true);
             }
-            catch (\RuntimeException $exception)
+            catch (Exception $e)
             {
-                $gMessage->show($exception->getMessage());
+                $ret = 'replace_error_open';
             }
-            catch (\UnexpectedValueException $exception)
+           
+            if ($ret !== 'replace_error_open')
             {
-                $gMessage->show($exception->getMessage());
-            }
+                for ($i = 0; $i < count($xmlLanguageObjects->string); $i++)
+                {
+                    $textId = (string) $xmlLanguageObjects->string[$i]['name'];
+                    
+                    foreach ($replacements as $search => $replace)
+                    {
+                        if (Language::isTranslationStringId($search))                
+                        {
+                            if ($search === $textId)                
+                            {
+                                $xmlLanguageObjects->string[$i] = $replace;
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            $xmlLanguageObjects->string[$i] = str_replace($search, $replace, (string) $xmlLanguageObjects->string[$i]);
+                        }
+                    }
+                }
 
-       //     $result = array();
-            $result = str_replace(array_keys($replacements), $replacements, $languageFile);
-            
-     //       $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php';
-   //         $filePathSave = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements_save.php';
-            
-            try
-            {
-                FileSystemUtils::writeFile($languageFilePath, $result);
-            }
-            catch (\RuntimeException $exception)
-            {
-                $gMessage->show($exception->getMessage());
-                // => EXIT
-            }
-            catch (\UnexpectedValueException $exception)
-            {
-                $gMessage->show($exception->getMessage());
-                // => EXIT
+                if (!is_writable($languageFilePath))
+                {
+                    $ret = 'replace_error_save';
+                }
+                else 
+                {
+                    if ($xmlLanguageObjects->asXML($languageFilePath) === false)
+                    {
+                        $ret = 'replace_error_save';
+                    }
+                    else
+                    {
+                        $ret='replace';
+                    }
+                }
             }
             
-            $ret='replace'   ;
+            libxml_clear_errors();
+            libxml_use_internal_errors($use_errors);
+            
             break;
             
         default:

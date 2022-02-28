@@ -18,7 +18,9 @@
     <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">ERSETZEN</string>  
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Ersetzen</string>
-    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Ersetzen stellt die ursprünglichen Bezeichnungen wieder her.</string>   
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Ersetzen stellt die ursprünglichen Bezeichnungen wieder her.</string>
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN">Bei Öffnen der Sprachdatei ist ein Fehler aufgetreten.</string> 
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE">Beim Speichern der Sprachdatei ist ein Fehler aufgetreten.</string>   
     <string name="PLG_REMOVE_GENDER_LANGUAGE_RESTORE">Diese Datei zurücksichern</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE">SICHERN</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE_DESC">Eine neue Sicherungsdatei erzeugen.</string>

@@ -18,7 +18,9 @@
     <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">REPLACE</string>  
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Replace</string>
-    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Replace restores the original expressions.</string>   
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC">Replace restores the original expressions.</string> 
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN">An error occurred while opening the language file.</string> 
+    <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE">An error occurred while saving the language file.</string>      
     <string name="PLG_REMOVE_GENDER_LANGUAGE_RESTORE">Restore this file</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE">SAVE</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_SAVE_DESC">Create a new backup file.</string>
