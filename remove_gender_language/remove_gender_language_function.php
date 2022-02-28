@@ -5,10 +5,6 @@
  * 
  * Functions for plugin remove_gender_language.
  *
- * Author: rmb
- *  
- * Compatible with Admidio version 4
- *
  * @copyright 2020-2022 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -31,12 +27,14 @@ unset($folders);
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
 
+//Einbinden der Konfigurationsdatei (darin ist die Sprachdatei definiert)
+include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config.php');
+
 $gMessage->showHtmlTextOnly(true);
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'string');
 
-$languageFileName =  'de';
 $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES .'/'.$languageFileName.'.xml';
 
 $ret = 'error'  ;
@@ -109,8 +107,6 @@ try
             
         case 'replace':
             include( ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php');
-            
-            $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES .'/de.xml';
         
             $use_errors = libxml_use_internal_errors(true);
             try

@@ -1,7 +1,10 @@
 <?php
 /**
  ***********************************************************************************************
- * Replacements for the admidio plugin remove_gender_language
+ * Replacements for the Admidio plugin remove_gender_language
+ *
+ * @copyright 2020-2022 rmb
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
  * 
  * The array is structured as follows:

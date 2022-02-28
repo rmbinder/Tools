@@ -31,6 +31,9 @@ unset($folders);
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
 
+//Einbinden der Konfigurationsdatei (darin ist die Sprachdatei definiert)
+include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config.php');
+
 if (!(StringUtils::strContains($gNavigation->getUrl(), 'tools.php') || StringUtils::strContains($gNavigation->getPreviousUrl(), 'tools.php')))
 {
     //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
@@ -107,7 +110,6 @@ $page->addJavascript('
 
 $page->addHtml('<strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_DESC').'</strong><br><br>');
 
-$languageFileName =  'de';
 $languageBackupGlobFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/'.$languageFileName.'*.xml';
 
 $backupFiles = glob($languageBackupGlobFilePath);
@@ -118,8 +120,8 @@ foreach ($backupFiles as $data)
 {
     $fileName = strrchr($data,$languageFileName);
     $backupFilesNames[] = $fileName;
- 
-    if (ADMIDIO_VERSION_TEXT !== substr($fileName, 3, -15))
+
+    if (ADMIDIO_VERSION_TEXT !== substr($fileName, strlen($languageFileName)+1, -15))
     {
         $obsoleteBackupFile = $fileName;
     }
