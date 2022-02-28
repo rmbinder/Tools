@@ -60,6 +60,7 @@ foreach ($folders as $folderAbsolutePath => $dummy)
         $existingPlugins[strtoupper($pluginFolderAndName)] = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/'.$pluginFolderAndName.'/'.$pluginFolderAndName.'.php';
     }
 }
+ksort($existingPlugins);
 
 foreach ($existingPlugins as $pluginname => $pluginPath)
 {
