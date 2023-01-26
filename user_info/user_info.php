@@ -283,8 +283,8 @@ function isUserAuthorized($scriptName)
     
     if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
     {
-        $GLOBALS['gLogger']->notice('MultipleMemberships: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
-        $GLOBALS['gLogger']->notice('MultipleMemberships: Error with menu entry: ScriptName: '. $scriptName);
+        $GLOBALS['gLogger']->notice('UserInfo: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
+        $GLOBALS['gLogger']->notice('UserInfo: Error with menu entry: ScriptName: '. $scriptName);
         $gMessage->show($GLOBALS['gL10n']->get('PLG_USER_INFO_MENU_URL_ERROR', array($scriptName)), $GLOBALS['gL10n']->get('SYS_ERROR'));
     }
     else
