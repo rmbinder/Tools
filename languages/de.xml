@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="PLG_TOOLS_DESC">Tools erkannte folgende Plugins:\n\n</string>
+    <string name="PLG_TOOLS_INFO1">Tools ist eine Plattform für kleinere Admidio-Plugins (Sub-Plugins).\n\nAlle Sub-Plugins müssen sich dabei in Unterordnern von tools befinden und denselben Namen besitzen wie der Unterordner. Beispiel: .../tools/user_info/user_info.php. Standardmäßig wird für jedes erkannte Sub-Plugin ein Button generiert, über den es gestartet werden kann. Soll für ein Sub-Plugin kein Button erzeugt werden, so muss lediglich der Ordner des Sub-Plugins umbenannt werden.</string>    
+    <string name="PLG_TOOLS_INFO2">Um das Hauptscript Tools aufzurufen, ist folgender URL-Eintrag im Menü notwendig:\n\n/adm_plugins/tools/tools.php\n\nFür jedes Sub-Plugin kann jedoch auch ein eigener Menüeintrag angelegt werden.\n\nBenötigt man beispielsweise nur das Sub-Plugin USER_INFO aus der Tools-Sammlung, so ist folgender URL-Eintrag im Menü erforderlich:\n\n/adm_plugins/tools/user_info/user_info.php</string>     
+    <string name="PLG_TOOLS_INFO3">Es wird dringend empfohlen, für jeden Menüeintrag unter "Sichtbar für" eine Rolle anzugeben. Sowohl Tools als auch die Sub-Plugins erstellen eine Zugriffsberechtigung aus den angegebenen Rollen.</string>   
     <string name="PLG_TOOLS_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_TOOLS_PLUGIN_NAME">Tools</string>        
 </resources>

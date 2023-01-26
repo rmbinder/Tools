@@ -37,12 +37,23 @@ if (!isUserAuthorized($scriptName))
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
+
+
 $headline = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 
 $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-cogs');
     
 $page = new HtmlPage('plg-tools-mainpage', $headline);
 
+
+// icon-link to info
+$html = '<p align="right">
+            <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/tools_popup_info.php').'">'.'
+                <i class="fas fa-info-circle" data-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
+            </a>
+        </p>';
+
+$page->addHtml($html);
 $page->addHtml($gL10n->get('PLG_TOOLS_DESC'));
 
 $existingPlugins = array();
