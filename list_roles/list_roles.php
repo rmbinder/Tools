@@ -5,7 +5,7 @@
  * 
  * This script is a modified groups_roles.php
  *
- * @copyright 2022 rmb
+ * @copyright 2020-2023 rmb
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
@@ -37,28 +37,23 @@ $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLD
 
 $headline = $gL10n->get('PLG_LIST_ROLES_NAME');
 
-// wenn list_roles von tools aus aufgerufen wurde, dann URL zum NaviStack hinzu
-if (StringUtils::strContains($gNavigation->getUrl(), 'tools.php') )
+//if the sub-plugin was not called from the main-plugin tools.php, then check the permissions
+$navStack = $gNavigation->getStack();
+if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
 {
-    $gNavigation->addUrl(CURRENT_URL, $headline);
-}
-
-// wenn die letzte URL im Stack nicht die eigene ist, dann wurde das Script direkt aufgerufen, 
-// d.h. NaviStack muss neu initialisiert werden und die Berechtigung zum Aufruf muss überprüft werden
-// Sonderfall, aber nicht abzufangen: wenn tools noch geöffnet ist und list_roles über das Menü aufgerufen wird
-// --> dann ist tools.php noch im NaviStack
-if (!StringUtils::strContains($gNavigation->getUrl(), 'list_roles.php') )
-{
-    $gNavigation->addStartUrl(CURRENT_URL, $headline);
-    
     //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
     
     // only authorized user are allowed to start this module
     if (!isUserAuthorized($scriptName))
     {
-           $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+        $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-layer-group');
+}
+else
+{
+    $gNavigation->addUrl(CURRENT_URL, $headline);
 }
 
 // create html page object

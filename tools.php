@@ -3,20 +3,20 @@
  ***********************************************************************************************
  * Tools
  *
- * Version 3.1.4
+ * Version 3.2.0 Beta 1
  *
  * (Version 1 and 2 were released under the name MultipleMemberships)
  * 
- * Stand 28.02.2022
+ * Stand 26.01.2023
  * 
  * Tools provides a platform for smaller Admidio plugins.
  * Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 4.1
+ * Compatible with Admidio version 2
  *
- * @copyright 2020-2022 rmb
+ * @copyright 2020-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
@@ -37,14 +37,11 @@ if (!isUserAuthorized($scriptName))
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
-// define title (html) and headline
-$title = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 $headline = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 
-$gNavigation->addStartUrl(CURRENT_URL, $headline);
+$gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-cogs');
     
 $page = new HtmlPage('plg-tools-mainpage', $headline);
-$page->setTitle($title);
 
 $page->addHtml($gL10n->get('PLG_TOOLS_DESC'));
 

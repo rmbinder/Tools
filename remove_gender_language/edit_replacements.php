@@ -37,7 +37,7 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'save')
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('html', 'save')));
 
-$headline = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME').' - '.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EDIT_REPLACEMENTS');
+$headline = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EDIT_REPLACEMENTS');
 
 if ($getMode === 'save')
 {
@@ -69,7 +69,7 @@ else
 {
     if ( !StringUtils::strContains($gNavigation->getUrl(), 'edit_replacements.php'))
     {
-        $gNavigation->addUrl(CURRENT_URL);
+        $gNavigation->addUrl(CURRENT_URL, $headline);
     }
     
     $page = new HtmlPage('edit_replacements-preferences', $headline);

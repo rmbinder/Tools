@@ -3,13 +3,13 @@
  ***********************************************************************************************
  * restore_blsv_export_config
  *
- * This plugin for Admidio restores the config.php from plugin restore_db.
+ * This plugin for Admidio restores the config.php from plugin blsv_export.
  * 
  * Author: rmb
  *
- * Compatible with Admidio version 4
+ * Compatible with Admidio version 4.2
  *
- * @copyright 2020-2022 rmb
+ * @copyright 2020-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *   
  ***********************************************************************************************
@@ -32,7 +32,11 @@ unset($folders);
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
 
-if (!(StringUtils::strContains($gNavigation->getUrl(), 'tools.php') || StringUtils::strContains($gNavigation->getPreviousUrl(), 'tools.php')))
+$headline = $gL10n->get('PLG_RESTORE_BLSV_EXPORT_CONFIG_NAME');
+
+//if the sub-plugin was not called from the main-plugin tools.php, then check the permissions
+$navStack = $gNavigation->getStack();
+if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
 {
     //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
@@ -42,11 +46,12 @@ if (!(StringUtils::strContains($gNavigation->getUrl(), 'tools.php') || StringUti
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-reply');
 }
-
-$gNavigation->addUrl(CURRENT_URL);
-
-$headline = $gL10n->get('PLG_RESTORE_BLSV_EXPORT_CONFIG_NAME');
+else
+{
+    $gNavigation->addUrl(CURRENT_URL, $headline);
+}
 
 // create html page object
 $page = new HtmlPage('plg-restore_blsv_export_config', $headline);
