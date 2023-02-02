@@ -22,6 +22,7 @@
  */
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
+include(__DIR__ . '/version.php');
 
 if(!defined('PLUGIN_FOLDER'))
 {
@@ -37,14 +38,11 @@ if (!isUserAuthorized($scriptName))
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
-
-
 $headline = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 
 $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-cogs');
     
-$page = new HtmlPage('plg-tools-mainpage', $headline);
-
+$page = new HtmlPage('plg-tools-mainpage', $headline.' <small>v'.$plugin_version.'</small>');
 
 // icon-link to info
 $html = '<p align="right">
