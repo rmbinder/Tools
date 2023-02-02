@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_BLSV_EXPORT_BLSV_EXPORT">BLSV_Export</string>
+    <string name="PLG_BLSV_EXPORT_BSBNET">BSBnet</string>    
+    <string name="PLG_BLSV_EXPORT_CREATE_FILE">Generate export file</string>
+    <string name="PLG_BLSV_EXPORT_CREATED_WITH">created with the plugin blsv_export of the online user management system admidio</string> 
+    <string name="PLG_BLSV_EXPORT_DATA_COMPARISON">datacomparison</string> 
+    <string name="PLG_BLSV_EXPORT_DATA_COMPARISON_WITH_BLSV">Excel file for data comparison with the BLSV</string>
+    <string name="PLG_BLSV_EXPORT_DESC">Since the beginning of 2018, members have to be registered with the BLSV (Bavarian State Sports Association - Bayerischer Landes-Sportverband) as (Excel) table with all club members.\n"BLSV_Export" creates this list as an XLSX or CSV file.</string>    
+    <string name="PLG_BLSV_EXPORT_DESC2">The prerequisite is that all members who are to be registered for divisions of the BLSV are in Admidio roles. This is relatively easy to do with "dependencies" on roles..\nThe assignments "role (Admidio) to division (BLSV)" are made in config.php.</string> 
+    <string name="PLG_BLSV_EXPORT_DOCUMENTATION">Documentation</string>
+    <string name="PLG_BLSV_EXPORT_EDIT">This can be used to edit the configuration file config.php of the plugin. After pressing the save button, a copy of the config.php is first created (config_save.php) to be on the safe side. The new configuration data are then written and the configuration file is then read in again.</string>
+    <string name="PLG_BLSV_EXPORT_EDIT_INFO">* * * ATTENTION * * * Syntax errors can cause the plugin to crash.</string>
+    <string name="PLG_BLSV_EXPORT_MEMBERSHIP_REPORT">membershipreport</string> 
+    <string name="PLG_BLSV_EXPORT_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_BLSV_EXPORT_SELECT_EXPORTFORMAT">Choose the output format:</string>
+    <string name="PLG_BLSV_EXPORT_SETTINGS">Settings</string> 
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_BLSV_EXPORT_BLSV_EXPORT">BLSV_Export</string>
+    <string name="PLG_BLSV_EXPORT_BSBNET">BSBnet</string>   
+    <string name="PLG_BLSV_EXPORT_CREATE_FILE">Exportdatei erzeugen</string>
+    <string name="PLG_BLSV_EXPORT_CREATED_WITH">erstellt mit dem Plugin blsv_export der Online-Mitgliederverwaltung Admidio</string> 
+    <string name="PLG_BLSV_EXPORT_DATA_COMPARISON">Datenabgleich</string> 
+    <string name="PLG_BLSV_EXPORT_DATA_COMPARISON_WITH_BLSV">Excel-Datei zum Datenabgleich mit dem BLSV</string>
+    <string name="PLG_BLSV_EXPORT_DESC">Seit Anfang 2018 muss eine Mitgliedermeldung an den BLSV (Bayerischer Landes-Sportverband) immer als (Excel-)Tabelle mit allen Vereinsmitgliedern erfolgen.\n"BLSV_Export" erstellt diese Liste als XLSX- oder als CSV-Datei.</string>    
+    <string name="PLG_BLSV_EXPORT_DESC2">Voraussetzung ist, dass alle Mitglieder, die für Sparten des BLSV gemeldet werden sollen, sich in Rollen von Admidio befinden. Dies ist mit "Abhängigkeiten" von Rollen relativ einfach durchzuführen.\n\nDie Zuordnungen "Rolle (Admidio) zu Sparte (BLSV)" erfolgen in der config.php.</string> 
+    <string name="PLG_BLSV_EXPORT_DOCUMENTATION">Dokumentation</string>   
+    <string name="PLG_BLSV_EXPORT_EDIT">Hiermit kann die Konfigurationsdatei config.php des Plugins editiert werden. Nach dem Betätigen des Speichern-Buttons wird zuerst, zur Sicherheit, eine Kopie der config.php erzeugt (config_save.php). Anschließend werden die neuen Konfigurationsdaten geschrieben und danach die Konfigurationsdatei erneut eingelesen.</string>
+    <string name="PLG_BLSV_EXPORT_EDIT_INFO">* * * ACHTUNG * * * Syntaxfehler können zum Absturz des Plugins führen.</string>
+    <string name="PLG_BLSV_EXPORT_MEMBERSHIP_REPORT">Mitgliedermeldung</string> 
+    <string name="PLG_BLSV_EXPORT_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
+    <string name="PLG_BLSV_EXPORT_SELECT_EXPORTFORMAT">Wähle das Ausgabeformat:</string> 
+    <string name="PLG_BLSV_EXPORT_SETTINGS">Einstellungen</string>
+</resources>
