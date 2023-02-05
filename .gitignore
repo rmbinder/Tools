@@ -2,4 +2,5 @@
 /remove_gender_language/de*.xml
 /remove_gender_language/replacements_save.php
 /blsv_export/config_save.php
+/blsv_export/config_orig.php
 

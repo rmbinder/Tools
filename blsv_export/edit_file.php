@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Editieren der config.php für das Admidio-Plugin BLSV_Export
  *
- * @copyright 2004-2023 rmb
+ * @copyright 2018-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
  * Parameters:
@@ -14,18 +14,13 @@
  */
 
 require_once(__DIR__ . '/../../../adm_program/system/common.php');
+require_once(__DIR__ . '/constants.php');
 
-//sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
+// only the main script can call and start this module
+if (!StringUtils::strContains($gNavigation->getUrl(), 'blsv_export.php') && !StringUtils::strContains($gNavigation->getUrl(), 'edit_file.php'))
 {
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
+    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);
 
 if (isset($_GET['mode']) && $_GET['mode'] === 'save')
 {
@@ -36,21 +31,23 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'save')
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('html', 'save')));
 
-$headline = $gL10n->get('PLG_BLSV_EXPORT_BLSV_EXPORT').' - '.$gL10n->get('PLG_BLSV_EXPORT_SETTINGS');
+$headline = $gL10n->get('PLG_BLSV_EXPORT_EDIT_CONFIG_FILE');
 
 if ($getMode === 'save')
 {
     // $_POST can not be used, because admidio removes alls HTML & PHP-Code from the parameters
     
     $postConfigText = htmlspecialchars_decode($_REQUEST['configtext']);
-    
-    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER .PLUGIN_FOLDER .'/config.php';
-    $filePathSave = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config_save.php';
-    
+        
     try
     {
-        FileSystemUtils::copyFile($filePath, $filePathSave, array('overwrite' => true));
-        FileSystemUtils::writeFile($filePath, $postConfigText);
+        if (!file_exists(CONFIG_ORIG))
+        {
+            FileSystemUtils::copyFile(CONFIG_CURR, CONFIG_ORIG);
+        }
+        
+        FileSystemUtils::copyFile(CONFIG_CURR, CONFIG_SAVE, array('overwrite' => true));
+        FileSystemUtils::writeFile(CONFIG_CURR, $postConfigText);
     }
     catch (\RuntimeException $exception)
     {
@@ -66,12 +63,12 @@ if ($getMode === 'save')
 }
 else
 {
-    if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
+    if ( !StringUtils::strContains($gNavigation->getUrl(), 'edit_file.php'))
     {
-        $gNavigation->addUrl(CURRENT_URL);
+        $gNavigation->addUrl(CURRENT_URL, $headline);
     }
     
-    $page = new HtmlPage('blsv_export-preferences', $headline);
+    $page = new HtmlPage('plg-blsv_export-edit-file', $headline);
     
     $page->addJavascript('
     $("#blsv_export-form").submit(function(event) {
@@ -107,15 +104,15 @@ else
     true
     );
     
-    $form = new HtmlForm('blsv_export-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/preferences.php', array('mode' => 'save')), $page);
+    $form = new HtmlForm('blsv_export-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_file.php', array('mode' => 'save')), $page);
 
     $form->addDescription($gL10n->get('PLG_BLSV_EXPORT_EDIT'));
 
     $configFile = '';
-    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config.php';
+   
     try
     {
-        $configFile = FileSystemUtils::readFile($filePath);
+        $configFile = FileSystemUtils::readFile(CONFIG_CURR);
     }
     catch (\RuntimeException $exception)
     {

@@ -19,26 +19,14 @@
  *
  * Compatible with Admidio version 4.1
  *
- * @copyright 2004-2023 rmb
+ * @copyright 2018-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *   
  ***********************************************************************************************
  */
 
 require_once(__DIR__ . '/../../../adm_program/system/common.php');
-require_once(__DIR__ . '/config.php');
-
-//sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
-{
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-}
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);
+require_once(__DIR__ . '/constants.php');
 
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
@@ -66,16 +54,6 @@ else
 
 $page = new HtmlPage('plg-blsv-export', $headline);
 
-//$gNavigation->addStartUrl(CURRENT_URL, $headline);
-
-// icon-link to info
-/*$html = '<p align="right">
-            <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/blsv_export_popup_info.php').'">'.'
-                <i class="fas fa-info-circle" data-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
-            </a>
-        </p>';
-$page->addHtml($html);*/
-
 $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_DESC'));
 $page->addHtml('<br><br>');
 $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_DESC2'));
@@ -83,14 +61,35 @@ $page->addHtml('<br><br>');
 
 if ($gCurrentUser->isAdministrator())
 {
-    // show link to pluginpreferences
-    $page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_BLSV_EXPORT_SETTINGS'),
-        ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/preferences.php',  'fa-cog');
+    // show link to edit config file
+    $page->addPageFunctionsMenuItem('admMenuItemPreferences', $gL10n->get('PLG_BLSV_EXPORT_EDIT_CONFIG_FILE'),
+        ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_file.php', 
+        'fa-cog');
     
-    // show link to pluginpreferences
-    $page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_FORMFILLER_DOCUMENTATION'),
-        ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/documentation.pdf',  'fa-file-pdf');
+    if (file_exists(CONFIG_ORIG) || file_exists(CONFIG_SAVE))
+    {
+        $page->addPageFunctionsMenuItem('admMenuItemRestore', $gL10n->get('PLG_BLSV_EXPORT_RESTORE_CONFIG_FILE'), '#', 'fa-reply');
+        if (file_exists(CONFIG_ORIG))
+        {
+            $page->addPageFunctionsMenuItem('admMenuItemRestoreOrig', $gL10n->get('PLG_BLSV_EXPORT_ORIG_FILE'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/restore_file.php', array('mode' => 'orig')),
+                'fa-reply', 
+                'admMenuItemRestore');
+        }
+        if (file_exists(CONFIG_SAVE))
+        {
+            $page->addPageFunctionsMenuItem('admMenuItemRestoreSave', $gL10n->get('PLG_BLSV_EXPORT_SAVE_FILE'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/restore_file.php', array('mode' => 'save')),
+                'fa-reply', 
+                'admMenuItemRestore');
+        }
+    }  
 }
+    
+// show link to documentation
+$page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_FORMFILLER_DOCUMENTATION'),
+    ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/documentation.pdf',  
+    'fa-file-pdf');
 
 // show form
 $form = new HtmlForm('blsv_export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/export.php'), $page);

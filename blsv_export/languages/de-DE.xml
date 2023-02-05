@@ -10,9 +10,14 @@
     <string name="PLG_BLSV_EXPORT_DESC2">Voraussetzung ist, dass alle Mitglieder, die für Sparten des BLSV gemeldet werden sollen, sich in Rollen von Admidio befinden. Dies ist mit "Abhängigkeiten" von Rollen relativ einfach durchzuführen.\n\nDie Zuordnungen "Rolle (Admidio) zu Sparte (BLSV)" erfolgen in der config.php.</string> 
     <string name="PLG_BLSV_EXPORT_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_BLSV_EXPORT_EDIT">Hiermit kann die Konfigurationsdatei config.php des Plugins editiert werden. Nach dem Betätigen des Speichern-Buttons wird zuerst, zur Sicherheit, eine Kopie der config.php erzeugt (config_save.php). Anschließend werden die neuen Konfigurationsdaten geschrieben und danach die Konfigurationsdatei erneut eingelesen.</string>
+    <string name="PLG_BLSV_EXPORT_EDIT_CONFIG_FILE">Konfigurationsdatei editieren</string>
     <string name="PLG_BLSV_EXPORT_EDIT_INFO">* * * ACHTUNG * * * Syntaxfehler können zum Absturz des Plugins führen.</string>
     <string name="PLG_BLSV_EXPORT_MEMBERSHIP_REPORT">Mitgliedermeldung</string> 
     <string name="PLG_BLSV_EXPORT_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
-    <string name="PLG_BLSV_EXPORT_SELECT_EXPORTFORMAT">Wählen Sie das Ausgabeformat:</string>
-    <string name="PLG_BLSV_EXPORT_SETTINGS">Einstellungen</string>           
+    <string name="PLG_BLSV_EXPORT_ORIG_FILE">Quelle: Ursprungsdatei</string> 
+    <string name="PLG_BLSV_EXPORT_ORIG_FILE_RESTORED">Die Konfigurationsdatei config.php ist über die Ursprungsdatei wieder hergestellt worden. Eine evtl. vorhandene Sicherungdatei config_save.php wurde gelöscht.\n\n</string>  
+    <string name="PLG_BLSV_EXPORT_RESTORE_CONFIG_FILE">Konfigurationsdatei wiederherstellen</string>  
+    <string name="PLG_BLSV_EXPORT_SAVE_FILE">Quelle: Sicherungsdatei</string>
+    <string name="PLG_BLSV_EXPORT_SAVE_FILE_RESTORED">Die Konfigurationsdatei config.php ist über die Sicherungsdatei wieder hergestellt worden. Die Sicherungdatei config_save.php wurde anschließend gelöscht.\n\n</string>           
+    <string name="PLG_BLSV_EXPORT_SELECT_EXPORTFORMAT">Wählen Sie das Ausgabeformat:</string>           
 </resources>

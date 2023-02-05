@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Konfigurationsdatei fuer das Admidio-Plugin blsv_export
  *
- * @copyright 2004-2023 rmb
+ * @copyright 2018-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */

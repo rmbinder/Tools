@@ -3,14 +3,14 @@
  ***********************************************************************************************
  * Exportdatei für das Admidio-Plugin blsv_export
  *
- * @copyright 2004-2023 rmb
+ * @copyright 2018-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
 
 require_once(__DIR__ . '/../../../adm_program/system/common.php');
 require_once(__DIR__ . '/config.php');
-include(__DIR__ . '/../version.php');
+require_once(__DIR__ . '/../version.php');
 
 // only the main script can call and start this module
 if (!StringUtils::strContains($gNavigation->getUrl(), 'blsv_export.php'))

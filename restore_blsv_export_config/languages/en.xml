@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
-    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_NAME">Restore of BLSV_Export-config</string> 
-    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_ORIG_FILE_RESTORED">The original file config.php was restored, the config_save.php was deleted.\n\n</string> 
-    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_NO_SAVE_FILE">The original file does not need to be restored as there is no config_save.php.\n\n</string> 
-    <string name="PLG_RESTORE_BLSV_EXPORT_CONFIG_ORIG_FILE_CREATED">The original file was created for the first time.\n\n</string>     
-</resources>
