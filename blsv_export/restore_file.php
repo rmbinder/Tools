@@ -16,19 +16,6 @@
  */
 
 require_once(__DIR__ . '/../../../adm_program/system/common.php');
-
-//sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-/*$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
-{
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-}
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);*/
-
 require_once(__DIR__ . '/constants.php');
 
 // only the main script can call and start this module
@@ -36,11 +23,6 @@ if (!StringUtils::strContains($gNavigation->getUrl(), 'blsv_export.php'))
 {
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-
-
-// Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
-
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'save', 'validValues' => array('orig', 'save')));

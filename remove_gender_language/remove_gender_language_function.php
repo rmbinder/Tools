@@ -5,7 +5,7 @@
  * 
  * Functions for plugin remove_gender_language.
  *
- * @copyright 2020-2022 rmb
+ * @copyright 2020-2023 rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
@@ -24,16 +24,13 @@ if(!defined('PLUGIN_PARENT_FOLDER'))
 }
 unset($folders);
 
-// Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
-
 //Einbinden der Konfigurationsdatei (darin ist die Sprachdatei definiert)
 include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config.php');
 
 $gMessage->showHtmlTextOnly(true);
 
-// Initialize and check the parameters
-$getMode = admFuncVariableIsValid($_GET, 'mode', 'string');
+$getMode = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'create','validValues' => array('create', 'restore_delete', 'replace')));
+$postRestoreOrDelete = admFuncVariableIsValid($_POST, 'restore_or_delete', 'string', array('defaultValue' => 'delete','validValues' => array('restore', 'delete')));
 
 $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES .'/'.$languageFileName.'.xml';
 
@@ -67,9 +64,9 @@ try
             $backupFile = $_POST['backup_file'];
             $backupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/'.$backupFile;
                      
-            $ret = $_POST['restore_or_delete']  ;
+            $ret = $postRestoreOrDelete ;
             
-            if ($ret === 'restore')
+            if ($postRestoreOrDelete === 'restore')
             {
                 try
                 {
@@ -86,7 +83,7 @@ try
                     // => EXIT
                 }        
             }
-            elseif  ($ret === 'delete')
+            elseif  ($postRestoreOrDelete === 'delete')
             {
                 try
                 {
@@ -173,10 +170,4 @@ catch(AdmException $e)
 }
 
 echo $ret;
-
-
-
-
-
-
 
