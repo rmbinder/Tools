@@ -20,6 +20,10 @@
  */
 require_once(__DIR__ . '/../../../adm_program/system/common.php');
 
+//With Admidio 4.3, the ModuleLists class was completely revised and replaced by the ModuleGroupsRoles class. 
+//To ensure that list_roles continues to run, the old ModuleLists class is integrated and modified accordingly.
+require_once(__DIR__ . '/classes/ModuleLists.php');
+
 //sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
 $folders = explode(DIRECTORY_SEPARATOR, __DIR__);
 if(!defined('PLUGIN_FOLDER'))
@@ -168,7 +172,7 @@ if ($listsResult['totalCount'] === 0)
     } 
     else 
     {
-        $gMessage->show($gL10n->get('PRO_NO_ROLES_VISIBLE'));
+        $gMessage->show($gL10n->get('SYS_NO_ROLES_VISIBLE'));
         // => EXIT
     }
 }
