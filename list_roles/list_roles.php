@@ -135,7 +135,7 @@ $page->addJavascript(
 );
 
 // create filter menu with elements for category
-$filterNavbar = new HtmlNavbar('navbar_filter', null, null, 'filter');
+$filterNavbar = new HtmlNavbar('navbar_filter', '', null, 'filter');
 $form = new HtmlForm('navbar_filter_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/list_roles.php', $page, array('type' => 'navbar', 'setFocus' => false));
 $form->addSelectBoxForCategories(
     'cat_uuid',
@@ -242,7 +242,8 @@ foreach ($listsResult['recordset'] as $row)
         // Contributory period
         if (strlen($role->getValue('rol_cost_period')) > 0 && $role->getValue('rol_cost_period') != 0) 
         {
-            $roleContribution .= ' - ' . TableRoles::getCostPeriods($role->getValue('rol_cost_period'));
+            $periodsArr = TableRoles::getCostPeriods();
+            $roleContribution .= ' - ' . $periodsArr[$role->getValue('rol_cost_period')];
         }
     }
     
