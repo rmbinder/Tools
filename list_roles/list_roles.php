@@ -186,7 +186,7 @@ $columnHeading = array(
     $gL10n->get('SYS_GROUPS_ROLES'),
     $gL10n->get('SYS_DESCRIPTION'),
     $gL10n->get('SYS_CONTRIBUTION'),
-    '<i class="fas fa-user" data-toggle="tooltip" title="'.$gL10n->get('SYS_MEMBERS').'"></i>
+    '<i class="fas fa-user" data-toggle="tooltip" title="'.$gL10n->get('SYS_ROLE_MEMBERS').'"></i>
     (<i class="fas fa-user-times" data-toggle="tooltip" title="'.$gL10n->get('SYS_FORMER_PL').'"></i>)',
     '<i class="fas fa-user-graduate" data-toggle="tooltip" title="'.$gL10n->get('SYS_LEADER').'"></i>',
     '&nbsp;'
