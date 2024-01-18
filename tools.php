@@ -3,18 +3,18 @@
  ***********************************************************************************************
  * Tools
  *
- * Version 3.2.0
+ * Version 3.3.0
  *
  * (Version 1 and 2 were released under the name MultipleMemberships)
  * 
- * Stand 18.02.2023
+ * Stand 18.01.2024
  * 
  * Tools provides a platform for smaller Admidio plugins.
  * Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 2
+ * Compatible with Admidio version 4.3
  *
  * @copyright rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
