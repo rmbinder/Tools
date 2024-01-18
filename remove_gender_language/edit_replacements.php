@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Script to edit the replacements.php file
  *
- * @copyright 2020-2022 rmb
+ * @copyright rmb
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *

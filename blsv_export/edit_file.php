@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Editieren der config.php für das Admidio-Plugin BLSV_Export
  *
- * @copyright 2018-2023 rmb
+ * @copyright rmb
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
  * Parameters:
