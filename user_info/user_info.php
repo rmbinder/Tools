@@ -199,14 +199,14 @@ while ($row = $statement->fetch())
     // 6. spalte
     // letzte anmeldungen
     $tempValue = '';
-    if(strlen($row['usr_actual_login']) > 0)
+    if(strlen((string) $row['usr_actual_login']) > 0)
     {
         // date must be formated
         $date = \DateTime::createFromFormat('Y-m-d H:i:s', $row['usr_actual_login']);
         $tempValue = $date->format($gSettingsManager->getString('system_date').' '.$gSettingsManager->getString('system_time'));
     }
 
-    if(strlen($row['usr_last_login']) > 0)
+    if(strlen((string) $row['usr_last_login']) > 0)
     {
         // date must be formated
         $date = \DateTime::createFromFormat('Y-m-d H:i:s', $row['usr_last_login']);

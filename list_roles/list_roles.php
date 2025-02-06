@@ -231,7 +231,7 @@ foreach ($listsResult['recordset'] as $row)
     $roleContribution = '';
     
     // show members fee
-    if (strlen($role->getValue('rol_cost')) > 0 || $role->getValue('rol_cost_period') > 0) 
+    if (strlen((string) $role->getValue('rol_cost')) > 0 || $role->getValue('rol_cost_period') > 0) 
     {
         // Member fee
         if (strlen($role->getValue('rol_cost')) > 0) 
