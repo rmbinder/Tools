@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_DELETE_CONTACTS_DESC">With the standard functions of Admidio it is only possible to delete individual contacts. Using this plugin, all members of a role can be deleted at once.</string>
+    <string name="PLG_DELETE_CONTACTS_MAKE_FORMER_DESC">You can make these contacts to former. This does not delete the data, but only terminates all role memberships. This has the advantage that you can always see later which data and roles you assigned to these contacts.</string>
+    <string name="PLG_DELETE_CONTACTS_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_DELETE_CONTACTS_PLUGIN_NAME">DELETE_CONTACTS</string>
+    <string name="PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC">If you select Delete, all data for these contacts will be deleted and cannot be viewed or restored.</string>
+    <string name="PLG_DELETE_CONTACTS_ROLE_HAS_NO_MEMBER">The selected role has no members!</string>
+    <string name="PLG_DELETE_CONTACTS_ROLE_SELECTION_DESC">All members of this role will be deleted. The role itself will not be removed.</string>  
+    <string name="PLG_DELETE_CONTACTS_USER_DELETE_OK">The member #VAR1_BOLD# was successfully deleted from the database!</string>
+    <string name="PLG_DELETE_CONTACTS_USER_IS_ADMIN">The member #VAR1# is an admin, you cannot delete him!</string>
+    <string name="PLG_DELETE_CONTACTS_USER_IS_YOURSELF">You cannot delete member #VAR1# because it is you!</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="PLG_DELETE_CONTACTS_DESC">Mit den Standardfunktionen von Admidio ist es nur möglich, einzelne Kontakte zu löschen. Mithilfe dieses Plugins können alle Mitglieder einer Rolle auf einmal gelöscht werden.</string>
+    <string name="PLG_DELETE_CONTACTS_MAKE_FORMER_DESC">Sie können diese Kontakte zu Ehemaligen machen. Dabei werden die Daten nicht gelöscht, sondern nur alle Rollenmitgliedschaften beendet. Das hat den Vorteil, dass Sie später immer sehen können, welche Daten und Rollen Sie diesen Kontakten zugewiesen hatten.</string>
+    <string name="PLG_DELETE_CONTACTS_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>    
+    <string name="PLG_DELETE_CONTACTS_PLUGIN_NAME">DELETE_CONTACTS</string>
+    <string name="PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC">Wenn Sie Löschen wählen, werden alle Daten dieser Kontakte gelöscht und können nicht mehr eingesehen oder wiederhergestellt werden.</string>
+    <string name="PLG_DELETE_CONTACTS_ROLE_HAS_NO_MEMBER">Die ausgewählte Rolle hat keine Mitglieder!</string>
+    <string name="PLG_DELETE_CONTACTS_ROLE_SELECTION_DESC">Alle Mitglieder dieser Rolle werden gelöscht. Die Rolle selber wird dabei nicht entfernt.</string>  
+    <string name="PLG_DELETE_CONTACTS_USER_DELETE_OK">Das Mitglied #VAR1_BOLD# wurde erfolgreich in der Datenbank gelöscht!</string>
+    <string name="PLG_DELETE_CONTACTS_USER_IS_ADMIN">Das Mitglied #VAR1# ist ein Admin, du kannst ihn nicht löschen!</string>
+    <string name="PLG_DELETE_CONTACTS_USER_IS_YOURSELF">Du kannst das Mitglied #VAR1# nicht löschen, weil du es selber bist!</string>
+</resources>
