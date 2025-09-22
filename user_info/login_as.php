@@ -13,6 +13,9 @@
  ***********************************************************************************************
  */
 
+use Admidio\Session\Entity\Session;
+use Admidio\Users\Entity\User;
+
 require_once(__DIR__ . '/../../../system/common.php');
 
 // Initialize and check the parameters

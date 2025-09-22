@@ -13,6 +13,9 @@
  ***********************************************************************************************
  */
 
+use Admidio\Infrastructure\Utils\FileSystemUtils;
+use Admidio\Infrastructure\Utils\StringUtils;
+
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/constants.php');
 

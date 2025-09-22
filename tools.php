@@ -21,6 +21,11 @@
  ***********************************************************************************************
  */
 
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Utils\FileSystemUtils;
+use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Roles\Entity\RolesRights;
+
 require_once(__DIR__ . '/../../system/common.php');
 include(__DIR__ . '/version.php');
 

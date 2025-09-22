@@ -23,6 +23,11 @@
  ***********************************************************************************************
  */
 
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\RolesRights;
+
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/constants.php');
 

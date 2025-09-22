@@ -14,6 +14,12 @@
  ***********************************************************************************************
  */
 
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\RolesRights;
+use Admidio\Users\Entity\User;
+
 require_once(__DIR__ . '/../../../system/common.php');
 
 //sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen

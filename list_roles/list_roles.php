@@ -18,6 +18,11 @@
  *             3 - event participation roles
  ***********************************************************************************************
  */
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\RolesRights;
+
 require_once(__DIR__ . '/../../../system/common.php');
 
 //With Admidio 4.3, the ModuleLists class was completely revised and replaced by the ModuleGroupsRoles class. 

@@ -13,6 +13,11 @@
  ***********************************************************************************************
  */
 
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\RolesRights;
+
 require_once(__DIR__ . '/../../../system/common.php');
 include(__DIR__ . '/../../../adm_program/installation/db_scripts/preferences.php');
 

@@ -10,6 +10,9 @@
  ***********************************************************************************************
  */
 
+use Admidio\Infrastructure\Language;
+use Admidio\Infrastructure\Utils\FileSystemUtils;
+
 require_once(__DIR__ . '/../../../system/common.php');
 
 //sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
