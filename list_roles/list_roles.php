@@ -18,7 +18,7 @@
  *             3 - event participation roles
  ***********************************************************************************************
  */
-require_once(__DIR__ . '/../../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 
 //With Admidio 4.3, the ModuleLists class was completely revised and replaced by the ModuleGroupsRoles class. 
 //To ensure that list_roles continues to run, the old ModuleLists class is integrated and modified accordingly.
@@ -285,13 +285,13 @@ foreach ($listsResult['recordset'] as $row)
         if ($getRoleType === ROLE_TYPE_INACTIVE) 
         {
             $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/adm_program/system/popup_message.php', array('type' => 'rol_enable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
+                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol_enable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
                                 '<i class="fas fa-check-square" data-toggle="tooltip" title="'.$gL10n->get('SYS_ACTIVATE_ROLE').'"></i></a>';
         } 
         elseif ($getRoleType === ROLE_TYPE_ACTIVE) 
         {
             $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/adm_program/system/popup_message.php', array('type' => 'rol_disable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
+                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol_disable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
                                 '<i class="fas fa-ban" data-toggle="tooltip" title="'.$gL10n->get('SYS_DEACTIVATE_ROLE').'"></i></a>';
         }
     }
@@ -299,7 +299,7 @@ foreach ($listsResult['recordset'] as $row)
     $iconLinks .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/groups-roles/groups_roles_new.php', array('role_uuid' => $roleUuid)).'">'.
                         '<i class="fas fa-edit" data-toggle="tooltip" title="'.$gL10n->get('SYS_EDIT_ROLE').'"></i></a>';
     $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                         data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/adm_program/system/popup_message.php', array('type' => 'rol', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
+                         data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
                          '<i class="fas fa-trash-alt" data-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE_ROLE').'"></i></a>';
 
     // create array with all column values

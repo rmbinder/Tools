@@ -13,7 +13,7 @@
  ***********************************************************************************************
  */
 
-require_once(__DIR__ . '/../../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/constants.php');
 
 // only the main script can call and start this module

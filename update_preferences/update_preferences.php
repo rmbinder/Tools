@@ -13,7 +13,7 @@
  ***********************************************************************************************
  */
 
-require_once(__DIR__ . '/../../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 include(__DIR__ . '/../../../adm_program/installation/db_scripts/preferences.php');
 
 //sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen

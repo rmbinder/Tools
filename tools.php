@@ -21,7 +21,7 @@
  ***********************************************************************************************
  */
 
-require_once(__DIR__ . '/../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../system/common.php');
 include(__DIR__ . '/version.php');
 
 if(!defined('PLUGIN_FOLDER'))

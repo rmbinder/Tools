@@ -13,7 +13,7 @@
  ***********************************************************************************************
  */
 
-require_once(__DIR__ . '/../../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 
 //sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
 $folders = explode(DIRECTORY_SEPARATOR, __DIR__);
@@ -199,7 +199,7 @@ elseif ($getMode == 'restore')
 
     if ($error == '')
     {
-        $buttonURL = ADMIDIO_URL . '/adm_program/system/logout.php';
+        $buttonURL = ADMIDIO_URL . '/system/logout.php';
         echo '<p>'.$gL10n->get('PLG_RESTORE_DB_RESTORE_OK').'</p>
               <p>'.$gL10n->get('PLG_RESTORE_DB_LOGOUT_DESC').'</p>
               <button class="btn btn-primary" onclick="window.location.href=\''.$buttonURL.'\'"> '.$gL10n->get('PLG_RESTORE_DB_LOGOUT').'</button>';
