@@ -52,7 +52,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-people-arrows');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-people-fill');
 }
 else
 {

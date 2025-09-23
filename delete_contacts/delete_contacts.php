@@ -53,7 +53,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-globe');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-person-x-fill');
 }
 else
 {
@@ -93,10 +93,10 @@ if ($getMode == 'start')     //Default
     $form->addSelectBoxFromSql('selection_role', $gL10n->get('SYS_ROLE'), $gDb, $sql, array('property' => HtmlForm::FIELD_REQUIRED, 'helpTextIdInline' => 'PLG_DELETE_CONTACTS_ROLE_SELECTION_DESC'));
 
     $form->addStaticControl('make_former', '', $gL10n->get('PLG_DELETE_CONTACTS_MAKE_FORMER_DESC'));
-    $form->addSubmitButton('btn_make_former', $gL10n->get('SYS_FORMER_PL'), array('icon' => 'fa-user-clock', 'class' => 'offset-sm-3'));
+    $form->addSubmitButton('btn_make_former', $gL10n->get('SYS_FORMER_PL'), array('icon' => 'bi-person-x-fill', 'class' => 'offset-sm-3'));
 
     $form->addStaticControl('remove_contact', '', $gL10n->get('PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC'));
-    $form->addSubmitButton('btn_remove_contact', $gL10n->get('SYS_DELETE'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
+    $form->addSubmitButton('btn_remove_contact', $gL10n->get('SYS_DELETE'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 
     $page->addHtml($form->show(false));
 }

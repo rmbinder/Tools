@@ -50,7 +50,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-info');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-info');
 }
 else
 {
@@ -138,7 +138,7 @@ $columnHeading[] = $gL10n->get('PLG_USER_INFO_CHANGED_ON');
 $columnAlign[]   = 'left';
 
 // 9. spalte login as
-$columnHeading[] = '<i class="fas fa-sign-in-alt" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
+$columnHeading[] = '<i class="bi bi-door-open" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
 $columnAlign[]   = 'center';
 
 $table->setColumnAlignByArray($columnAlign);
@@ -251,11 +251,11 @@ while ($row = $statement->fetch())
     if ($gCurrentUser->isAdministrator() && ($gCurrentUserId !== $row['usr_id']))
     {
         $targetUrl = SecurityUtils::encodeUrl('login_as.php', array('user_uuid' => $user->getValue('usr_uuid')));
-        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="fas fa-sign-in-alt" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
+        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="bi bi-door-open" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
     }
     else
     {
-        $columnValues[] = '<i class="fas fa-times" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
+        $columnValues[] = '<i class="bi bi-door-closed" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
     }
     
     $table->addRowByArray($columnValues);

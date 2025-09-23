@@ -52,7 +52,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-venus-mars');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-gender-ambiguous');
 }
 else
 {    
@@ -63,7 +63,7 @@ $page = new HtmlPage('plg-remove_gender_language', $headline);
 
 // show link to edit_replacements
 $page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EDIT_REPLACEMENTS'),
-        ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_replacements.php',  'fa-edit');
+        ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_replacements.php',  'bi-pencil-fill');
 
 $page->addJavascript('
     $(".form-remove_gender_language").submit(function(event) {
@@ -82,13 +82,13 @@ $page->addJavascript('
                 if (data === "create" || data === "delete" || data === "restore"|| data === "replace") {
                     formAlert.attr("class", "alert alert-success form-alert");
                     if (data === "create") {
-                        formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_CREATED').'</strong>");
+                        formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_CREATED').'</strong>");
                     } else if (data === "delete") {
-                        formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_DELETED').'</strong>");
+                        formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_DELETED').'</strong>");
                     } else if (data === "restore") {
-                        formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_RESTORED').'</strong>");
+                        formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_RESTORED').'</strong>");
                     } else {
-                        formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_UPDATED').'</strong>");
+                        formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_UPDATED').'</strong>");
                     } 
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
@@ -101,11 +101,11 @@ $page->addJavascript('
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
                     if (data === "replace_error_open") {
-                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN').' ");
+                        formAlert.html("<i class=\"bi bi-exclamation-circle-fill\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN').' ");
                     } else if (data === "replace_error_save") {
-                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE').' ");
+                        formAlert.html("<i class=\"bi bi-exclamation-circle-fill\"></i>'.$gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE').' ");
                     } else {
-                        formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                        formAlert.html("<i class=\"bi bi-exclamation-circle-fill\"></i>" + data);
                     } 
                 }
             }
@@ -137,7 +137,7 @@ if (count($backupFiles) < 4)
 {
     $formCreate = new HtmlForm('remove_gender_language_create_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/remove_gender_language_function.php', array('mode' => 'create')), $page, array('class' => 'form-remove_gender_language'));
     $formCreate->addCustomContent($gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_SAVE'), $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_SAVE_DESC'), array('helpTextIdLabel' => 'PLG_REMOVE_GENDER_LANGUAGE_MAX_FILES'));
-    $formCreate->addSubmitButton('btn_create', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_CREATE'), array('icon' => 'fa-clone', 'class' => 'offset-sm-3'));
+    $formCreate->addSubmitButton('btn_create', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_CREATE'), array('icon' => 'bi-copy', 'class' => 'offset-sm-3'));
     $page->addHtml($formCreate->show(false));
 }
 
@@ -161,13 +161,13 @@ if (count($backupFiles) !== 0)
     $formBackupAndRestore->addSelectBox('backup_file', '',$backupFilesNames, array( 'showContextDependentFirstEntry' => false, 'arrayKeyIsNotValue' => true));
     $selectBoxEntries = array('delete' => $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_DELETE'), 'restore' => $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_RESTORE'));
     $formBackupAndRestore->addSelectBox('restore_or_delete', '',$selectBoxEntries, array( 'showContextDependentFirstEntry' => false));
-    $formBackupAndRestore->addSubmitButton('btn_restore_delete', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EXECUTE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3')); 
+    $formBackupAndRestore->addSubmitButton('btn_restore_delete', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EXECUTE'), array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3')); 
     $page->addHtml($formBackupAndRestore->show(false));
 }
 
 $formUndo = new HtmlForm('remove_gender_language_undo_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/remove_gender_language_function.php', array('mode' => 'replace')), $page, array('class' => 'form-remove_gender_language'));
 $formUndo->addCustomContent($gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE'), $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_DESC'), array('helpTextIdLabel' => 'PLG_REMOVE_GENDER_LANGUAGE_INFO_CHANGE_TEXT'));
-$formUndo->addSubmitButton('btn_replace', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN'), array('icon' => 'fa-backspace', 'class' => 'offset-sm-3'));    
+$formUndo->addSubmitButton('btn_replace', $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN'), array('icon' => 'bi-backspace-fill', 'class' => 'offset-sm-3'));    
 $page->addHtml($formUndo->show(false));
 
 $page->show();

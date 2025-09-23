@@ -50,7 +50,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-recycle');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-recycle');
 }
 else
 {
@@ -85,7 +85,7 @@ if ($getMode == 'start')     //Default
     {
         $form->addDescription($gL10n->get('PLG_UPDATE_PREFERENCES_FOUND'));
         $form->addDescription($missingSettingsTxt);
-        $form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));       
+        $form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3'));       
     }
     else 
     {

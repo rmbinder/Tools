@@ -92,7 +92,7 @@ else
                 if (data === "success") {
         
                     formAlert.attr("class", "alert alert-success form-alert");
-                    formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
+                    formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
                     formAlert.fadeOut("slow");
@@ -100,7 +100,7 @@ else
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
-                    formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                    formAlert.html("<i class=\"bi bi-exclamation-circle-fill\"></i>" + data);
                 }
             }
         });
@@ -131,7 +131,7 @@ else
 
     $form->addDescription('<textarea id="configtext" name="configtext" cols="200" rows="18">'.$configFile .'</textarea>');
     $form->addDescription('<strong>'.$gL10n->get('PLG_BLSV_EXPORT_EDIT_INFO').'</strong>');
-    $form->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' btn-primary'));
+    $form->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' btn-primary'));
 
     $page->addHtml($form->show(false));
     $page->show();

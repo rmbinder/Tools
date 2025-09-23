@@ -50,7 +50,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-database');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-database');
 }
 else
 {
@@ -104,7 +104,7 @@ if ($getMode == 'start')     //Default
     {
         $form = new HtmlForm('choose_db_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/restore_db.php', array('mode' => 'restore')), $page);
         $form->addSelectBox('backup_file', $gL10n->get('PLG_RESTORE_DB_CHOOSE_BACKUPFILE'), $existingBackupFiles, array('property' => HtmlForm::FIELD_REQUIRED , 'helpTextIdInline' => 'PLG_RESTORE_DB_CHOOSE_BACKUPFILE_DESC'));
-        $form->addSubmitButton('btn_restore', $gL10n->get('PLG_RESTORE_DB_RESTORE'), array('icon' => 'fa-undo', 'class' => 'offset-sm-3'));
+        $form->addSubmitButton('btn_restore', $gL10n->get('PLG_RESTORE_DB_RESTORE'), array('icon' => 'bi-arrow-counterclockwise', 'class' => 'offset-sm-3'));
 
         $page->addHtml($form->show(false));
     }

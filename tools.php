@@ -45,14 +45,14 @@ if (!isUserAuthorized($scriptName))
 
 $headline = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 
-$gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-cogs');
+$gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-gear-fill');
     
 $page = new HtmlPage('plg-tools-mainpage', $headline.' <small>v'.$plugin_version.'</small>');
 
 // icon-link to info
 $html = '<p align="right">
             <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/tools_popup_info.php').'">'.'
-                <i class="fas fa-info-circle" data-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
+                <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
             </a>
         </p>';
 

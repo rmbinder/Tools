@@ -22,11 +22,11 @@ $page = new HtmlPage('plg-tools-info', $headline);
 
 header('Content-type: text/html; charset=utf-8');
 
-$form = new HtmlForm('plugin_informations_form', null, $page);
+$form = new HtmlForm('plugin_informations_form', '', $page);
 $form->addHtml('
     <div class="modal-header">
         <h3 class="modal-title">'.$headline.'</h3>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
     ');

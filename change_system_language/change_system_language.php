@@ -49,7 +49,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
     {
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-globe');
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-globe');
 }
 else
 {
@@ -75,7 +75,7 @@ if ($getMode == 'start')     //Default
         array('property' => HtmlForm::FIELD_REQUIRED, 'defaultValue' => $gSettingsManager->getString('system_language'), 'helpTextIdInline' => 'PLG_CHANGE_SYSTEM_LANGUAGE_HELPTEXT')
         );
    
-    $form->addSubmitButton('btn_restore', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => 'offset-sm-3'));
+    $form->addSubmitButton('btn_restore', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3'));
 
     $page->addHtml($form->show(false));
  
