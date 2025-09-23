@@ -110,8 +110,8 @@ $page->show();
 
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
- * Zur Prüfung werden die Einstellungen von 'Modulrechte' und 'Sichtbar für'
- * verwendet, die im Modul Menü für dieses Plugin gesetzt wurden.
+ * Zur Prüfung wird die Einstellung von 'Sichtbar für' verwendet,
+ * die im Modul Menü für dieses Plugin gesetzt wurde.
  * @return  bool    true, wenn der User berechtigt ist
  */
 function isUserAuthorized($scriptName)
@@ -141,28 +141,13 @@ function isUserAuthorized($scriptName)
         }
     }
     
-    $sql = 'SELECT men_id, men_com_id, men_name_intern, men_name, men_description, men_url, men_icon, com_name_intern
-                  FROM '.TBL_MENU.'
-             LEFT JOIN '.TBL_COMPONENTS.'
-                    ON com_id = men_com_id
-                 WHERE men_id = ? -- $menId
-              ORDER BY men_men_id_parent DESC, men_order';
+    // read current roles rights of the menu
+    $displayMenu = new RolesRights($gDb, 'menu_view', $menId);
     
-    $menuStatement = $gDb->queryPrepared($sql, array($menId));
-    while ($row = $menuStatement->fetch())
+    // check for right to show the menu
+    if (count($displayMenu->getRolesIds()) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
     {
-        if ((int) $row['men_com_id'] === 0 || Component::isVisible($row['com_name_intern']))
-        {
-            // Read current roles rights of the menu
-            $displayMenu = new RolesRights($gDb, 'menu_view', $row['men_id']);
-            $rolesDisplayRight = $displayMenu->getRolesIds();
-            
-            // check for right to show the menu
-            if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
-            {
-                $userIsAuthorized = true;
-            }
-        }
+        $userIsAuthorized = true;
     }
     return $userIsAuthorized;
 }
