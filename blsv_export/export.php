@@ -8,6 +8,7 @@
  ***********************************************************************************************
  */
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 
@@ -31,7 +32,8 @@ $str_csv     = '';   // enthaelt die komplette CSV-Datei als String
 $header      = array();
 $rows        = array();
 
-$userField = new TableUserField($gDb);
+//$userField = new TableUserField($gDb);
+$userField = new Entity($gDb, TBL_USER_FIELDS, 'usf');
 
 switch ($postExportMode)
 {

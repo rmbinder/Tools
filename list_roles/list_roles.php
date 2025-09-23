@@ -18,9 +18,11 @@
  *             3 - event participation roles
  ***********************************************************************************************
  */
+use Admidio\Categories\Entity\Category;
 use Admidio\Components\Entity\Component;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
 
 require_once(__DIR__ . '/../../../system/common.php');
@@ -111,7 +113,7 @@ if (!$gCurrentUser->checkRolesRight('rol_assign_roles'))
     $getRoleType = ROLE_TYPE_ACTIVE;
 }
 
-$category = new TableCategory($gDb);
+$category = new Category($gDb);
 
 if ($getCatUuid !== '') 
 {
@@ -204,7 +206,7 @@ $table->setDatatablesGroupColumn(1);
 $table->addRowHeadingByArray($columnHeading);
 
 // Create role object
-$role = new TableRoles($gDb);
+$role = new Role($gDb);
 
 foreach ($listsResult['recordset'] as $row) 
 {
@@ -247,7 +249,7 @@ foreach ($listsResult['recordset'] as $row)
         // Contributory period
         if (strlen($role->getValue('rol_cost_period')) > 0 && $role->getValue('rol_cost_period') != 0) 
         {
-            $periodsArr = TableRoles::getCostPeriods();
+            $periodsArr = Role::getCostPeriods();
             $roleContribution .= ' - ' . $periodsArr[$role->getValue('rol_cost_period')];
         }
     }

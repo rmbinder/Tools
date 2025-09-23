@@ -17,6 +17,8 @@
 use Admidio\Components\Entity\Component;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\Membership;
+use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
 use Admidio\Users\Entity\User;
 
@@ -146,7 +148,7 @@ elseif ($getMode == 'delete')
         {
             try 
             {
-                $member = new TableMembers($gDb);
+                $member = new Membership($gDb);
                     
                 $sql = 'SELECT mem_id, mem_rol_id, mem_usr_id, mem_begin, mem_end, mem_leader
                           FROM '.TBL_MEMBERS.'
@@ -165,7 +167,7 @@ elseif ($getMode == 'delete')
                 while ($row = $pdoStatement->fetch()) 
                 {
                     // stop all role memberships of this organization
-                    $role = new TableRoles($gDb, $row['mem_rol_id']);
+                    $role = new Role($gDb, $row['mem_rol_id']);
                     $role->stopMembership($row['mem_usr_id']);
                 }
                 $message .= $gL10n->get('SYS_END_MEMBERSHIP_OF_USER_OK', array($user->getValue('FIRST_NAME') . ' ' . $user->getValue('LAST_NAME'), $gCurrentOrganization->getValue('org_longname'))).'<br/>';
