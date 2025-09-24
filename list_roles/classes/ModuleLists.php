@@ -233,12 +233,13 @@ class ModuleLists extends Modules
         }
 
         // create a list with all rol_ids that the user is allowed to view
-        $visibleRoles = implode(',', $gCurrentUser->getRolesViewMemberships());
+        //$visibleRoles = implode(',', $gCurrentUser->getRolesViewMemberships());
+        $visibleRoles = '\'' . implode('\', \'', $gCurrentUser->getRolesViewMemberships()) . '\'';
         if ($visibleRoles !== '') {
-            return ' AND rol_id IN ('.$visibleRoles.')';
+            return ' AND rol_uuid IN ('.$visibleRoles.')';
         }
 
-        return ' AND rol_id = 0 ';
+        return ' AND rol_uuid IS NULL ';
     }
 
     /**

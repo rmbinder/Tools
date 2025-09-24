@@ -128,6 +128,7 @@ $lists->setParameter('role_type', (int) $getRoleType);
 
 // create html page object
 $page = new HtmlPage('admidio-groups-roles', $headline);
+$page->setContentFullWidth();
 
 // add filter navbar
 $page->addJavascript(
@@ -185,7 +186,7 @@ if ($listsResult['totalCount'] === 0)
 }
 
 // Create table
-$table = new HtmlTable('roles_table', $page, true, true);
+$table = new HtmlTable('roles_table', $page, true, false);
 
 // create array with all column heading values
 $columnHeading = array(
@@ -273,7 +274,7 @@ foreach ($listsResult['recordset'] as $row)
     $iconLinks = '';
     
     // send a mail to all role members
-    if ($gCurrentUser->hasRightSendMailToRole($rolId) && $gSettingsManager->getBool('enable_mail_module')) 
+    if ($gCurrentUser->hasRightSendMailToRole($rolId) && $gSettingsManager->getBool('mail_module_enabled')) 
     {
         $iconLinks .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/messages/messages_write.php', array('role_uuid' => $roleUuid)).'">'.
                     '<i class="bi bi-envelope-fill" data-toggle="tooltip" title="'.$gL10n->get('SYS_EMAIL_TO_MEMBERS').'"></i></a>';
