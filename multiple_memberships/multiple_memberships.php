@@ -89,7 +89,7 @@ $queryParams = array(
 );
 $statement = $gDb->queryPrepared($sql, $queryParams);
 	
-$datatable = true;
+$datatable = false;
 $hoverRows = false;
 $classTable  = 'table table-condensed';
 $table = new HtmlTable('table_role_overview', $page, $hoverRows, $datatable, $classTable);

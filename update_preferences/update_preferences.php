@@ -19,7 +19,7 @@ use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Roles\Entity\RolesRights;
 
 require_once(__DIR__ . '/../../../system/common.php');
-include(__DIR__ . '/../../../adm_program/installation/db_scripts/preferences.php');
+include(__DIR__ . '/../../../install/db_scripts/preferences.php');
 
 //sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
 $folders = explode(DIRECTORY_SEPARATOR, __DIR__);

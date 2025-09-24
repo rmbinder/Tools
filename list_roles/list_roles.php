@@ -80,7 +80,7 @@ define('ROLE_TYPE_ACTIVE', 1);
 define('ROLE_TYPE_EVENT_PARTICIPATION', 2);
 
 // check if the module is enabled and disallow access if it's disabled
-if (!$gSettingsManager->getBool('groups_roles_enable_module')) 
+if (!$gSettingsManager->getBool('groups_roles_module_enabled')) 
 {
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
     // => EXIT
@@ -101,7 +101,7 @@ switch ($getRoleType)
         break;
 }
 
-if (!$gCurrentUser->manageRoles()) 
+if (!$gCurrentUser->isAdministratorRoles()) 
 {
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
         // => EXIT
@@ -152,7 +152,7 @@ $form->addSelectBoxForCategories(
     HtmlForm::SELECT_BOX_MODUS_FILTER,
     array('defaultValue' => $getCatUuid)
 );
-if ($gCurrentUser->manageRoles()) 
+if ($gCurrentUser->isAdministratorRoles()) 
 {
     $form->addSelectBox(
         'role_type',
@@ -287,7 +287,7 @@ foreach ($listsResult['recordset'] as $row)
     }
     
     // edit roles of you are allowed to assign roles
-    if ($gCurrentUser->manageRoles()) 
+    if ($gCurrentUser->isAdministratorRoles()) 
     {
         if ($getRoleType === ROLE_TYPE_INACTIVE) 
         {

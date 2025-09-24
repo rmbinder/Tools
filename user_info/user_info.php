@@ -63,6 +63,7 @@ $user = new User($gDb, $gProfileFields);
 $page = new HtmlPage('plg-user_info', $headline);
 
 $page->addHtml($gL10n->get('PLG_USER_INFO_DESC'));
+$page->setContentFullWidth();
 
 // show all registerd users
 $sql = 'SELECT usr_id, CONCAT(last_name.usd_value, \', \', first_name.usd_value) AS name,
@@ -97,7 +98,7 @@ $queryParams = array(
 
 $statement = $gDb->queryPrepared($sql, $queryParams);
 	
-$datatable = true;
+$datatable = false;
 $hoverRows = true;
 $classTable  = 'table table-condensed';
 $table = new HtmlTable('table_role_overview', $page, $hoverRows, $datatable, $classTable);
@@ -138,7 +139,7 @@ $columnHeading[] = $gL10n->get('PLG_USER_INFO_CHANGED_ON');
 $columnAlign[]   = 'left';
 
 // 9. spalte login as
-$columnHeading[] = '<i class="bi bi-door-open" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
+$columnHeading[] = '<i class="bi bi-person-up" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
 $columnAlign[]   = 'center';
 
 $table->setColumnAlignByArray($columnAlign);
@@ -169,8 +170,7 @@ while ($row = $statement->fetch())
     // Add icon for "gender"
     if(strlen($row['gender']) > 0)
     {
-        // show selected text of optionfield or combobox
-        $arrListValues  = $gProfileFields->getProperty('GENDER', 'usf_value_list');
+        $arrListValues = $gProfileFields->getProperty('GENDER', 'ufo_usf_options', '', false);
         $columnValues[] = $arrListValues[$row['gender']];
     }
     else
@@ -251,11 +251,11 @@ while ($row = $statement->fetch())
     if ($gCurrentUser->isAdministrator() && ($gCurrentUserId !== $row['usr_id']))
     {
         $targetUrl = SecurityUtils::encodeUrl('login_as.php', array('user_uuid' => $user->getValue('usr_uuid')));
-        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="bi bi-door-open" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
+        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="bi bi-person-up" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
     }
     else
     {
-        $columnValues[] = '<i class="bi bi-door-closed" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
+        $columnValues[] = '<i class="bi bi-person-lock" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
     }
     
     $table->addRowByArray($columnValues);
