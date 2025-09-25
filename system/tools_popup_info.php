@@ -12,7 +12,7 @@
  * Parameters:      none
  *****************************************************************************/
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 
 // set headline of the script
 $headline = $gL10n->get('SYS_INFORMATIONS');

@@ -40,9 +40,9 @@ include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/
 
 $headline = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME');
 
-//if the sub-plugin was not called from the main-plugin tools.php, then check the permissions
+//if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
 $navStack = $gNavigation->getStack();
-if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
+if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_PARENT_FOLDER.'/index.php', false)))
 {
     //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));

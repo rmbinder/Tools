@@ -38,9 +38,9 @@ $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLD
 
 $headline = $gL10n->get('PLG_USER_INFO_NAME');
 
-//if the sub-plugin was not called from the main-plugin tools.php, then check the permissions
+//if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
 $navStack = $gNavigation->getStack();
-if (!(StringUtils::strContains($navStack[0]['url'], 'tools.php')))
+if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_PARENT_FOLDER.'/index.php', false)))
 {
     //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
@@ -139,7 +139,7 @@ $columnHeading[] = $gL10n->get('PLG_USER_INFO_CHANGED_ON');
 $columnAlign[]   = 'left';
 
 // 9. spalte login as
-$columnHeading[] = '<i class="bi bi-person-up" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
+$columnHeading[] = '<i class="bi bi-person-up" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC').'"></i>';
 $columnAlign[]   = 'center';
 
 $table->setColumnAlignByArray($columnAlign);
@@ -251,11 +251,11 @@ while ($row = $statement->fetch())
     if ($gCurrentUser->isAdministrator() && ($gCurrentUserId !== $row['usr_id']))
     {
         $targetUrl = SecurityUtils::encodeUrl('login_as.php', array('user_uuid' => $user->getValue('usr_uuid')));
-        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="bi bi-person-up" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
+        $columnValues[] = '<a class="admidio-icon-link" href="' . $targetUrl . '" ><i class="bi bi-person-up" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS').' '.$row['usr_login_name'].'"></i></a>';
     }
     else
     {
-        $columnValues[] = '<i class="bi bi-person-lock" data-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
+        $columnValues[] = '<i class="bi bi-person-lock" data-bs-toggle="tooltip" title="'.$gL10n->get('PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE', array($row['usr_login_name'])).'"></i>';
     }
     
     $table->addRowByArray($columnValues);

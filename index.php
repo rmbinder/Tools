@@ -27,7 +27,8 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Roles\Entity\RolesRights;
 
 require_once(__DIR__ . '/../../system/common.php');
-include(__DIR__ . '/version.php');
+
+include(__DIR__ . '/system/version.php');
 
 if(!defined('PLUGIN_FOLDER'))
 {
@@ -42,7 +43,7 @@ if (!isUserAuthorized($scriptName))
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-
+                                
 $headline = $gL10n->get('PLG_TOOLS_PLUGIN_NAME');
 
 $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-gear-fill');
@@ -51,7 +52,7 @@ $page = new HtmlPage('plg-tools-mainpage', $headline.' <small>v'.$plugin_version
 
 // icon-link to info
 $html = '<p align="right">
-            <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/tools_popup_info.php').'">'.'
+            <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/tools_popup_info.php').'">'.'
                 <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
             </a>
         </p>';
