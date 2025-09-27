@@ -22,326 +22,101 @@ use Admidio\Categories\Entity\Category;
 use Admidio\Components\Entity\Component;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
-use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
+use Admidio\Roles\Service\RolesService;
+use Plugins\Tools\list_roles\classes\Presenter\ListRolesPresenter;
 
-require_once(__DIR__ . '/../../../system/common.php');
-
-//With Admidio 4.3, the ModuleLists class was completely revised and replaced by the ModuleGroupsRoles class. 
-//To ensure that list_roles continues to run, the old ModuleLists class is integrated and modified accordingly.
-require_once(__DIR__ . '/classes/ModuleLists.php');
-
-//sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
-{
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-}
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);
-
-// Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
-
-$headline = $gL10n->get('PLG_LIST_ROLES_NAME');
-
-//if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
-$navStack = $gNavigation->getStack();
-if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_PARENT_FOLDER.'/index.php', false)))
-{
-    //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
-    $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
+try {
+    require_once(__DIR__ . '/../../../system/common.php');
+    require_once(__DIR__ . '/system/common_function.php');
     
-    // only authorized user are allowed to start this module
-    if (!isUserAuthorized($scriptName))
+    //sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
+    $folders = explode(DIRECTORY_SEPARATOR, __DIR__);
+    if(!defined('PLUGIN_FOLDER'))
     {
+        define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
+    }
+    if(!defined('PLUGIN_PARENT_FOLDER'))
+    {
+        define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
+    }
+    unset($folders);
+    
+    // Einbinden der Sprachdatei
+    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
+    
+    // Initialize and check the parameters
+    $getCategoryUUID = admFuncVariableIsValid($_GET, 'cat_uuid', 'uuid');
+    $getRoleUUID     = admFuncVariableIsValid($_GET, 'role_uuid', 'uuid');
+    $getRoleType     = admFuncVariableIsValid($_GET, 'role_type', 'int', array('defaultValue' => 1));
+
+    // check if the module is enabled and disallow access if it's disabled
+    if (!$gSettingsManager->getBool('groups_roles_module_enabled')) {
+        throw new Exception('SYS_MODULE_DISABLED');
+    }
+    
+    // only users with the special right are allowed to manage roles
+    if (!$gCurrentUser->isAdministratorRoles()) {
+        //throw new Exception('SYS_NO_RIGHTS');                     // über Exception wird nur SYS_NO_RIGHTS angezeigt
         $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
     }
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-stack');
-}
-else
-{
-    $gNavigation->addUrl(CURRENT_URL, $headline);
-}
 
-// create html page object
-$page = new HtmlPage('admidio-groups-roles', $headline);
+    $headline = $gL10n->get('PLG_LIST_ROLES_NAME');
 
-// Initialize and check the parameters
-$getCatUuid  = admFuncVariableIsValid($_GET, 'cat_uuid', 'string');
-$getRoleType = admFuncVariableIsValid($_GET, 'role_type', 'int', array('defaultValue' => 2))-1;
-
-// bei $getRoleType wird beim Übertragen mittels GET +1 hinzuaddiert, da 0 nicht übertragen wird
-define('ROLE_TYPE_INACTIVE', 0);
-define('ROLE_TYPE_ACTIVE', 1);
-define('ROLE_TYPE_EVENT_PARTICIPATION', 2);
-
-// check if the module is enabled and disallow access if it's disabled
-if (!$gSettingsManager->getBool('groups_roles_module_enabled')) 
-{
-    $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
-    // => EXIT
-}
-
-switch ($getRoleType) 
-{
-    case ROLE_TYPE_INACTIVE:
-        $headline .= ' - ' .  $gL10n->get('SYS_INACTIVE_GROUPS_ROLES');
-        break;
-
-    case ROLE_TYPE_ACTIVE:
-        $headline .= ' - ' .  $gL10n->get('SYS_GROUPS_ROLES');
-        break;
-
-    case ROLE_TYPE_EVENT_PARTICIPATION:
-        $headline .= ' - ' .  $gL10n->get('SYS_ROLES_CONFIRMATION_OF_PARTICIPATION');
-        break;
-}
-
-if (!$gCurrentUser->isAdministratorRoles()) 
-{
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-        // => EXIT
-}
-
-// only users with the right to assign roles can view inactive roles
-if (!$gCurrentUser->checkRolesRight('rol_assign_roles')) 
-{
-    $getRoleType = ROLE_TYPE_ACTIVE;
-}
-
-$category = new Category($gDb);
-
-if ($getCatUuid !== '') 
-{
-    $category->readDataByUuid($getCatUuid);
-    $headline .= ' - '.$category->getValue('cat_name');
-}
-
-// New Modulelist object
-$lists = new ModuleLists();
-$lists->setParameter('cat_id', $category->getValue('cat_id'));
-$lists->setParameter('role_type', (int) $getRoleType);
-
-// create html page object
-$page = new HtmlPage('admidio-groups-roles', $headline);
-$page->setContentFullWidth();
-
-// add filter navbar
-$page->addJavascript(
-    '
-    $("#cat_uuid").change(function() {
-        $("#navbar_filter_form").submit();
-    });
-    $("#role_type").change(function() {
-        $("#navbar_filter_form").submit();
-    });',
-    true
-);
-
-// create filter menu with elements for category
-$filterNavbar = new HtmlNavbar('navbar_filter', '', null, 'filter');
-$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/list_roles.php', $page, array('type' => 'navbar', 'setFocus' => false));
-$form->addSelectBoxForCategories(
-    'cat_uuid',
-    $gL10n->get('SYS_CATEGORY'),
-    $gDb,
-    'ROL',
-    HtmlForm::SELECT_BOX_MODUS_FILTER,
-    array('defaultValue' => $getCatUuid)
-);
-if ($gCurrentUser->isAdministratorRoles()) 
-{
-    $form->addSelectBox(
-        'role_type',
-        $gL10n->get('SYS_ROLE_TYPES'),
-        array(1 => $gL10n->get('SYS_INACTIVE_GROUPS_ROLES'), 2 => $gL10n->get('SYS_ACTIVE_GROUPS_ROLES'), 3 => $gL10n->get('SYS_ROLES_CONFIRMATION_OF_PARTICIPATION')),
-        array('defaultValue' => $getRoleType+1, 'showContextDependentFirstEntry' => false)
-    );
-}
-$filterNavbar->addForm($form->show());
-$page->addHtml($filterNavbar->show());
-
-$previousCategoryId = 0;
-
-// Get Lists
-$listsResult = $lists->getDataSet(0,0);
-
-if ($listsResult['totalCount'] === 0) 
-{
-    // If login valid, than show message for non available roles
-    if ($getRoleType === ROLE_TYPE_ACTIVE) 
-    {
-        $gMessage->show($gL10n->get('SYS_NO_RIGHTS_VIEW_LIST'));
-        // => EXIT
-    } 
-    else 
-    {
-        $gMessage->show($gL10n->get('SYS_NO_ROLES_VISIBLE'));
-        // => EXIT
+    // only users with the right to assign roles can view inactive roles
+    if (!$gCurrentUser->checkRolesRight('rol_assign_roles')) {
+        $getRoleType = ListRolesPresenter::ROLE_TYPE_ACTIVE;
     }
-}
 
-// Create table
-$table = new HtmlTable('roles_table', $page, true, false);
+    $category = new Category($gDb);
 
-// create array with all column heading values
-$columnHeading = array(
-    $gL10n->get('SYS_CATEGORY'),
-    $gL10n->get('SYS_GROUPS_ROLES'),
-    $gL10n->get('SYS_DESCRIPTION'),
-    $gL10n->get('SYS_CONTRIBUTION'),
-    '<i class="bi bi-person-fill" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_ROLE_MEMBERS').'"></i>
-    (<i class="bi bi-person-x-fill" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_FORMER_PL').'"></i>)',
-    '<i class="bi bi-mortarboard" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_LEADER').'"></i>',
-    '&nbsp;'
-);
-
-$table->setColumnAlignByArray(array('left', 'left', 'left', 'left', 'left', 'left', 'right'));
-$table->disableDatatablesColumnsSort(array(7));
-$table->setDatatablesColumnsNotHideResponsive(array(7));
-$table->setDatatablesGroupColumn(1);
-$table->addRowHeadingByArray($columnHeading);
-
-// Create role object
-$role = new Role($gDb);
-
-foreach ($listsResult['recordset'] as $row) 
-{
-    // Put data to Roleobject
-    $role->setArray($row);
-    
-    $catId = (int) $role->getValue('cat_id');
-    $rolId = (int) $role->getValue('rol_id');
-    $roleUuid = $role->getValue('rol_uuid');
-    $rolName = $role->getValue('rol_name');
-   
-    $roleDescription = '';
-
-    if (strlen($role->getValue('rol_description')) > 0) 
+    //if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
+    $navStack = $gNavigation->getStack();
+    if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_PARENT_FOLDER.'/index.php', false)))
     {
-        $roleDescription = strip_tags($role->getValue('rol_description'));
-
-        if (strlen($roleDescription) > 50) 
+        //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
+        $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
+        
+        // only authorized user are allowed to start this module
+        if (!isUserAuthorized($scriptName))
         {
-            // read first 200 chars of text, then search for last space and cut the text there. After that add a "more" link
-            $textPrev = substr($roleDescription, 0, 50);
-            $maxPosPrev = strrpos($textPrev, ' ');
-            $roleDescription = substr($textPrev, 0, $maxPosPrev).
-                            ' <span class="collapse" id="viewdetails-'.$roleUuid.'">'.substr($roleDescription, $maxPosPrev).'.
-                            </span> <a class="admidio-icon-link" data-bs-toggle="collapse" data-bs-target="#viewdetails-'.$roleUuid.'"><i class="bi bi-chevron-double-right" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_MORE').'"></i></a>';
+            $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+        }
+        $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-stack');
+    }
+    else
+    {
+        $gNavigation->addUrl(CURRENT_URL, $headline);
+    }
+    
+    // create html page object
+    $groupsRoles = new ListRolesPresenter('adm_groups_roles', $headline);
+
+    $rolesService = new RolesService($gDb);
+    $data = $rolesService->findAll($getRoleType, $getCategoryUUID);
+
+    if (count($data) === 0) {
+        if ($gValidLogin) {
+            // If login valid, then show message for not available roles
+            if ($getRoleType === ListRolesPresenter::ROLE_TYPE_ACTIVE) {
+                $gMessage->show($gL10n->get('SYS_NO_RIGHTS_VIEW_LIST'));
+                // => EXIT
+            } else {
+                $gMessage->show($gL10n->get('SYS_NO_ROLES_VISIBLE'));
+                // => EXIT
+            }
+        } else {
+            // forward to login page
+            require(__DIR__ . '/../../../system/login_valid.php');
         }
     }
 
-    $roleContribution = '';
-    
-    // show members fee
-    if (strlen((string) $role->getValue('rol_cost')) > 0 || $role->getValue('rol_cost_period') > 0) 
-    {
-        // Member fee
-        if (strlen($role->getValue('rol_cost')) > 0) 
-        {
-            $roleContribution .= (float) $role->getValue('rol_cost').' '.$gSettingsManager->getString('system_currency');
-        }
-
-        // Contributory period
-        if (strlen($role->getValue('rol_cost_period')) > 0 && $role->getValue('rol_cost_period') != 0) 
-        {
-            $periodsArr = Role::getCostPeriods();
-            $roleContribution .= ' - ' . $periodsArr[$role->getValue('rol_cost_period')];
-        }
-    }
-    
-    // show count of members and leaders of this role
-    $numMember = '';
-    $numLeader = '';
-    $numMember .= $row['num_members'];
-
-    if ($gCurrentUser->hasRightViewFormerRolesMembers($rolId) && $getRoleType === ROLE_TYPE_ACTIVE && $row['num_former'] > 0) 
-    {
-        // show former members
-        $numMember .=  ' ('.$row['num_former'].')';
-    }
-
-    if ($row['num_leader'] > 0) 
-    {
-        $numLeader =  $row['num_leader'] ;
-    }
-
-    $iconLinks = '';
-    
-    // send a mail to all role members
-    if ($gCurrentUser->hasRightSendMailToRole($rolId) && $gSettingsManager->getBool('mail_module_enabled')) 
-    {
-        $iconLinks .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/messages/messages_write.php', array('role_uuid' => $roleUuid)).'">'.
-                    '<i class="bi bi-envelope" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_EMAIL_TO_MEMBERS').'"></i></a>';
-    }
-
-    // link to assign or remove members if you are allowed to do it
-    if ($role->allowedToAssignMembers($gCurrentUser)) 
-    {
-        $iconLinks .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/groups-roles/members_assignment.php', array('role_uuid' => $roleUuid)).'">'.
-                            '<i class="bi bi-person-plus" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_ASSIGN_MEMBERS').'"></i></a>';
-    }
-    
-    // edit roles if you are allowed to assign roles
-    if ($gCurrentUser->isAdministratorRoles()) 
-    {
-        if ($getRoleType === ROLE_TYPE_INACTIVE) 
-        {
-          /*  $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol_enable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
-                                '<i class="bi bi-eye" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_ACTIVATE_ROLE').'"></i></a>';*/
-            //neu
-            $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                data-href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_MODULES . '/groups-roles/groups_roles.php', array('mode' => 'activate',  'role_uuid' => $roleUuid     )) . '">' .
-                '<i class="bi bi-eye" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_ACTIVATE_ROLE') . '"></i></a>';
-            
-        } 
-        elseif ($getRoleType === ROLE_TYPE_ACTIVE) 
-        {
-     /*       $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                                data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol_disable', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
-                                '<i class="bi bi-eye-slash" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DEACTIVATE_ROLE').'"></i></a>';*/
-            
-            //neu
-            $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                data-href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_MODULES . '/groups-roles/groups_roles.php', array('mode' => 'deactivate',  'role_uuid' => $roleUuid     )) . '">' .
-                '<i class="bi bi-eye-slash" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_DEACTIVATE_ROLE') . '"></i></a>';
-            
-        }
-    }
-    
-    $iconLinks .= '<a class="admidio-icon-link" href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/groups-roles/groups_roles.php', array('mode' => 'edit', 'role_uuid' => $roleUuid)).'">'.
-                        '<i class="bi bi-pencil-square" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_EDIT_ROLE').'"></i></a>';
-    
-    
-    $iconLinks .= '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
-                         data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.'/system/popup_message.php', array('type' => 'rol', 'element_id' => 'row_'.$roleUuid, 'name' => $rolName, 'database_id' => $roleUuid)).'">'.
-                         '<i class="bi bi-trash" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_DELETE_ROLE').'"></i></a>';
-    //neu
-    
-    
-
-    // create array with all column values
-    $columnValues = array(
-        array('value' => $role->getValue('cat_name'), 'order' => (int) $role->getValue('cat_sequence')),
-        '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/groups-roles/lists_show.php', array('mode' => 'html', 'rol_ids' => $rolId)).'">'.$rolName.'</a>',
-        $roleDescription,
-        $roleContribution,
-        $numMember,
-        $numLeader,
-        $iconLinks
-    );
-
-    $table->addRowByArray($columnValues, 'row_'. $roleUuid);
+    $groupsRoles->createList($getCategoryUUID, $getRoleType);
+    $groupsRoles->show();
+} catch (Throwable $e) {
+    $gMessage->show($e->getMessage());
 }
 
-$page->addHtml($table->show());
-$page->show();
 
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
