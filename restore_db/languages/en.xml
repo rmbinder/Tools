@@ -5,7 +5,6 @@
     <string name="PLG_RESTORE_DB_DESC">This plugin restores the Admidio database.</string>
     <string name="PLG_RESTORE_DB_LOGOUT">Logout and back to homepage</string>
     <string name="PLG_RESTORE_DB_LOGOUT_DESC">In order to read all data cleanly again, you will be logged out of the current session when you click the button.</string>    
-    <string name="PLG_RESTORE_DB_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_RESTORE_DB_NO_BACKUPFILE">There are no backup files.</string>    
     <string name="PLG_RESTORE_DB_PLUGIN_NAME">RESTORE_DB</string>
     <string name="PLG_RESTORE_DB_RESTORE">Restore</string>

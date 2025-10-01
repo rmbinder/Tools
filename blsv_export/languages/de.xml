@@ -13,7 +13,6 @@
     <string name="PLG_BLSV_EXPORT_EDIT_CONFIG_FILE">Konfigurationsdatei editieren</string>
     <string name="PLG_BLSV_EXPORT_EDIT_INFO">* * * ACHTUNG * * * Syntaxfehler können zum Absturz des Plugins führen.</string>
     <string name="PLG_BLSV_EXPORT_MEMBERSHIP_REPORT">Mitgliedermeldung</string> 
-    <string name="PLG_BLSV_EXPORT_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_BLSV_EXPORT_ORIG_FILE">Quelle: Ursprungsdatei</string> 
     <string name="PLG_BLSV_EXPORT_ORIG_FILE_RESTORED">Die Konfigurationsdatei config.php ist über die Ursprungsdatei wieder hergestellt worden. Eine evtl. vorhandene Sicherungdatei config_save.php wurde gelöscht.\n\n</string>  
     <string name="PLG_BLSV_EXPORT_RESTORE_CONFIG_FILE">Konfigurationsdatei wiederherstellen</string>  

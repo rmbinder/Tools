@@ -13,8 +13,9 @@ use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 
 require_once(__DIR__ . '/../../../system/common.php');
+require_once(__DIR__ . '/../system/common_function.php');
 require_once(__DIR__ . '/config.php');
-require_once(__DIR__ . '/../version.php');
+require_once(__DIR__ . '/../system/version.php');
 
 // only the main script can call and start this module
 if (!StringUtils::strContains($gNavigation->getUrl(), 'blsv_export.php'))

@@ -13,7 +13,6 @@
     <string name="PLG_BLSV_EXPORT_EDIT_CONFIG_FILE">Edit configuration file</string>
     <string name="PLG_BLSV_EXPORT_EDIT_INFO">* * * ATTENTION * * * Syntax errors can cause the plugin to crash.</string>
     <string name="PLG_BLSV_EXPORT_MEMBERSHIP_REPORT">membershipreport</string> 
-    <string name="PLG_BLSV_EXPORT_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_BLSV_EXPORT_ORIG_FILE">Source: original file</string> 
     <string name="PLG_BLSV_EXPORT_ORIG_FILE_RESTORED">The configuration file config.php has been restored from the original file. Any existing backup file config_save.php was deleted.\n\n</string>  
     <string name="PLG_BLSV_EXPORT_RESTORE_CONFIG_FILE">Restore configuration file</string>  

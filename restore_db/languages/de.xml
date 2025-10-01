@@ -5,7 +5,6 @@
     <string name="PLG_RESTORE_DB_DESC">Dieses Plugin stellt die Admidio-Datenbank wieder her.</string>
     <string name="PLG_RESTORE_DB_LOGOUT">Logout und zurück zur Homepage</string>
     <string name="PLG_RESTORE_DB_LOGOUT_DESC">Um alle Daten wieder sauber einzulesen, wirst Du beim Klick auf den Button von der aktuellen Sitzung abgemeldet.</string>
-    <string name="PLG_RESTORE_DB_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_RESTORE_DB_NO_BACKUPFILE">Es sind keine Backupdateien vorhanden.</string>    
     <string name="PLG_RESTORE_DB_PLUGIN_NAME">RESTORE_DB</string>
     <string name="PLG_RESTORE_DB_RESTORE">Wiederherstellen</string>

@@ -14,7 +14,6 @@
     <string name="PLG_REMOVE_GENDER_LANGUAGE_EXECUTE">Ausführen</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_INFO_CHANGE_TEXT">Nachdem die ursprünglichen Sprachausdrücke wiederhergestellt worden sind, sollte Admidio neu gestartet werden.</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_MAX_FILES">Es können maximal 3 Sicherungen erzeugt werden. Bereits vorhandene Dateien werden überschrieben.\n\nNachdem eine Sicherung wiederhergestellt wurde, sollte Admidio neu gestartet werden.</string>
-    <string name="PLG_REMOVE_GENDER_LANGUAGE_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">ERSETZEN</string>  
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Ersetzen</string>

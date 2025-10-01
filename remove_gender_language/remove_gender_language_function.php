@@ -14,21 +14,10 @@ use Admidio\Infrastructure\Language;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 
 require_once(__DIR__ . '/../../../system/common.php');
-
-//sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
-{
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-}
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);
+require_once(__DIR__ . '/../system/common_function.php');
 
 //Einbinden der Konfigurationsdatei (darin ist die Sprachdatei definiert)
-include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/config.php');
+include(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/config.php');
 
 $gMessage->showHtmlTextOnly(true);
 
@@ -44,7 +33,7 @@ try
     switch($getMode)
     {
         case 'create':
-            $languageBackupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/'.$languageFileName.'_'.ADMIDIO_VERSION_TEXT.'_'.DATE_NOW.'.xml';
+            $languageBackupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/'.$languageFileName.'_'.ADMIDIO_VERSION_TEXT.'_'.DATE_NOW.'.xml';
             
             try
             {
@@ -65,7 +54,7 @@ try
                           
         case 'restore_delete':
             $backupFile = $_POST['backup_file'];
-            $backupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/'.$backupFile;
+            $backupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/'.$backupFile;
                      
             $ret = $postRestoreOrDelete ;
             
@@ -106,7 +95,7 @@ try
             break;
             
         case 'replace':
-            include( ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php');
+            include( ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/replacements.php');
         
             $use_errors = libxml_use_internal_errors(true);
             try

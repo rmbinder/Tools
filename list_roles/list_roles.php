@@ -19,31 +19,16 @@
  ***********************************************************************************************
  */
 use Admidio\Categories\Entity\Category;
-use Admidio\Components\Entity\Component;
-use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
-use Admidio\Roles\Entity\RolesRights;
 use Admidio\Roles\Service\RolesService;
 use Plugins\Tools\list_roles\classes\Presenter\ListRolesPresenter;
 
 try {
     require_once(__DIR__ . '/../../../system/common.php');
-    require_once(__DIR__ . '/system/common_function.php');
-    
-    //sowohl der plugin-ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-    $folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-    if(!defined('PLUGIN_FOLDER'))
-    {
-        define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-    }
-    if(!defined('PLUGIN_PARENT_FOLDER'))
-    {
-        define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-    }
-    unset($folders);
+    require_once(__DIR__ . '/../system/common_function.php');
     
     // Einbinden der Sprachdatei
-    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/languages');
+    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/languages');
     
     // Initialize and check the parameters
     $getCategoryUUID = admFuncVariableIsValid($_GET, 'cat_uuid', 'uuid');
@@ -72,13 +57,10 @@ try {
 
     //if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
     $navStack = $gNavigation->getStack();
-    if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_PARENT_FOLDER.'/index.php', false)))
+    if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER.'/index.php', false)))
     {
-        //$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/formfiller...
-        $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
-        
         // only authorized user are allowed to start this module
-        if (!isUserAuthorized($scriptName))
+        if (!isUserAuthorized(basename(__FILE__), true))
         {
             $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
         }
@@ -117,49 +99,4 @@ try {
     $gMessage->show($e->getMessage());
 }
 
-
-/**
- * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
- * Zur Prüfung wird die Einstellung von 'Sichtbar für' verwendet,
- * die im Modul Menü für dieses Plugin gesetzt wurde.
- * @param   string  $scriptName   Der Scriptname des Plugins
- * @return  bool    true, wenn der User berechtigt ist
- */
-function isUserAuthorized($scriptName)
-{
-    global $gDb, $gMessage, $gLogger, $gL10n, $gCurrentUser;
-    
-    $userIsAuthorized = false;
-    $menId = 0;
-    
-    $sql = 'SELECT men_id
-              FROM '.TBL_MENU.'
-             WHERE men_url = ? -- $scriptName ';
-    
-    $menuStatement = $gDb->queryPrepared($sql, array($scriptName));
-    
-    if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
-    {
-        $gLogger->notice('ListRoles: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
-        $gLogger->notice('ListRoles: Error with menu entry: ScriptName: '. $scriptName);
-        $gMessage->show($gL10n->get('PLG_LIST_ROLES_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
-    }
-    else
-    {
-        while ($row = $menuStatement->fetch())
-        {
-            $menId = (int) $row['men_id'];
-        }
-    }
-    
-    // read current roles rights of the menu
-    $displayMenu = new RolesRights($gDb, 'menu_view', $menId);
-    
-    // check for right to show the menu
-    if (count($displayMenu->getRolesIds()) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
-    {
-        $userIsAuthorized = true;
-    }
-    return $userIsAuthorized;
-}
 

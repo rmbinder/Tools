@@ -18,6 +18,7 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 
 require_once(__DIR__ . '/../../../system/common.php');
+require_once(__DIR__ . '/../system/common_function.php');
 require_once(__DIR__ . '/constants.php');
 
 // only the main script can call and start this module
@@ -96,7 +97,7 @@ else
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
                     formAlert.fadeOut("slow");
-                    window.location.replace("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/blsv_export.php");
+                    window.location.replace("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/blsv_export.php");
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
@@ -108,7 +109,7 @@ else
     true
     );
     
-    $form = new HtmlForm('blsv_export-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_file.php', array('mode' => 'save')), $page);
+    $form = new HtmlForm('blsv_export-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/edit_file.php', array('mode' => 'save')), $page);
 
     $form->addDescription($gL10n->get('PLG_BLSV_EXPORT_EDIT'));
 

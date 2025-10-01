@@ -14,7 +14,6 @@
     <string name="PLG_REMOVE_GENDER_LANGUAGE_EXECUTE">Execute</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_INFO_CHANGE_TEXT">After the original language expressions have been restored, Admidio should be restarted.</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_MAX_FILES">A maximum of 3 backups can be created. Already existing files will be overwritten.\n\nAfter a backup has been restored, Admidio should be restarted.</string>
-    <string name="PLG_REMOVE_GENDER_LANGUAGE_MENU_URL_ERROR">The plugin authorization check failed. No menu item could be uniquely identified with this URL.\n\n=> #VAR1_BOLD#</string>    
     <string name="PLG_REMOVE_GENDER_LANGUAGE_PLUGIN_NAME">REMOVE_GENDER_LANGUAGE</string>
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE">REPLACE</string>  
     <string name="PLG_REMOVE_GENDER_LANGUAGE_REPLACE_BTN">Replace</string>

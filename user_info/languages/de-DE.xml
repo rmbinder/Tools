@@ -7,7 +7,6 @@
     <string name="PLG_USER_INFO_LOGIN_AS">Login als</string>
     <string name="PLG_USER_INFO_LOGIN_AS_DESC">Hier besteht für Administratoren die Möglichkeit sich unter dem Account des Benutzers anzumelden.</string>
     <string name="PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE">Login als #VAR1# nicht möglich.</string>
-    <string name="PLG_USER_INFO_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_USER_INFO_NAME">User Info (Benutzerinformation)</string> 
     <string name="PLG_USER_INFO_NUMBER_LOGINS">Anzahl Logins</string>     
 </resources>

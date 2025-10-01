@@ -2,7 +2,6 @@
 <resources>   
     <string name="PLG_UPDATE_PREFERENCES_DESC">Dieses Plugin vergleicht die aktuellen Einstellungen mit den Default-Einstellungen in der /installation/db_scripts/preferences.php. Wenn in der preferences.php Einstellungen aufgeführt sind, die noch nicht existieren, werden sie gesetzt.</string>
     <string name="PLG_UPDATE_PREFERENCES_FOUND">Folgende Variablen sind in der prefences.php aufgeführt, aber nicht in den aktuellen Einstellungen:</string>  
-    <string name="PLG_UPDATE_PREFERENCES_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es konnte kein Menüpunkt mit dieser URL eindeutig identifiziert werden.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_UPDATE_PREFERENCES_NOTHING_FOUND">---> Es gibt keinen Unterschied in den Einstellungen.</string> 
     <string name="PLG_UPDATE_PREFERENCES_PLUGIN_NAME">UPDATE_PREFERENCES</string>
     <string name="PLG_UPDATE_PREFERENCES_UPDATED">Alle fehlenden Variablen sind gesetzt.</string>

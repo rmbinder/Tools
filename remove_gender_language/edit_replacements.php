@@ -19,18 +19,7 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 
 require_once(__DIR__ . '/../../../system/common.php');
-
-//sowohl der plugin-Ordner, als auch der übergeordnete Ordner (= /tools) könnten umbenannt worden sein, deshalb neu auslesen
-$folders = explode(DIRECTORY_SEPARATOR, __DIR__);
-if(!defined('PLUGIN_FOLDER'))
-{
-    define('PLUGIN_FOLDER', '/'.$folders[sizeof($folders)-1]);
-}
-if(!defined('PLUGIN_PARENT_FOLDER'))
-{
-    define('PLUGIN_PARENT_FOLDER', '/'.$folders[sizeof($folders)-2]);
-}
-unset($folders);
+require_once(__DIR__ . '/../system/common_function.php');
 
 if (isset($_GET['mode']) && $_GET['mode'] === 'save')
 {
@@ -49,8 +38,8 @@ if ($getMode === 'save')
     
     $postConfigText = htmlspecialchars_decode($_REQUEST['configtext']);
     
-    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php';
-    $filePathSave = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements_save.php';
+    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/replacements.php';
+    $filePathSave = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/replacements_save.php';
     
     try
     {
@@ -100,7 +89,7 @@ else
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
                     formAlert.fadeOut("slow");
-                    //window.location.replace("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_replacements.php");
+                    //window.location.replace("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/edit_replacements.php");
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
@@ -112,12 +101,12 @@ else
     true
     );
     
-    $form = new HtmlForm('edit_replacements-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/edit_replacements.php', array('mode' => 'save')), $page);
+    $form = new HtmlForm('edit_replacements-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/edit_replacements.php', array('mode' => 'save')), $page);
 
     $form->addDescription($gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_EDIT'));
 
     $configFile = '';
-    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_PARENT_FOLDER . PLUGIN_FOLDER .'/replacements.php';
+    $filePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/replacements.php';
     try
     {
         $configFile = FileSystemUtils::readFile($filePath);

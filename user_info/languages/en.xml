@@ -7,7 +7,6 @@
     <string name="PLG_USER_INFO_LOGIN_AS">Login as</string>
     <string name="PLG_USER_INFO_LOGIN_AS_DESC">Here administrators have the option of logging in under the user's account.</string>
     <string name="PLG_USER_INFO_LOGIN_AS_NOT_POSSIBLE">Login as #VAR1# not possible.</string>
-    <string name="PLG_USER_INFO_MENU_URL_ERROR">The authorization check of the plugin failed. No menu item could be clearly identified with this URL.\n\n=> #VAR1_BOLD#</string>
     <string name="PLG_USER_INFO_NAME">User Info (User information)</string> 
     <string name="PLG_USER_INFO_NUMBER_LOGINS">Number of logins</string>     
 </resources>

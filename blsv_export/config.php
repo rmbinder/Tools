@@ -13,7 +13,7 @@
 // Es darf nur die Zuordnung 'Rolle' => 'Spalte' über der Schlüsselwert 'rols_blsv' angepasst werden.
 
 // Weitere Informationen zur Konfigurierung finden sich in der Dokumentation.
- 
+
 // Der Dateiname der Exportdatei (hier nur Präfix) 
 $filename    = 'BLSV-Export'.'_'.date('Y-m-d');
 
