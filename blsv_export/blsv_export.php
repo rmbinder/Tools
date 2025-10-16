@@ -87,7 +87,7 @@ if ($gCurrentUser->isAdministrator())
 }
     
 // show link to documentation
-$page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_FORMFILLER_DOCUMENTATION'),
+$page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_BLSV_EXPORT_DOCUMENTATION'),
     ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/documentation.pdf',  
     'bi-file-pdf-fill');
 
