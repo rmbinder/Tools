@@ -23,6 +23,8 @@
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 use Plugins\Tools\classes\Config\ConfigTable;
 
 // Fehlermeldungen anzeigen
@@ -32,8 +34,6 @@ try {
 
     require_once (__DIR__ . '/../../system/common.php');
     require_once (__DIR__ . '/system/common_function.php');
-
-    include (__DIR__ . '/system/version.php');
 
     // only authorized user are allowed to start this module
     if (! isUserAuthorized()) {
@@ -45,45 +45,44 @@ try {
     if ($pPreferences->checkforupdate()) {
         $pPreferences->init();
     }
-
+    $pPreferences->read();
+    
     $headline = $gL10n->get('PLG_TOOLS_NAME');
-
+    $title = $gL10n->get('PLG_TOOLS_NAME');
+    
     $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-tools');
 
-    $page = new HtmlPage('plg-tools-mainpage', $headline . ' <small>v' . $plugin_version . '</small>');
-
-    // icon-link to info
-    $html = '<p align="right">
-            <a class="admidio-icon-link openPopup" href="javascript:void(0);" data-href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/tools_popup_info.php') . '">' . '
-                <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="' . $gL10n->get('SYS_INFORMATIONS') . '"></i>
-            </a>
-            <a class="admidio-icon-link" href="' . SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/preferences.php') . '">' . '<i class="bi bi-gear" data-toggle="tooltip" title="' . $gL10n->get('SYS_SETTINGS') . '"></i>
-            </a>
-        </p>';
-
-    $page->addHtml($html);
-
-    $page->addHtml($gL10n->get('PLG_TOOLS_DESC'));
-
+    // create html page object
+    $page = PagePresenter::withHtmlIDAndHeadline('plg-tools-main-html');
+    $page->setTitle($title);
+    $page->setHeadline($headline. '<font size="-1">  v' . $pPreferences->config['Plugininformationen']['version'] .'</font>');
+    
     $existingPlugins = array();
-
     $folders = FileSystemUtils::getDirectoryContent(__DIR__, false, true, array(
         FileSystemUtils::CONTENT_TYPE_DIRECTORY
     ));
-
+    
     foreach ($folders as $folderAbsolutePath => $dummy) {
         $pluginFolderAndName = substr($folderAbsolutePath, strrpos($folderAbsolutePath, DIRECTORY_SEPARATOR) + 1);
         if (is_file($folderAbsolutePath . '/' . $pluginFolderAndName . '.php')) {
             $existingPlugins[strtoupper($pluginFolderAndName)] = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/' . $pluginFolderAndName . '/' . $pluginFolderAndName . '.php';
         }
     }
-    ksort($existingPlugins);
+    ksort($existingPlugins);  
 
-    foreach ($existingPlugins as $pluginname => $pluginPath) {
-        $page->addHtml('<button type="button" class="btn btn-primary" style= "text-align: center;width:75%" onclick="window.location.href=\'' . $pluginPath . '\'">' . $pluginname . '</button>');
-        $page->addHtml('<br><br>');
-    }
+    $page->assignSmartyVariable('urlPopup', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/tools_popup_info.php'));
+    $page->assignSmartyVariable('urlSettings', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/preferences.php'));
+    $page->assignSmartyVariable('existingPlugins', $existingPlugins);
+    
+    $form = new FormPresenter(
+        'tools_form',
+        'templates/main.script.plugin.tools.tpl',
+        '',
+        $page
+    );
 
+    $form->addToHtmlPage(false);
+    
     // show complete html page
     $page->show();
 } catch (Exception $e) {
