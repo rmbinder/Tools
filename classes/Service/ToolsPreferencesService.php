@@ -5,10 +5,10 @@
  * This class adds some functions that are used in the preferences module to keep the
  * code easy to read and short
  *
- * DocumentsPreferencesService is a modified (Admidio)PreferencesService
+ * ToolsPreferencesService is a modified (Admidio)PreferencesService
  *
  * @copyright rmb
- * @see https://github.com/rmbinder/documents/
+ * @see https://github.com/rmbinder/tools/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  */
 
@@ -41,9 +41,16 @@ class ToolsPreferencesService
         switch ($panel) {
             
             case 'Settings':
- 
+                $pPreferences->config['settings']['subplugins'] = array();
+                $existingPlugins = getExistingPlugins();
+                foreach ($existingPlugins as $pluginKey => $pluginData)
+                {
+                    if (isset($formData[$pluginData['name']]))
+                    {
+                        $pPreferences->config['settings']['subplugins'][] = $pluginData['name'];
+                    }
+                }
            	break; 
-
         }
         $pPreferences->save();
         return $result;

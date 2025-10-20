@@ -9,7 +9,9 @@
  ***********************************************************************************************
  */
  
+use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Roles\Entity\RolesRights;
+use Plugins\Tools\classes\Config\ConfigTable;
 
 require_once(__DIR__ . '/../../../system/common.php');
 
@@ -130,3 +132,39 @@ function isUserAuthorized( string $scriptname = '',  bool $subplugin = false)
     return $userIsAuthorized;
 }
 
+/**
+ * Liest alle Subplugins ein.
+ * Definition eines Subplugin:
+ *     Unterordner von Tools + php-Datei mit demselben Namen wie der Ordner
+ *     z.B. .../Tools/blsv_export/blsv_export.php
+ * Rückgabe-Array:
+ *     'name'   = Name des Plugins in Großbuchstaben
+ *     'url'    = URL des Plugins für den Aufruf-Link
+ *     'enabled'= true, wenn das Plugin aktiviert ist
+ * @param none
+ * @return array $existingPlugins Das Rückgabe-Array
+ */
+function getExistingPlugins()
+{
+    $pPreferences = new ConfigTable();
+    $pPreferences->read();
+    
+    $existingPlugins = array();
+    $folders = FileSystemUtils::getDirectoryContent(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER, false, true, array(FileSystemUtils::CONTENT_TYPE_DIRECTORY));
+
+    foreach ($folders as $folderAbsolutePath => $dummy) {
+       
+        $pluginFolderAndName = substr($folderAbsolutePath, strrpos($folderAbsolutePath, DIRECTORY_SEPARATOR) + 1);
+        if (is_file($folderAbsolutePath . '/' . $pluginFolderAndName . '.php')) {
+            $tempArr = array();    
+            $tempArr['name'] = strtoupper($pluginFolderAndName);
+            $tempArr['url'] = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/' . $pluginFolderAndName . '/' . $pluginFolderAndName . '.php';
+            $tempArr['enabled'] =(bool) in_array($tempArr['name'], $pPreferences->config['settings']['subplugins']);
+            $existingPlugins[] = $tempArr;
+        }
+    }
+    
+    array_multisort(array_column($existingPlugins, 'name'), SORT_ASC, $existingPlugins);   
+
+    return $existingPlugins;
+}

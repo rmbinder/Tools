@@ -11,10 +11,13 @@
     <br> 
     {$l10n->get('PLG_TOOLS_DESC')}
      
-    {foreach $existingPlugins as $plugin }
-        <a class="btn btn-primary" style= "text-align: center;width:75%" id="open_documentation" href="{$plugin}">
-            </i>{$plugin@key}</a>      
-            <br><br>    
+    {foreach $existingPlugins as $existingPlugin}
+        {if $existingPlugin.enabled }
+            <a class="btn btn-primary" style= "text-align: center;width:75%" id="open_documentation" href="{$existingPlugin.url}">
+                {$existingPlugin.name}
+            </a>      
+            <br><br> 
+        {/if} 
     {/foreach}
         
     <div class="form-alert" style="display: none;">&nbsp;</div>

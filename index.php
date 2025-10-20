@@ -57,19 +57,8 @@ try {
     $page->setTitle($title);
     $page->setHeadline($headline. '<font size="-1">  v' . $pPreferences->config['Plugininformationen']['version'] .'</font>');
     
-    $existingPlugins = array();
-    $folders = FileSystemUtils::getDirectoryContent(__DIR__, false, true, array(
-        FileSystemUtils::CONTENT_TYPE_DIRECTORY
-    ));
+    $existingPlugins = getExistingPlugins();
     
-    foreach ($folders as $folderAbsolutePath => $dummy) {
-        $pluginFolderAndName = substr($folderAbsolutePath, strrpos($folderAbsolutePath, DIRECTORY_SEPARATOR) + 1);
-        if (is_file($folderAbsolutePath . '/' . $pluginFolderAndName . '.php')) {
-            $existingPlugins[strtoupper($pluginFolderAndName)] = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/' . $pluginFolderAndName . '/' . $pluginFolderAndName . '.php';
-        }
-    }
-    ksort($existingPlugins);  
-
     $page->assignSmartyVariable('urlPopup', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/tools_popup_info.php'));
     $page->assignSmartyVariable('urlSettings', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/preferences.php'));
     $page->assignSmartyVariable('existingPlugins', $existingPlugins);

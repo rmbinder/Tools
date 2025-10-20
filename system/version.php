@@ -10,4 +10,4 @@
  */
 
 $plugin_version = '4.0.0 Beta 1';
-$plugin_stand = '16.10.2025';
+$plugin_stand = '20.10.2025';

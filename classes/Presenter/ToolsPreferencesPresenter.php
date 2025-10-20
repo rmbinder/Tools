@@ -5,17 +5,17 @@
  * This class adds some functions that are used in the Documents-preferences module to keep the
  * code easy to read and short
  *
- * DocumentsPreferencesPresenter is a modified (Admidio)PreferencesPresenter
+ * ToolsPreferencesPresenter is a modified (Admidio)PreferencesPresenter
  *
  * **Code example**
  * ```
  * // generate html output
- * $page = new DocumentsPreferencesPresenter('Options', $headline);
- * $page->createOptionsForm();
+ * $page = new ToolsPreferencesPresenter('Options', $headline);
+ * $page->createSettingsForm();
  * $page->show();
  * ```
  * @copyright rmb
- * @see https://github.com/rmbinder/documents/
+ * @see https://github.com/rmbinder/tools/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  */
 
@@ -24,6 +24,7 @@ namespace Plugins\Tools\classes\Presenter;
 use Admidio\Changelog\Service\ChangelogService;
 use Admidio\Documents\Service\DocumentsService;
 use Admidio\Infrastructure\Exception;
+use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\UI\Presenter\FormPresenter;
 use Admidio\UI\Presenter\PagePresenter;
@@ -93,7 +94,6 @@ class ToolsPreferencesPresenter extends PagePresenter
     public function createSettingsForm(): string
     {
         global $gL10n, $gSettingsManager, $gCurrentSession, $gDb, $gProfileFields;
-        
         $pPreferences = new ConfigTable();
         $pPreferences->read();
         
@@ -105,8 +105,16 @@ class ToolsPreferencesPresenter extends PagePresenter
             array('class' => 'form-preferences')
         );
         
-  //      $folder = new Folder($gDb);
- //       $folder->readDataByUuid($pPreferences->config['settings']['folderUUID']);
+        $existingPlugins = getExistingPlugins();
+        
+        foreach ($existingPlugins as $pluginKey => $pluginData)
+        {
+            $formSettings->addCheckbox(
+                $pluginData['name'],
+                $pluginData['name'],
+                $pluginData['enabled']
+            );
+        }
  
         $html = '<a class="btn btn-secondary" href="' . ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/uninstallation.php">
                     <i class="bi bi-trash"></i>' . $gL10n->get('PLG_TOOLS_SWITCH_TO_UNINSTALLATION') . '
@@ -118,14 +126,13 @@ class ToolsPreferencesPresenter extends PagePresenter
             array('helpTextId' => 'PLG_TOOLS_UNINSTALLATION_DESC', 'alertWarning' => $gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST'))
         );
         
-
-    
         $formSettings->addSubmitButton(
             'adm_button_save_options',
             $gL10n->get('SYS_SAVE'),
             array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3')
         );
-
+        
+        $this->assignSmartyVariable('existingPlugins', $existingPlugins);
         $smarty = $this->getSmartyTemplate();
         $formSettings->addToSmarty($smarty);
         $gCurrentSession->addFormObject($formSettings);

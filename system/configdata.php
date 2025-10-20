@@ -10,7 +10,7 @@
  */
 
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration       		
-$config_default['subplugins'] = array();    		
+$config_default['settings']['subplugins'] = array();     	
       
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';

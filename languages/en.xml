@@ -10,7 +10,8 @@
     <string name="PLG_TOOLS_ALLORG">in all organizations</string> 
     <string name="PLG_TOOLS_CONFIG_DATA">Configuration data</string>
     <string name="PLG_TOOLS_DESC">Tools recognized the following plugins:\n\n</string>
-    <string name="PLG_TOOLS_INFO1">Tools is a platform for smaller Admidio plugins (sub-plugins).\n\nAll sub-plugins must be in subfolders of tools and have the same name as the subfolder. Example: .../tools/user_info/user_info.php. By default, a button is generated for each detected sub-plugin, which can be used to start it. If no button is to be created for a sub-plugin, you only have to rename the folder of the sub-plugin.</string>    
+    <string name="PLG_TOOLS_ENABLE_SUBPLUGINS">These settings allow you to enable or disable subplugins. (Default: all subplugins enabled)</string>    
+    <string name="PLG_TOOLS_INFO1">Tools is a platform for smaller Admidio plugins (sub-plugins).\n\nAll sub-plugins must be in subfolders of tools and have the same name as the subfolder. Example: .../tools/user_info/user_info.php. By default, a button is generated for each detected sub-plugin, which can be used to start it.</string>    
     <string name="PLG_TOOLS_INFO2">In order to call up the main script tools, the following URL entry is required in the menu:\n\n/adm_plugins/tools/tools.php\n\nHowever, a separate menu entry can also be created for each sub-plugin.\n\nIf, for example, you only need the sub-plugin USER_INFO from the tools collection, the following URL entry is required in the menu:\n\n/adm_plugins/tools/user_info/user_info.php</string>     
     <string name="PLG_TOOLS_INFO3">It is strongly recommended to specify a role for each menu item under "Visible for". Both tools and the sub-plugins create an access permission from the specified roles.</string>   
     <string name="PLG_TOOLS_MENU_ITEM">Menu item</string> 

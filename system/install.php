@@ -104,6 +104,19 @@ try {
     // prüfen, ob die Konfigurationstabelle bereits vorhanden ist und ggf. neu anlegen oder aktualisieren
     if ($pPreferences->checkforupdate()) {
         $pPreferences->init();
+        
+        // beim allerersten Aufruf des Scripts ist kein Subplugin aktiviert
+        // dies könnte bei Nutzern zur Verwirrung führen, wenn nichts angezeigt wird
+        // deshalb als Voreinstellung alle aktivieren
+        $existingPlugins = getExistingPlugins();
+        if (count(array_filter($pPreferences->config['settings']['subplugins'])) === 0)
+        {
+            foreach ($existingPlugins as $pluginKey => $pluginData)
+            {
+                $pPreferences->config['settings']['subplugins'][] = $pluginData['name'];
+            }
+            $pPreferences->save();
+        }
     }
 
     $pPreferences->config['install']['access_role_id'] = $role->getValue('rol_id'); // für die Uninstall-Routine: die ID der Zugriffsrolle in der Konfigurationstabelle speichern

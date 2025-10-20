@@ -10,7 +10,8 @@
     <string name="PLG_TOOLS_ALLORG">in allen Organisationen</string>
     <string name="PLG_TOOLS_CONFIG_DATA">Konfigurationsdaten</string>                  
     <string name="PLG_TOOLS_DESC">Tools erkannte folgende Plugins:\n\n</string>
-    <string name="PLG_TOOLS_INFO1">Tools ist eine Plattform für kleinere Admidio-Plugins (Sub-Plugins).\n\nAlle Sub-Plugins müssen sich dabei in Unterordnern von tools befinden und denselben Namen besitzen wie der Unterordner. Beispiel: .../tools/user_info/user_info.php. Standardmäßig wird für jedes erkannte Sub-Plugin ein Button generiert, über den es gestartet werden kann. Soll für ein Sub-Plugin kein Button erzeugt werden, so muss lediglich der Ordner des Sub-Plugins umbenannt werden.</string>    
+    <string name="PLG_TOOLS_ENABLE_SUBPLUGINS">Über diese Einstellungen können die Subplugins aktiviert oder deaktiviert werden. (Voreinstellung: alle Subplugins aktiviert)</string>     
+    <string name="PLG_TOOLS_INFO1">Tools ist eine Plattform für kleinere Admidio-Plugins (Sub-Plugins).\n\nAlle Sub-Plugins müssen sich dabei in Unterordnern von tools befinden und denselben Namen besitzen wie der Unterordner. Beispiel: .../tools/user_info/user_info.php. Standardmäßig wird für jedes erkannte Sub-Plugin ein Button generiert, über den es gestartet werden kann.</string>    
     <string name="PLG_TOOLS_INFO2">Um das Hauptscript Tools aufzurufen, ist folgender URL-Eintrag im Menü notwendig:\n\n/adm_plugins/tools/tools.php\n\nFür jedes Sub-Plugin kann jedoch auch ein eigener Menüeintrag angelegt werden.\n\nBenötigt man beispielsweise nur das Sub-Plugin USER_INFO aus der Tools-Sammlung, so ist folgender URL-Eintrag im Menü erforderlich:\n\n/adm_plugins/tools/user_info/user_info.php</string>     
     <string name="PLG_TOOLS_INFO3">Es wird dringend empfohlen, für jeden Menüeintrag unter "Sichtbar für" eine Rolle anzugeben. Sowohl Tools als auch die Sub-Plugins erstellen eine Zugriffsberechtigung aus den angegebenen Rollen.</string>   
     <string name="PLG_TOOLS_MENU_ITEM">Menüpunkt</string>  
@@ -32,5 +33,5 @@
     <string name="PLG_TOOLS_UNINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
     <string name="PLG_TOOLS_UNINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
     <string name="PLG_TOOLS_UNINSTALLATION">Deinstallation</string>
-    <string name="PLG_TOOLS_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string> 
+    <string name="PLG_TOOLS_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string>
 </resources>
