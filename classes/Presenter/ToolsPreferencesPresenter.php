@@ -18,7 +18,6 @@
  * @see https://github.com/rmbinder/tools/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  */
-
 namespace Plugins\Tools\classes\Presenter;
 
 use Admidio\Changelog\Service\ChangelogService;
@@ -32,25 +31,30 @@ use Plugins\Tools\classes\Config\ConfigTable;
 
 class ToolsPreferencesPresenter extends PagePresenter
 {
+
     /**
+     *
      * @var array Array with all possible entries for the preferences.
-     *            Each entry consists of an array that has the following structure:
-     *            array ('key' => 'xzy', 'label' => 'xyz', 'panels' => array('id' => 'xyz', 'title' => 'xyz', 'icon' => 'xyz'))
-     * 
-     *            There are thwo different visualizations of the preferences:
-     *              1) a nested tab structure (main tabs created by 'key' and 'label' and sub tabs created by 'panels')
-     *              2) a accordion structure when the @media query (max-width: 768px) is active ('key' and 'label' are used for card header
-     *                 and 'panels' for accordions inside the card) 
+     *      Each entry consists of an array that has the following structure:
+     *      array ('key' => 'xzy', 'label' => 'xyz', 'panels' => array('id' => 'xyz', 'title' => 'xyz', 'icon' => 'xyz'))
+     *     
+     *      There are thwo different visualizations of the preferences:
+     *      1) a nested tab structure (main tabs created by 'key' and 'label' and sub tabs created by 'panels')
+     *      2) a accordion structure when the @media query (max-width: 768px) is active ('key' and 'label' are used for card header
+     *      and 'panels' for accordions inside the card)
      */
     protected array $preferenceTabs = array();
+
     /**
+     *
      * @var string Name of the preference panel that should be shown after page loading.
-     *             If this parameter is empty, then show the common preferences.
+     *      If this parameter is empty, then show the common preferences.
      */
     protected string $preferencesPanelToShow = '';
 
     /**
      * Constructor that initializes the class member parameters
+     *
      * @throws Exception
      */
     public function __construct(string $panel = '')
@@ -67,81 +71,128 @@ class ToolsPreferencesPresenter extends PagePresenter
     }
 
     /**
+     *
      * @throws Exception
      */
     private function initialize(): void
     {
         global $gL10n;
         $this->preferenceTabs = array(
-           
-            // === 1) System ===
+
+            // === 1) KONFIGURATION ===
             array(
-                'key'    => 'system',
-                'label'  => '',
+                'key' => 'configuration',
+                'label' => $gL10n->get('SYS_CONFIGURATION'),
                 'panels' => array(
-                    array('id'=>'settings',  'title'=>$gL10n->get('PLG_TOOLS_NAME'),   'icon'=>'bi-gear',     'subcards'=>false),           
-                ),
+                    array(
+                        'id' => 'default_settings',
+                        'title' => $gL10n->get('PLG_TOOLS_SUBPLUGINS'),
+                        'icon' => 'bi-gear',
+                        'subcards' => false
+                    )
+                )
             ),
+
+            // === 2) System ===
+            array(
+                'key' => 'system',
+                'label' => $gL10n->get('SYS_SYSTEM'),
+                'panels' => array(
+                    array(
+                        'id' => 'informations',
+                        'title' => $gL10n->get('SYS_INFORMATIONS'),
+                        'icon' => 'bi-info-circle',
+                        'subcards' => false
+                    ),
+                    array(
+                        'id' => 'uninstallation',
+                        'title' => $gL10n->get('PLG_TOOLS_UNINSTALLATION'),
+                        'icon' => 'bi-trash',
+                        'subcards' => false
+                    )
+                )
+            )
         );
     }
 
     /**
      * Generates the html of the form from the options preferences and will return the complete html.
+     *
      * @return string Returns the complete html of the form from the options preferences.
      * @throws Exception
      * @throws \Smarty\Exception
      */
-    public function createSettingsForm(): string
+    public function createDefaultSettingsForm(): string
     {
         global $gL10n, $gSettingsManager, $gCurrentSession, $gDb, $gProfileFields;
         $pPreferences = new ConfigTable();
         $pPreferences->read();
-        
-        $formSettings = new FormPresenter(
-            'adm_preferences_form_settings',
-            '../templates/preferences.plugin.tools.tpl',
-            SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/preferences.php', array('mode' => 'save', 'panel' => 'Settings')),
-            null,
-            array('class' => 'form-preferences')
-        );
-        
+
+        $formSettings = new FormPresenter('adm_preferences_form_settings', '../templates/preferences.plugin.tools.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/preferences.php', array(
+            'mode' => 'save',
+            'panel' => 'Settings'
+        )), null, array(
+            'class' => 'form-preferences'
+        ));
+
         $existingPlugins = getExistingPlugins();
-        
-        foreach ($existingPlugins as $pluginKey => $pluginData)
-        {
-            $formSettings->addCheckbox(
-                $pluginData['name'],
-                $pluginData['name'],
-                $pluginData['enabled']
-            );
+
+        foreach ($existingPlugins as $pluginKey => $pluginData) {
+            $formSettings->addCheckbox($pluginData['name'], $pluginData['name'], $pluginData['enabled']);
         }
- 
-        $html = '<a class="btn btn-primary" href="' . ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/uninstall.php">
-                    <i class="bi bi-trash"></i>' . $gL10n->get('PLG_TOOLS_UNINSTALLATION') . '
-                </a>';
-        $formSettings->addCustomContent(
-            'openUninstallation',
-            $gL10n->get('PLG_TOOLS_UNINSTALLATION'),
-            $html,
-            array('helpTextId' => 'PLG_TOOLS_UNINSTALLATION_DESC')
-        );
-        
-        $formSettings->addSubmitButton(
-            'adm_button_save_options',
-            $gL10n->get('SYS_SAVE'),
-            array('icon' => 'bi-check-lg', 'class' => 'offset-sm-3')
-        );
-        
+
+        $formSettings->addSubmitButton('adm_button_save_options', $gL10n->get('SYS_SAVE'), array(
+            'icon' => 'bi-check-lg',
+            'class' => 'offset-sm-3'
+        ));
+
         $this->assignSmartyVariable('existingPlugins', $existingPlugins);
         $smarty = $this->getSmartyTemplate();
         $formSettings->addToSmarty($smarty);
         $gCurrentSession->addFormObject($formSettings);
         return $smarty->fetch('../templates/preferences.plugin.tools.tpl');
     }
-    
+
+    /**
+     * Generates the html of the form from the informations preferences and will return the complete html.
+     *
+     * @return string Returns the complete html of the form from the informations preferences.
+     * @throws Exception
+     * @throws \Smarty\Exception
+     */
+    public function createInformationsForm(): string
+    {
+        global $gL10n;
+
+        $pPreferences = new ConfigTable();
+        $pPreferences->read();
+
+        $this->assignSmartyVariable('plg_name', $gL10n->get('PLG_TOOLS_NAME'));
+        $this->assignSmartyVariable('plg_version', $pPreferences->config['Plugininformationen']['version']);
+        $this->assignSmartyVariable('plg_date', $pPreferences->config['Plugininformationen']['stand']);
+        $smarty = $this->getSmartyTemplate();
+        return $smarty->fetch('../templates/preferences.informations.plugin.tools.tpl');
+    }
+
+    /**
+     * Generates the html of the form from the deinstallation preferences and will return the complete html.
+     *
+     * @return string Returns the complete html of the form from the configurations preferences.
+     * @throws Exception
+     * @throws \Smarty\Exception
+     */
+    public function createUninstallationForm(): string
+    {
+        $this->assignSmartyVariable('open_uninstall', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/uninstall.php'));
+        $smarty = $this->getSmartyTemplate();
+        return $smarty->fetch('../templates/preferences.uninstall.plugin.tools.tpl');
+    }
+
     /**
      * Set a panel name that should be opened at a page load.
-     * @param string $panelName Name of the panel that should be opened at a page load.
+     *
+     * @param string $panelName
+     *            Name of the panel that should be opened at a page load.
      * @return void
      */
     public function setPanelToShow(string $panelName): void
@@ -152,7 +203,8 @@ class ToolsPreferencesPresenter extends PagePresenter
     /**
      * Read all available registrations from the database and create the HTML content of this
      * page with the Smarty template engine and write the HTML output to the internal
-     * parameter **$pageContent**. If no registration is found, then show a message to the user.
+     * parameter **$pageContent**.
+     * If no registration is found, then show a message to the user.
      */
     public function show(): void
     {
@@ -330,7 +382,7 @@ class ToolsPreferencesPresenter extends PagePresenter
             // === 5) Formular-Submit per AJAX ===
             $(document).on("submit", "form[id^=\"adm_preferences_form_\"]", formSubmit);
       ', true);
-      
+
         ChangelogService::displayHistoryButton($this, 'preferences', 'preferences,texts');
 
         // Load the select2 in case any of the form uses a select box. Unfortunately, each section

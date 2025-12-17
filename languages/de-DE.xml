@@ -10,6 +10,10 @@
     <string name="PLG_TOOLS_INSTALL_UPDATE_REQUIRED">Die vorhandene Installation ist unvollständig. Es ist notwendig, die Installationsroutine erneut zu durchlaufen.\n\nZur Installation folgendes Script ausführen: #VAR1#</string>
     <string name="PLG_TOOLS_NAME">Tools</string> 
     <string name="PLG_TOOLS_NAME_DESC">Das Plugin Tools</string>
+    <string name="PLG_TOOLS_PLUGIN_DATE">Stand</string>
+    <string name="PLG_TOOLS_PLUGIN_NAME">Name des Plugins</string>
+    <string name="PLG_TOOLS_PLUGIN_VERSION">Version</string>
+    <string name="PLG_TOOLS_SUBPLUGINS">Subplugins</string>     
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_ERROR">- Beim Löschen der Zugriffsrollen ist ein Fehler aufgetreten. Es konnten nicht alle Zugriffsrollen gelöscht werden.\n</string>
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_SUCCESS">- Die vom Plugin angelegten Zugriffsrollen wurden gelöscht.\n</string>   
     <string name="PLG_TOOLS_UNINST_DATA_DELETE_ERROR">- Beim Löschen der Konfigurationsdaten ist ein Fehler aufgetreten.\n</string>

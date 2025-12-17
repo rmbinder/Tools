@@ -10,6 +10,10 @@
     <string name="PLG_TOOLS_INSTALL_UPDATE_REQUIRED">The existing installation is incomplete. It is necessary to run the installation routine again.\n\nTo install, run the following script: #VAR1#</string>
     <string name="PLG_TOOLS_NAME">Tools</string> 
     <string name="PLG_TOOLS_NAME_DESC">The Tools plugin</string>
+    <string name="PLG_TOOLS_PLUGIN_DATE">Status</string>
+    <string name="PLG_TOOLS_PLUGIN_NAME">Plug-in name</string>
+    <string name="PLG_TOOLS_PLUGIN_VERSION">Version</string>
+    <string name="PLG_TOOLS_SUBPLUGINS">Subplugins</string>         
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_ERROR">- An error occurred while deleting access roles. Not all access roles could be deleted.\n</string>
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_SUCCESS">- The access roles created by the plugin have been deleted.\n</string>   
     <string name="PLG_TOOLS_UNINST_DATA_DELETE_ERROR">- An error occurred while deleting the configuration data.\n</string>
