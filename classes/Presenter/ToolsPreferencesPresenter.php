@@ -116,14 +116,14 @@ class ToolsPreferencesPresenter extends PagePresenter
             );
         }
  
-        $html = '<a class="btn btn-secondary" href="' . ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/uninstallation.php">
-                    <i class="bi bi-trash"></i>' . $gL10n->get('PLG_TOOLS_SWITCH_TO_UNINSTALLATION') . '
+        $html = '<a class="btn btn-primary" href="' . ADMIDIO_URL . FOLDER_PLUGINS . '/Tools/system/uninstall.php">
+                    <i class="bi bi-trash"></i>' . $gL10n->get('PLG_TOOLS_UNINSTALLATION') . '
                 </a>';
         $formSettings->addCustomContent(
             'openUninstallation',
             $gL10n->get('PLG_TOOLS_UNINSTALLATION'),
             $html,
-            array('helpTextId' => 'PLG_TOOLS_UNINSTALLATION_DESC', 'alertWarning' => $gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST'))
+            array('helpTextId' => 'PLG_TOOLS_UNINSTALLATION_DESC')
         );
         
         $formSettings->addSubmitButton(

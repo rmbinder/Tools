@@ -20,6 +20,9 @@
  * read()						-	liest die Konfigurationsdaten aus der Datenbank
  * checkforupdate()				-	vergleicht die Angaben in der Datei version.php
  * 									mit den Daten in der DB
+ * getAllAccessRoles()          -   reads all access roles stored in the configuration table
+ * getShortcut()                -   returns the shortcut of the plugin
+ * getTableName()               -   returns the table name of the plugin
  *
  *****************************************************************************/
 
@@ -99,8 +102,8 @@ class ConfigTable
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;
-		$this->config['Plugininformationen']['table_name'] = $this->table_name;
-		$this->config['Plugininformationen']['shortcut'] = self::$shortcut;
+//		$this->config['Plugininformationen']['table_name'] = $this->table_name;
+//		$this->config['Plugininformationen']['shortcut'] = self::$shortcut;
 		
 		// die eingelesenen Konfigurationsdaten in ein Arbeitsarray kopieren
 		$config_ist = $this->config;
@@ -287,7 +290,7 @@ class ConfigTable
 	}
 	
 	/**
-	 * Liest alle Zugriffsrollen ein, die in der Konfigurationstabelle gespeichert sind
+	 * Reads all access roles stored in the configuration table
 	 * @return  array $data
 	 */
 	public function getAllAccessRoles()
@@ -307,5 +310,23 @@ class ConfigTable
 	    }
 	    
 	    return $data;
+	}
+    
+    /**
+	 * Returns the shortcut of the plugin.
+	 * @return string $shortcut.
+	 */
+	public function getShortcut()
+	{
+	    return self::$shortcut;
+	}
+	
+	/**
+	 * Returns the table name of the plugin.
+	 * @return string $table_name.
+	 */
+	public function getTableName()
+	{
+	    return $this->table_name;
 	}
 }

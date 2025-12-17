@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="PLG_TOOLS_ACCESS_ROLE">Access role</string>
-    <string name="PLG_TOOLS_ACCESS_ROLES_STILL_PRESENT">- The menu item cannot be deleted because access roles still exist.\n</string>  
     <string name="PLG_TOOLS_ACCESS_TO_PLUGIN">Access to the tools plugin</string>
-    <string name="PLG_TOOLS_ACCESS_TO_PLUGIN">Access to the Tools plugin</string>
     <string name="PLG_TOOLS_ACCESS_TO_PLUGIN_DESC">Members of this role have access to the Tools plugin</string>
-    <string name="PLG_TOOLS_ACCESS_TO_PLUGIN_DESC">Members of this role have access to the Tools plugin</string> 
-    <string name="PLG_TOOLS_ACTORGONLY">only in the current organization</string>
-    <string name="PLG_TOOLS_ALLORG">in all organizations</string> 
-    <string name="PLG_TOOLS_CONFIG_DATA">Configuration data</string>
     <string name="PLG_TOOLS_DESC">Tools recognized the following plugins:\n\n</string>
     <string name="PLG_TOOLS_ENABLE_SUBPLUGINS">These settings allow you to enable or disable subplugins. (Default: all subplugins enabled)</string>    
-    <string name="PLG_TOOLS_INFO1">Tools is a platform for smaller Admidio plugins (sub-plugins).\n\nAll sub-plugins must be in subfolders of tools and have the same name as the subfolder. Example: .../tools/user_info/user_info.php. By default, a button is generated for each detected sub-plugin, which can be used to start it.</string>    
-    <string name="PLG_TOOLS_INFO2">In order to call up the main script tools, the following URL entry is required in the menu:\n\n/adm_plugins/tools/tools.php\n\nHowever, a separate menu entry can also be created for each sub-plugin.\n\nIf, for example, you only need the sub-plugin USER_INFO from the tools collection, the following URL entry is required in the menu:\n\n/adm_plugins/tools/user_info/user_info.php</string>     
+    <string name="PLG_TOOLS_INFO1">Tools is a platform for smaller Admidio plugins (sub-plugins).\n\nAll sub-plugins must be in subfolders of tools and have the same name as the subfolder. Example: .../Tools/user_info/user_info.php. By default, a button is generated for each detected sub-plugin, which can be used to start it.</string>    
+    <string name="PLG_TOOLS_INFO2">During installation, a menu item and an access role are automatically created for the main script Tools.\n\nHowever, a separate menu entry can also be created for each sub-plugin.\n\nIf, for example, you only need the sub-plugin USER_INFO from the tools collection, the following URL entry is required in the menu:\n\n/adm_plugins/Tools/user_info/user_info.php</string>     
     <string name="PLG_TOOLS_INFO3">It is strongly recommended to specify a role for each menu item under "Visible for". Both tools and the sub-plugins create an access permission from the specified roles.</string>   
-    <string name="PLG_TOOLS_MENU_ITEM">Menu item</string> 
+    <string name="PLG_TOOLS_INSTALL_UPDATE_REQUIRED">The existing installation is incomplete. It is necessary to run the installation routine again.\n\nTo install, run the following script: #VAR1#</string>
     <string name="PLG_TOOLS_NAME">Tools</string> 
     <string name="PLG_TOOLS_NAME_DESC">The Tools plugin</string>
-    <string name="PLG_TOOLS_REMOVE_ACCESS_ROLE">Remove access role</string>
-    <string name="PLG_TOOLS_REMOVE_CONFIG_DATA">Remove configuration data</string>
-    <string name="PLG_TOOLS_REMOVE_MENU_ITEM">Remove menu item</string>
-    <string name="PLG_TOOLS_SWITCH_TO_UNINSTALLATION">Switch to uninstall</string> 
-    <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_ALERT">Only roles (=access roles) that were created by the plugin during setup will be removed.</string>
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_ERROR">- An error occurred while deleting access roles. Not all access roles could be deleted.\n</string>
     <string name="PLG_TOOLS_UNINST_ACCESS_ROLE_SUCCESS">- The access roles created by the plugin have been deleted.\n</string>   
     <string name="PLG_TOOLS_UNINST_DATA_DELETE_ERROR">- An error occurred while deleting the configuration data.\n</string>
     <string name="PLG_TOOLS_UNINST_DATA_DELETE_SUCCESS">- The configuration data created by the plugin has been deleted.\n</string>
-    <string name="PLG_TOOLS_UNINST_MENU_ITEM_ALERT">The menu item will only be removed if all access roles created by the plugin (including in other organizations) have been deleted beforehand.</string>
     <string name="PLG_TOOLS_UNINST_MENU_ITEM_ERROR">- An error occurred while deleting the menu item.\n</string>
+    <string name="PLG_TOOLS_UNINST_MENU_ITEM_NOT_DELETED">- The menu item created by the plugin could not be deleted because it is still in use in another organization..\n</string>
     <string name="PLG_TOOLS_UNINST_MENU_ITEM_SUCCESS">- The menu item created by the plugin has been deleted.\n</string> 
+    <string name="PLG_TOOLS_UNINST_NO_INST_IDS_FOUND">- No menu item and/or access role could be found. You must delete the menu item and access role manually..\n</string> 
+    <string name="PLG_TOOLS_UNINST_SECURITY_CHECK">Are you sure you want to uninstall the plugin?</string> 
     <string name="PLG_TOOLS_UNINST_STARTMESSAGE">The following deletions were performed:\n\n</string>
     <string name="PLG_TOOLS_UNINST_TABLE_DELETE_ERROR">- The table "adm_plugin_preferences" could not be deleted because it houses more data from other plugins.\n</string>
     <string name="PLG_TOOLS_UNINST_TABLE_DELETE_SUCCESS">- The created table "adm_plugin_preferences" was deleted.\n</string>
