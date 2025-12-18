@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>   
-    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_DESC">Mithilfe dieses Plugins kann man ohne Administratorrechte auf eine andere Systemsprache umschalten.</string>
-    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_HELPTEXT">Wählen Sie die neue Systemsprache aus.</string>
-    <string name="PLG_CHANGE_SYSTEM_LANGUAGE_PLUGIN_NAME">CHANGE_SYSTEM_LANGUAGE</string> 
-</resources>
