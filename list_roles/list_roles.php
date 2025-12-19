@@ -18,6 +18,8 @@
  *             3 - event participation roles
  ***********************************************************************************************
  */
+
+use Admidio\Infrastructure\Exception;
 use Admidio\Categories\Entity\Category;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Roles\Service\RolesService;
@@ -42,8 +44,7 @@ try {
     
     // only users with the special right are allowed to manage roles
     if (!$gCurrentUser->isAdministratorRoles()) {
-        //throw new Exception('SYS_NO_RIGHTS');                     // über Exception wird nur SYS_NO_RIGHTS angezeigt
-        $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+        throw new Exception('SYS_NO_RIGHTS');                  
     }
 
     $headline = $gL10n->get('PLG_LIST_ROLES_NAME');
@@ -62,7 +63,7 @@ try {
         // only authorized user are allowed to start this module
         if (!isUserAuthorized(basename(__FILE__), true))
         {
-            $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+            throw new Exception('SYS_NO_RIGHTS');                  
         }
         $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-stack');
     }

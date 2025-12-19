@@ -13,10 +13,12 @@
  ***********************************************************************************************
  */
 
+use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Roles\Entity\RolesRights;
 
+try {
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/../system/common_function.php');
 
@@ -35,7 +37,7 @@ if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER.'/index.php', 
     // only authorized user are allowed to start this module
     if (!isUserAuthorized(basename(__FILE__), true))
     {
-        $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+        throw new Exception('SYS_NO_RIGHTS');
     }
     $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-gender-ambiguous');
 }
@@ -156,4 +158,6 @@ $formUndo->addSubmitButton('btn_replace', $gL10n->get('PLG_REMOVE_GENDER_LANGUAG
 $page->addHtml($formUndo->show(false));
 
 $page->show();
-
+} catch (Throwable $e) {
+    $gMessage->show($e->getMessage());
+}
