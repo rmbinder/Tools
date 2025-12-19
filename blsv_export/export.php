@@ -144,7 +144,7 @@ try {
                             $content = $user->getValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), 'database');
 
                             // show selected text of optionfield or combobox
-                            $arrListValues = $gProfileFields->getPropertyById($usf_id, 'usf_value_list', 'text');
+                            $arrListValues = $gProfileFields->getPropertyById($usf_id, 'ufo_usf_options', 'text');
                             $content = isset($arrListValues[$content]) ? $arrListValues[$content] : '';
                         } else {
                             $content = $user->getValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'));
