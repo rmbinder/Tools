@@ -139,7 +139,7 @@ class ListRolesPresenter extends PagePresenter
                     $templateRow['actions'][] = array(
                         'url' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_MODULES . '/groups-roles/groups_roles.php', array('mode' => 'export', 'role_uuid' => $row['rol_uuid'])),
                         'icon' => 'bi bi-download',
-                        'tooltip' => $gL10n->get('SYS_EXPORT_VCARD_FROM_VAR', array($row['rol_name']))
+                        'tooltip' => $gL10n->get('SYS_EXPORT_VCARD')
                     );
                 }
                 
