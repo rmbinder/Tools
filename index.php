@@ -3,11 +3,11 @@
  ***********************************************************************************************
  * Tools
  *
- * Version 4.0.0
+ * Version 4.0.1
  *
  * (Version 1 and 2 were released under the name MultipleMemberships)
  * 
- * Stand 19.12.2025
+ * Stand 28.12.2025
  * 
  * Tools provides a platform for smaller Admidio plugins.
  * Each plugin must be in a separate subfolder of Tools and the plugin name and folder name must be identical.
@@ -26,9 +26,6 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\UI\Presenter\FormPresenter;
 use Admidio\UI\Presenter\PagePresenter;
 use Plugins\Tools\classes\Config\ConfigTable;
-
-// Fehlermeldungen anzeigen
-error_reporting(E_ALL);
 
 try {
     require_once (__DIR__ . '/../../system/common.php');
