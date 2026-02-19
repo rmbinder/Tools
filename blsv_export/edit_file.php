@@ -12,11 +12,12 @@
  *            save   - Speichern der neuen Daten
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 
 try {
     require_once (__DIR__ . '/../../../system/common.php');
@@ -26,11 +27,6 @@ try {
     // only the main script can call and start this module
     if (! StringUtils::strContains($gNavigation->getUrl(), 'blsv_export.php') && ! StringUtils::strContains($gNavigation->getUrl(), 'edit_file.php')) {
         throw new Exception('SYS_NO_RIGHTS');
-    }
-
-    if (isset($_GET['mode']) && $_GET['mode'] === 'save') {
-        // ajax mode then only show text if error occurs
-        $gMessage->showTextOnly(true);
     }
 
     // Initialize and check the parameters
@@ -65,13 +61,17 @@ try {
             $gMessage->show($exception->getMessage());
             // => EXIT
         }
-        echo 'success';
+        
+        $gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 2000);
+        $gMessage->show($gL10n->get('SYS_SAVE_DATA'));
     } else {
         if (! StringUtils::strContains($gNavigation->getUrl(), 'edit_file.php')) {
             $gNavigation->addUrl(CURRENT_URL, $headline);
         }
 
-        $page = new HtmlPage('plg-blsv_export-edit-file', $headline);
+        $page = PagePresenter::withHtmlIDAndHeadline('plg-blsv_export-edit-file');
+        $page->setContentFullWidth();
+        $page->setHeadline($headline);
 
         $page->addJavascript('
     $("#blsv_export-form").submit(function(event) {
@@ -105,11 +105,9 @@ try {
         });
     });', true);
 
-        $form = new HtmlForm('blsv_export-form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/edit_file.php', array(
+        $form = new FormPresenter('blsv_export_file_edit_form', 'templates/edit_file.plugin.tools.subplugin.blsv_export.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/edit_file.php', array(
             'mode' => 'save'
         )), $page);
-
-        $form->addDescription($gL10n->get('PLG_BLSV_EXPORT_EDIT'));
 
         $configFile = '';
 
@@ -123,14 +121,14 @@ try {
 
         $configFile = htmlspecialchars($configFile, ENT_QUOTES, 'UTF-8');
 
-        $form->addDescription('<textarea id="configtext" name="configtext" cols="200" rows="18">' . $configFile . '</textarea>');
-        $form->addDescription('<strong>' . $gL10n->get('PLG_BLSV_EXPORT_EDIT_INFO') . '</strong>');
         $form->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array(
             'icon' => 'bi-check-lg',
             'class' => ' btn-primary'
         ));
 
-        $page->addHtml($form->show(false));
+        $page->assignSmartyVariable('configtext', '<textarea id="configtext" name="configtext" cols="200" rows="18">' . $configFile . '</textarea>');
+
+        $form->addToHtmlPage(false);
         $page->show();
     }
 } catch (Throwable $e) {

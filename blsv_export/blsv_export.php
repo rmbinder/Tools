@@ -22,10 +22,11 @@
  *   
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 
 try {
     require_once (__DIR__ . '/../../../system/common.php');
@@ -49,12 +50,9 @@ try {
         $gNavigation->addUrl(CURRENT_URL, $headline);
     }
 
-    $page = new HtmlPage('plg-blsv-export', $headline);
-
-    $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_DESC'));
-    $page->addHtml('<br><br>');
-    $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_DESC2'));
-    $page->addHtml('<br><br>');
+    $page = PagePresenter::withHtmlIDAndHeadline('plg-blsv-export');
+    $page->setContentFullWidth();
+    $page->setHeadline($headline);
 
     if ($gCurrentUser->isAdministrator()) {
         // show link to edit config file
@@ -78,8 +76,7 @@ try {
     // show link to documentation
     $page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_BLSV_EXPORT_DOCUMENTATION'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/documentation.pdf', 'bi-file-pdf-fill');
 
-    // show form
-    $form = new HtmlForm('blsv_export_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/export.php'), $page);
+    $form = new FormPresenter('blsv_export_form', 'templates/main.view.plugin.tools.subplugin.blsv_export.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/export.php'), $page);
 
     $radioButtonEntries = array(
         'xlsx' => $gL10n->get('SYS_MICROSOFT_EXCEL') . ' (XLSX)',
@@ -95,8 +92,8 @@ try {
         'class' => ' col-sm-offset-3'
     ));
 
-    // add form to html page and show page
-    $page->addHtml($form->show(false));
+    $form->addToHtmlPage(false);
+
     $page->show();
 } catch (Throwable $e) {
     $gMessage->show($e->getMessage());

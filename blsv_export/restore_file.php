@@ -39,9 +39,8 @@ try {
     $headline = $gL10n->get('PLG_BLSV_EXPORT_RESTORE_CONFIG_FILE');
 
     $gNavigation->addUrl(CURRENT_URL, $headline);
-
-    // create html page object
-    $page = new HtmlPage('plg-blsv_export_restore', $headline);
+    
+    $return_message = '';
 
     // gibt es eine config_save?
     if ($getMode === 'save' && file_exists(CONFIG_SAVE)) {
@@ -59,7 +58,8 @@ try {
             // => EXIT
         }
 
-        $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_SAVE_FILE_RESTORED'));
+        $return_message = $gL10n->get('PLG_BLSV_EXPORT_SAVE_FILE_RESTORED');
+        
     } elseif ($getMode === 'orig' && file_exists(CONFIG_ORIG)) {
         // config.php überschreiben mit config_orig.php
         try {
@@ -75,10 +75,12 @@ try {
             // => EXIT
         }
 
-        $page->addHtml($gL10n->get('PLG_BLSV_EXPORT_ORIG_FILE_RESTORED'));
+        $return_message = $gL10n->get('PLG_BLSV_EXPORT_SAVE_FILE_RESTORED');
     }
+    
+    $gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 5000);
+    $gMessage->show($return_message, $headline);
 
-    $page->show();
 } catch (Throwable $e) {
     $gMessage->show($e->getMessage());
 }
