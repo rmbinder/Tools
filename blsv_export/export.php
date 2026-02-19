@@ -7,10 +7,10 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Roles\Entity\Role;
 use Admidio\Users\Entity\User;
 
 try {
@@ -42,7 +42,6 @@ try {
     $header = array();
     $rows = array();
 
-    // $userField = new TableUserField($gDb);
     $userField = new Entity($gDb, TBL_USER_FIELDS, 'usf');
 
     switch ($postExportMode) {
@@ -82,10 +81,17 @@ try {
         }
 
         if (isset($data['rols_blsv']) && is_array($data['rols_blsv'])) {
-            $rols_blsv = $data['rols_blsv'];
 
-            foreach ($data['rols_blsv'] as $roldata) {
-                $rols_count[$roldata] = 0;
+            $role = new Role($gDb);
+            foreach ($data['rols_blsv'] as $roleId => $spartennummer) {
+                $rols_count[$spartennummer] = 0;
+
+                if (! is_int($roleId)) {
+                    $role->readDataByUuid((string) $roleId);
+                    $rols_blsv[$role->getValue('rol_id')] = $spartennummer;
+                } else {
+                    $rols_blsv[$roleId] = $spartennummer;
+                }
             }
         }
     }
