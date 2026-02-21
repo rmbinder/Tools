@@ -20,6 +20,8 @@ use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Roles\Entity\Membership;
 use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 use Admidio\Users\Entity\User;
 
 try {
@@ -58,16 +60,21 @@ try {
         $postDeletionType = 'delete';
     }
 
-    $page = new HtmlPage('plg-delete-contacts-main', $headline);
-
-    $page->addHtml('<strong>' . $gL10n->get('PLG_DELETE_CONTACTS_DESC') . '</strong><br><br>');
-
     if ($getMode == 'start') // Default
     {
-        $form = new HtmlForm('delete_contacts_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/delete_contacts.php', array(
-            'mode' => 'delete'
-        )), $page);
+        $page = PagePresenter::withHtmlIDAndHeadline('lg-delete-contacts-main');
+        $page->setHeadline($headline);
+        $page->addHtml('<strong>' . $gL10n->get('PLG_DELETE_CONTACTS_DESC') . '</strong><br><br>');
 
+        $form = new FormPresenter(
+            'delete_contacts_form',
+            'templates/main.view.plugin.tools.subplugin.delete_contacts.tpl',
+            SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/delete_contacts.php', array(
+                'mode' => 'delete'
+            )),
+            $page
+            );
+        
         $sql = 'SELECT rol_id, rol_name, cat_name
               FROM ' . TBL_CATEGORIES . ' , ' . TBL_ROLES . '
              WHERE cat_id = rol_cat_id
@@ -75,23 +82,27 @@ try {
                 OR cat_org_id IS NULL )
           ORDER BY cat_sequence, rol_name';
         $form->addSelectBoxFromSql('selection_role', $gL10n->get('SYS_ROLE'), $gDb, $sql, array(
-            'property' => HtmlForm::FIELD_REQUIRED,
-            'helpTextIdInline' => 'PLG_DELETE_CONTACTS_ROLE_SELECTION_DESC'
+            'property' => FormPresenter::FIELD_REQUIRED,
+            'helpTextId' => 'PLG_DELETE_CONTACTS_ROLE_SELECTION_DESC'
         ));
 
-        $form->addStaticControl('make_former', '', $gL10n->get('PLG_DELETE_CONTACTS_MAKE_FORMER_DESC'));
+        $form->addCustomContent('make_former', '', $gL10n->get('PLG_DELETE_CONTACTS_MAKE_FORMER_DESC'));
+        
         $form->addSubmitButton('btn_make_former', $gL10n->get('SYS_FORMER_PL'), array(
             'icon' => 'bi-person-x-fill',
             'class' => 'offset-sm-3'
         ));
 
-        $form->addStaticControl('remove_contact', '', $gL10n->get('PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC'));
+        $form->addCustomContent('remove_contact', '', $gL10n->get('PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC'));
+        
         $form->addSubmitButton('btn_remove_contact', $gL10n->get('SYS_DELETE'), array(
             'icon' => 'bi-trash',
             'class' => 'offset-sm-3'
         ));
 
-        $page->addHtml($form->show(false));
+        $form->addToHtmlPage(false);
+        $page->show();
+        
     } elseif ($getMode == 'delete') {
         $sql = 'SELECT mem_usr_id
               FROM ' . TBL_MEMBERS . '
@@ -168,7 +179,7 @@ try {
                         $user->getValue('FIRST_NAME') . ' ' . $user->getValue('LAST_NAME'),
                         $gCurrentOrganization->getValue('org_longname')
                     )) . '<br/>';
-                } catch (AdmException | Exception $e) {
+                } catch (Exception $e) {
                     $message .= $e->getMessage();
                 }
             } elseif ($postDeletionType === 'delete') {
@@ -181,15 +192,16 @@ try {
                     $message .= $gL10n->get('PLG_DELETE_CONTACTS_USER_DELETE_OK', array(
                         $username
                     )) . '<br/>';
-                } catch (AdmException | Exception $e) {
+                } catch (Exception $e) {
                     $message .= $e->getMessage();
                 }
             }
         }
-
-        $page->addHtml($message);
+        
+        $gMessage->setForwardUrl($gNavigation->getPreviousUrl());
+        $gMessage->show($message, $headline);
     }
-    $page->show();
-} catch (Throwable $e) {
+  
+} catch (Exception $e) {
     $gMessage->show($e->getMessage());
 }
