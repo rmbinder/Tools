@@ -12,10 +12,11 @@
  *   
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\UI\Component\DataTables;
+use Admidio\UI\Presenter\PagePresenter;
 use Admidio\Users\Entity\User;
 
 try {
@@ -41,8 +42,43 @@ try {
         $gNavigation->addUrl(CURRENT_URL, $headline);
     }
 
-    // create html page object
-    $page = new HtmlPage('plg-multiple_memberships', $headline);
+    $page = PagePresenter::withHtmlIDAndHeadline('plg-multiple_memberships');
+    $page->setContentFullWidth();
+    $page->setHeadline($headline);
+
+    $smarty = $page->createSmartyObject();
+    $smarty->assign('l10n', $gL10n);
+    $smarty->assign('classTable', 'table table-condensed table-hover');
+
+    $table = new DataTables($page, 'adm_multiple_memberships_table');
+    $table->setGroupColumn(1);
+    $table->setRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+
+    // data array
+    $data = array(
+        'headers' => array(),
+        'rows' => array(),
+        'column_align' => array(),
+        'column_width' => array()
+    );
+
+    $data['column_align'] = array(
+        'left',
+        'left',
+        'right'
+    );
+
+    $data['headers'] = array(
+        '&nbsp;',
+        '&nbsp;',
+        '&nbsp;'
+    );
+
+    $data['column_width'] = array(
+        '',
+        '70%',
+        '30%'
+    );
 
     $sql = 'SELECT ' . TBL_MEMBERS . '.mem_rol_id, ' . TBL_MEMBERS . '.mem_usr_id, ' . TBL_MEMBERS . '.mem_begin, ' . TBL_MEMBERS . '.mem_end , rol_name,last_name.usd_value AS last_name, first_name.usd_value AS first_name FROM ' . TBL_MEMBERS . '
      LEFT JOIN ' . TBL_USER_DATA . ' AS last_name
@@ -71,25 +107,7 @@ try {
     );
     $statement = $gDb->queryPrepared($sql, $queryParams);
 
-    $datatable = true;
-    $hoverRows = false;
-    $classTable = 'table table-condensed';
-    $table = new HtmlTable('table_role_overview', $page, $hoverRows, $datatable, $classTable);
-
-    $columnAlign = array(
-        'left',
-        'left',
-        'right'
-    );
-    $table->setColumnAlignByArray($columnAlign);
-
-    $columnValues = array(
-        '',
-        '',
-        ''
-    );
-    $table->addRowHeadingByArray($columnValues);
-
+    $listRowNumber = 1;
     while ($row = $statement->fetch()) {
         $user->readDataById($row['mem_usr_id']);
         $columnValues = array();
@@ -104,12 +122,27 @@ try {
             $date->format($gSettingsManager->getString('system_date'))
         ));
 
-        $table->addRowByArray($columnValues);
+        $data['rows'][] = array(
+            'id' => 'row-' . $listRowNumber,
+            'data' => $columnValues
+        );
+
+        ++ $listRowNumber;
     }
 
-    $table->setDatatablesGroupColumn(1);
+    $table->createJavascript(count($data['rows']), count($data['headers']));
+    $table->setColumnAlignByArray($data['column_align']);
 
-    $page->addHtml($table->show(false));
+    $smarty->assign('columnAlign', $data['column_align']);
+    $smarty->assign('columnWidth', $data['column_width']);
+    $smarty->assign('headers', $data['headers']);
+    $smarty->assign('rows', $data['rows']);
+
+    // Fetch the HTML table from our Smarty template
+    $htmlTable = $smarty->fetch('templates/view.plugin.tools.subplugin.multiple_memberships.tpl');
+    // add table list to the page
+    $page->addHtml($htmlTable);
+
     $page->show();
 } catch (Throwable $e) {
     $gMessage->show($e->getMessage());
