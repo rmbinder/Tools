@@ -76,7 +76,7 @@ try {
     // show link to documentation
     $page->addPageFunctionsMenuItem('admMenuItemOpenDoc', $gL10n->get('PLG_BLSV_EXPORT_DOCUMENTATION'), ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/documentation.pdf', 'bi-file-pdf-fill');
 
-    $form = new FormPresenter('blsv_export_form', 'templates/main.view.plugin.tools.subplugin.blsv_export.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/export.php'), $page);
+    $form = new FormPresenter('blsv_export_form', 'templates/view.plugin.tools.subplugin.blsv_export.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/export.php'), $page);
 
     $radioButtonEntries = array(
         'xlsx' => $gL10n->get('SYS_MICROSOFT_EXCEL') . ' (XLSX)',

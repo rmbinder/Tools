@@ -35,12 +35,13 @@ try {
 
     // if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
     $navStack = $gNavigation->getStack();
-    if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false))) {
+   // if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false))) {
+        if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false)) ) {
         // only authorized user are allowed to start this module
         if (! isUserAuthorized(basename(__FILE__), true)) {
             throw new Exception('SYS_NO_RIGHTS');
         }
-        $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-person-x-fill');
+        $gNavigation->addStartUrl(strtok(CURRENT_URL, '?'), $headline, 'bi-person-x-fill');
     } else {
         $gNavigation->addUrl(CURRENT_URL, $headline);
     }
@@ -68,7 +69,7 @@ try {
 
         $form = new FormPresenter(
             'delete_contacts_form',
-            'templates/main.view.plugin.tools.subplugin.delete_contacts.tpl',
+            'templates/view.plugin.tools.subplugin.delete_contacts.tpl',
             SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/delete_contacts.php', array(
                 'mode' => 'delete'
             )),
@@ -197,7 +198,7 @@ try {
                 }
             }
         }
-        
+
         $gMessage->setForwardUrl($gNavigation->getPreviousUrl());
         $gMessage->show($message, $headline);
     }

@@ -54,9 +54,12 @@ class ListRolesPresenter extends PagePresenter
     {
         global $gSettingsManager, $gL10n, $gDb, $gCurrentSession, $gCurrentUser;
 
+        $headline = $gL10n->get('PLG_LIST_ROLES_NAME');
+        
         $templateData = array();
         $this->createHeader($categoryUUID, $roleType);
         $this->setContentFullWidth();
+        $this->setHeadline($headline);
         
         $rolesService = new RolesService($gDb);
         $data = $rolesService->findAll($roleType, $categoryUUID);
@@ -197,7 +200,7 @@ class ListRolesPresenter extends PagePresenter
        
         $this->smarty->assign('leader', '<i class="bi bi-mortarboard" data-bs-toggle="tooltip" title="'.$gL10n->get('SYS_LEADER').'"></i>');
         
-        $this->pageContent .= $this->smarty->fetch('templates/listroles.plugin.tools.subplugin.listroles.tpl');
+        $this->pageContent .= $this->smarty->fetch('templates/view.plugin.tools.subplugin.listroles.tpl');
     }
 
     /**
