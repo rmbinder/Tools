@@ -12,10 +12,11 @@
  * 
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 
 try {
     require_once (__DIR__ . '/../../../system/common.php');
@@ -59,38 +60,39 @@ try {
         }
     }
 
-    $page = new HtmlPage('plg-update_preferences', $headline);
+    $page = PagePresenter::withHtmlIDAndHeadline('plg-update_preferences');
+    $page->setContentFullWidth();
+    $page->setHeadline($headline);
 
     $page->addHtml('<strong>' . $gL10n->get('PLG_UPDATE_PREFERENCES_DESC') . '</strong><br><br>');
 
     if ($getMode == 'start') // Default
     {
-        $form = new HtmlForm('update_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/update_preferences.php', array(
+        $form = new FormPresenter('update_preferences_form', 'templates/view.plugin.tools.subplugin.update_preferences.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/update_preferences.php', array(
             'mode' => 'update'
         )), $page);
 
         if (! empty($missingSettingsTxt)) {
-            $form->addDescription($gL10n->get('PLG_UPDATE_PREFERENCES_FOUND'));
-            $form->addDescription($missingSettingsTxt);
+            $form->addDescription('dsc_prefs_found', $gL10n->get('PLG_UPDATE_PREFERENCES_FOUND'));
+            $form->addDescription('dsc_miss_txt', $missingSettingsTxt);
             $form->addSubmitButton('btn_save', $gL10n->get('SYS_SAVE'), array(
                 'icon' => 'bi-check-lg',
                 'class' => 'offset-sm-3'
             ));
         } else {
-            $form->addDescription($gL10n->get('PLG_UPDATE_PREFERENCES_NOTHING_FOUND'));
-
-            // seltsamerweise wird in diesem Abschnitt nichts angezeigt wenn diese Anweisung fehlt
-            $form->addStaticControl('', '', '');
+            $form->addDescription('dsc_nothing_found', $gL10n->get('PLG_UPDATE_PREFERENCES_NOTHING_FOUND'));
         }
-        $page->addHtml($form->show(false));
+
+        $form->addToHtmlPage(false);
+        $page->show();
     } elseif ($getMode == 'update') {
         foreach ($missingSettingsArr as $key => $value) {
             $gSettingsManager->set($key, $value);
         }
-        $page->addHtml($gL10n->get('PLG_UPDATE_PREFERENCES_UPDATED'));
-    }
 
-    $page->show();
+        $gMessage->setForwardUrl($gNavigation->getPreviousUrl(), 2000);
+        $gMessage->show($gL10n->get('PLG_UPDATE_PREFERENCES_UPDATED'), $headline);
+    }
 } catch (Throwable $e) {
     $gMessage->show($e->getMessage());
 }
