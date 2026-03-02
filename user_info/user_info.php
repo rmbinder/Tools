@@ -12,10 +12,11 @@
  *   
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\UI\Component\DataTables;
+use Admidio\UI\Presenter\PagePresenter;
 use Admidio\Users\Entity\User;
 
 try {
@@ -41,11 +42,70 @@ try {
 
     $user = new User($gDb, $gProfileFields);
 
-    // create html page object
-    $page = new HtmlPage('plg-user_info', $headline);
-
-    $page->addHtml($gL10n->get('PLG_USER_INFO_DESC'));
+    $page = PagePresenter::withHtmlIDAndHeadline('plg-user_info');
     $page->setContentFullWidth();
+    $page->setHeadline($headline);
+    $page->addHtml($gL10n->get('PLG_USER_INFO_DESC'));
+
+    $smarty = $page->createSmartyObject();
+    $smarty->assign('l10n', $gL10n);
+    $smarty->assign('classTable', 'table table-condensed table-hover');
+
+    $table = new DataTables($page, 'adm_user_info_table');
+    $table->setRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+
+    // data array
+    $data = array(
+        'headers' => array(),
+        'rows' => array(),
+        'column_align' => array(),
+        'column_width' => array()
+    );
+
+    // 1. spalte name
+    $data['headers'][] = $gL10n->get('SYS_NAME');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 2. spalte benutzername
+    $data['headers'][] = $gL10n->get('SYS_USERNAME');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 3. spalte geschlecht
+    $data['headers'][] = $gL10n->get('SYS_GENDER');
+    $data['column_align'][] = 'center';
+    $data['column_width'][] = '';
+
+    // 4. spalte geburtstag
+    $data['headers'][] = $gL10n->get('SYS_BIRTHDAY');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 5. spalte anzahl logins
+    $data['headers'][] = $gL10n->get('PLG_USER_INFO_NUMBER_LOGINS');
+    $data['column_align'][] = 'center';
+    $data['column_width'][] = '';
+
+    // 6. spalte letzte logins
+    $data['headers'][] = $gL10n->get('PLG_USER_INFO_LAST_LOGINS');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 7. spalte erstellt am
+    $data['headers'][] = $gL10n->get('PLG_USER_INFO_CREATED_ON');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 8. spalte geändert am
+    $data['headers'][] = $gL10n->get('PLG_USER_INFO_CHANGED_ON');
+    $data['column_align'][] = 'left';
+    $data['column_width'][] = '';
+
+    // 9. spalte login as
+    $data['headers'][] = '<i class="bi bi-person-up" data-bs-toggle="tooltip" title="' . $gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC') . '"></i>';
+    $data['column_align'][] = 'center';
+    $data['column_width'][] = '';
 
     // show all registerd users
     $sql = 'SELECT usr_id, CONCAT(last_name.usd_value, \', \', first_name.usd_value) AS name,
@@ -80,57 +140,7 @@ try {
 
     $statement = $gDb->queryPrepared($sql, $queryParams);
 
-    $datatable = false;
-    $hoverRows = true;
-    $classTable = 'table table-condensed';
-    $table = new HtmlTable('table_role_overview', $page, $hoverRows, $datatable, $classTable);
-
-    $columnHeading = array();
-    $columnAlign = array();
-
-    // 1. spalte name
-    $columnHeading[] = $gL10n->get('SYS_NAME');
-    $columnAlign[] = 'left';
-
-    // 2. spalte benutzername
-    $columnHeading[] = $gL10n->get('SYS_USERNAME');
-    $columnAlign[] = 'left';
-
-    // 3. spalte geschlecht
-    $columnHeading[] = $gL10n->get('SYS_GENDER');
-    $columnAlign[] = 'center';
-
-    // 4. spalte geburtstag
-    $columnHeading[] = $gL10n->get('SYS_BIRTHDAY');
-    $columnAlign[] = 'left';
-
-    // 5. spalte anzahl logins
-    $columnHeading[] = $gL10n->get('PLG_USER_INFO_NUMBER_LOGINS');
-    $columnAlign[] = 'center';
-
-    // 6. spalte letzte logins
-    $columnHeading[] = $gL10n->get('PLG_USER_INFO_LAST_LOGINS');
-    $columnAlign[] = 'left';
-
-    // 7. spalte erstellt am
-    $columnHeading[] = $gL10n->get('PLG_USER_INFO_CREATED_ON');
-    $columnAlign[] = 'left';
-
-    // 8. spalte geändert am
-    $columnHeading[] = $gL10n->get('PLG_USER_INFO_CHANGED_ON');
-    $columnAlign[] = 'left';
-
-    // 9. spalte login as
-    $columnHeading[] = '<i class="bi bi-person-up" data-bs-toggle="tooltip" title="' . $gL10n->get('PLG_USER_INFO_LOGIN_AS_DESC') . '"></i>';
-    $columnAlign[] = 'center';
-
-    $table->setColumnAlignByArray($columnAlign);
-    $table->disableDatatablesColumnsSort(array(
-        3,
-        9
-    ));
-    $table->addRowHeadingByArray($columnHeading);
-
+    $listRowNumber = 1;
     while ($row = $statement->fetch()) {
         $user->readDataById($row['usr_id']);
         $columnValues = array();
@@ -149,7 +159,7 @@ try {
             $columnValues[] = '';
         }
 
-        // 3. palte
+        // 3. spalte
         // Add icon for "gender"
         if (strlen($row['gender']) > 0) {
             $arrListValues = $gProfileFields->getProperty('GENDER', 'ufo_usf_options', '', false);
@@ -225,11 +235,27 @@ try {
             )) . '"></i>';
         }
 
-        $table->addRowByArray($columnValues);
+        $data['rows'][] = array(
+            'id' => 'row-' . $listRowNumber,
+            'data' => $columnValues
+        );
+
+        ++ $listRowNumber;
     }
 
-    $page->addHtml($table->show(false));
+    $table->disableColumnsSort(array(9));
+    $table->createJavascript(count($data['rows']), count($data['headers']));
+    $table->setColumnAlignByArray($data['column_align']);
 
+    $smarty->assign('columnAlign', $data['column_align']);
+    $smarty->assign('columnWidth', $data['column_width']);
+    $smarty->assign('headers', $data['headers']);
+    $smarty->assign('rows', $data['rows']);
+
+    // Fetch the HTML table from our Smarty template
+    $htmlTable = $smarty->fetch('templates/view.plugin.tools.subplugin.user_info.tpl');
+    // add table list to the page
+    $page->addHtml($htmlTable);
     $page->show();
 } catch (Throwable $e) {
     $gMessage->show($e->getMessage());
