@@ -18,7 +18,6 @@
  *             3 - event participation roles
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Categories\Entity\Category;
 use Admidio\Infrastructure\Utils\StringUtils;
@@ -26,52 +25,50 @@ use Admidio\Roles\Service\RolesService;
 use Plugins\Tools\list_roles\classes\Presenter\ListRolesPresenter;
 
 try {
-    require_once(__DIR__ . '/../../../system/common.php');
-    require_once(__DIR__ . '/../system/common_function.php');
-    
+    require_once (__DIR__ . '/../../../system/common.php');
+    require_once (__DIR__ . '/../system/common_function.php');
+
     // Einbinden der Sprachdatei
-    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER .'/languages');
-    
+    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/languages');
+
     // Initialize and check the parameters
     $getCategoryUUID = admFuncVariableIsValid($_GET, 'cat_uuid', 'uuid');
-    $getRoleUUID     = admFuncVariableIsValid($_GET, 'role_uuid', 'uuid');
-    $getRoleType     = admFuncVariableIsValid($_GET, 'role_type', 'int', array('defaultValue' => 1));
+    $getRoleUUID = admFuncVariableIsValid($_GET, 'role_uuid', 'uuid');
+    $getRoleType = admFuncVariableIsValid($_GET, 'role_type', 'int', array(
+        'defaultValue' => 1
+    ));
 
     // check if the module is enabled and disallow access if it's disabled
-    if (!$gSettingsManager->getBool('groups_roles_module_enabled')) {
+    if (! $gSettingsManager->getBool('groups_roles_module_enabled')) {
         throw new Exception('SYS_MODULE_DISABLED');
     }
-    
+
     // only users with the special right are allowed to manage roles
-    if (!$gCurrentUser->isAdministratorRoles()) {
-        throw new Exception('SYS_NO_RIGHTS');                  
+    if (! $gCurrentUser->isAdministratorRoles()) {
+        throw new Exception('SYS_NO_RIGHTS');
     }
 
     $headline = $gL10n->get('PLG_LIST_ROLES_NAME');
 
     // only users with the right to assign roles can view inactive roles
-    if (!$gCurrentUser->checkRolesRight('rol_assign_roles')) {
+    if (! $gCurrentUser->checkRolesRight('rol_assign_roles')) {
         $getRoleType = ListRolesPresenter::ROLE_TYPE_ACTIVE;
     }
 
     $category = new Category($gDb);
 
-    //if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
+    // if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
     $navStack = $gNavigation->getStack();
-    if (!(StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER.'/index.php', false)))
-    {
+    if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false))) {
         // only authorized user are allowed to start this module
-        if (!isUserAuthorized(basename(__FILE__), true))
-        {
-            throw new Exception('SYS_NO_RIGHTS');                  
+        if (! isUserAuthorized(basename(__FILE__), true)) {
+            throw new Exception('SYS_NO_RIGHTS');
         }
         $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-stack');
-    }
-    else
-    {
+    } else {
         $gNavigation->addUrl(CURRENT_URL, $headline);
     }
-    
+
     // create html page object
     $groupsRoles = new ListRolesPresenter('adm_groups_roles', $headline);
 
@@ -90,7 +87,7 @@ try {
             }
         } else {
             // forward to login page
-            require(__DIR__ . '/../../../system/login_valid.php');
+            require (__DIR__ . '/../../../system/login_valid.php');
         }
     }
 

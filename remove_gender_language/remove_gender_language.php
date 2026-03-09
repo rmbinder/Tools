@@ -147,10 +147,8 @@ try {
 
             $gMessage->setForwardUrl($gNavigation->getUrl(), 2000);
             $gMessage->show($result, $headline);
-
             break;
     }
 } catch (Throwable $exception) {
-
     $gMessage->show($exception->getMessage());
 }

@@ -12,28 +12,24 @@
  * Parameters:      none
  *****************************************************************************/
 
-require_once(__DIR__ . '/../../../system/common.php');
+ use Admidio\Infrastructure\Exception;
+ 
+try {
+    require_once (__DIR__ . '/../../../system/common.php');
+    require_once (__DIR__ . '/common_function.php');
 
-// set headline of the script
-$headline = $gL10n->get('SYS_INFORMATIONS');
+    // set headline of the script
+    $headline = $gL10n->get('SYS_INFORMATIONS');
 
-// create html page object
-$page = new HtmlPage('plg-tools-info', $headline);
+    $infoText = '
+        <div class="row">
+            <a>'     . $gL10n->get('PLG_TOOLS_INFO1') . '</a> 
+            <a><br>' . $gL10n->get('PLG_TOOLS_INFO2') . '</a> 
+            <a><br>' . $gL10n->get('PLG_TOOLS_INFO3') . '</a> 
+        </div>';
 
-header('Content-type: text/html; charset=utf-8');
-
-$form = new HtmlForm('plugin_informations_form', '', $page);
-$form->addHtml('
-    <div class="modal-header">
-        <h3 class="modal-title">'.$headline.'</h3>
-        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-    </div>
-    <div class="modal-body">
-    ');
-
-$form->addDescription($gL10n->get('PLG_TOOLS_INFO1'));
-$form->addDescription($gL10n->get('PLG_TOOLS_INFO2'));
-$form->addDescription($gL10n->get('PLG_TOOLS_INFO3'));
-
-$form->addHtml('</div>');
-echo $form->show();
+    $gMessage->showInModalWindow();
+    $gMessage->show($infoText, $headline);
+} catch (Exception $e) {
+    $gMessage->show($e->getMessage());
+}

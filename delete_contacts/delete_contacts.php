@@ -13,7 +13,6 @@
  * 
  ***********************************************************************************************
  */
-
 use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
@@ -35,8 +34,8 @@ try {
 
     // if the sub-plugin was not called from the main-plugin /Tools/index.php, then check the permissions
     $navStack = $gNavigation->getStack();
-   // if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false))) {
-        if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false)) ) {
+
+    if (! (StringUtils::strContains($navStack[0]['url'], PLUGIN_FOLDER . '/index.php', false))) {
         // only authorized user are allowed to start this module
         if (! isUserAuthorized(basename(__FILE__), true)) {
             throw new Exception('SYS_NO_RIGHTS');
@@ -67,15 +66,10 @@ try {
         $page->setHeadline($headline);
         $page->addHtml('<strong>' . $gL10n->get('PLG_DELETE_CONTACTS_DESC') . '</strong><br><br>');
 
-        $form = new FormPresenter(
-            'delete_contacts_form',
-            'templates/view.plugin.tools.subplugin.delete_contacts.tpl',
-            SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/delete_contacts.php', array(
-                'mode' => 'delete'
-            )),
-            $page
-            );
-        
+        $form = new FormPresenter('delete_contacts_form', 'templates/view.plugin.tools.subplugin.delete_contacts.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/delete_contacts.php', array(
+            'mode' => 'delete'
+        )), $page);
+
         $sql = 'SELECT rol_id, rol_name, cat_name
               FROM ' . TBL_CATEGORIES . ' , ' . TBL_ROLES . '
              WHERE cat_id = rol_cat_id
@@ -88,14 +82,14 @@ try {
         ));
 
         $form->addCustomContent('make_former', '', $gL10n->get('PLG_DELETE_CONTACTS_MAKE_FORMER_DESC'));
-        
+
         $form->addSubmitButton('btn_make_former', $gL10n->get('SYS_FORMER_PL'), array(
             'icon' => 'bi-person-x-fill',
             'class' => 'offset-sm-3'
         ));
 
         $form->addCustomContent('remove_contact', '', $gL10n->get('PLG_DELETE_CONTACTS_REMOVE_CONTACT_DESC'));
-        
+
         $form->addSubmitButton('btn_remove_contact', $gL10n->get('SYS_DELETE'), array(
             'icon' => 'bi-trash',
             'class' => 'offset-sm-3'
@@ -103,7 +97,6 @@ try {
 
         $form->addToHtmlPage(false);
         $page->show();
-        
     } elseif ($getMode == 'delete') {
         $sql = 'SELECT mem_usr_id
               FROM ' . TBL_MEMBERS . '
@@ -202,7 +195,6 @@ try {
         $gMessage->setForwardUrl($gNavigation->getPreviousUrl());
         $gMessage->show($message, $headline);
     }
-  
 } catch (Exception $e) {
     $gMessage->show($e->getMessage());
 }

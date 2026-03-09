@@ -73,38 +73,6 @@ try {
         $page->setContentFullWidth();
         $page->setHeadline($headline);
 
-        $page->addJavascript('
-    $("#blsv_export-form").submit(function(event) {
-        var id = $(this).attr("id");
-        var action = $(this).attr("action");
-        var formAlert = $("#" + id + " .form-alert");
-        formAlert.hide();
-        
-        // disable default form submit
-        event.preventDefault();
-        
-        $.post({
-        
-            url: action,
-            data: $(this).serialize(),
-            success: function(data) {
-                if (data === "success") {
-        
-                    formAlert.attr("class", "alert alert-success form-alert");
-                    formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>' . $gL10n->get('SYS_SAVE_DATA') . '</strong>");
-                    formAlert.fadeIn("slow");
-                    formAlert.animate({opacity: 1.0}, 2500);
-                    formAlert.fadeOut("slow");
-                    window.location.replace("' . ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/blsv_export.php");
-                } else {
-                    formAlert.attr("class", "alert alert-danger form-alert");
-                    formAlert.fadeIn();
-                    formAlert.html("<i class=\"bi bi-exclamation-circle-fill\"></i>" + data);
-                }
-            }
-        });
-    });', true);
-
         $form = new FormPresenter('blsv_export_file_edit_form', 'templates/edit_file.plugin.tools.subplugin.blsv_export.tpl', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/edit_file.php', array(
             'mode' => 'save'
         )), $page);

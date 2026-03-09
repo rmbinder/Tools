@@ -45,6 +45,6 @@ $columns[] = array('headline' => 'Geschlecht',   'usf_uuid' => $gProfileFields->
 $columns[] = array('headline' => 'Geburtsdatum', 'usf_uuid' => $gProfileFields->getProperty('BIRTHDAY', 'usf_uuid'));
 
 // 7. Spalte - Überschrift 'Spartennummer'
-// BLSV und BSBnet: Diese Zeile ist entsprechend anzupassen: 'rols_blsv' => array('Rol-ID in Admidio' => 'Spartennummer im BLSV (bzw. Fachverband im BSB)', ...)
-$columns[] = array('headline' => 'Spartennummer', 'rols_blsv' => array('de2c1b09-4e84-4db5-a518-6f0927a3885b' => '09', '134' => '34'));
+// BLSV und BSBnet: Diese Zeile ist entsprechend anzupassen: 'rols_blsv' => array('Rol-ID oder Rol-UUID in Admidio' => 'Spartennummer im BLSV (bzw. Fachverband im BSB)', ...)
+$columns[] = array('headline' => 'Spartennummer', 'rols_blsv' => array('135' => '09', '221' => '34'));
 
