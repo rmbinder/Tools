@@ -36,7 +36,7 @@ class RemoveGenderLanguageService
         // Einbinden der Konfigurationsdatei (darin ist die Sprachdatei definiert)
         include (ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/config.php');
 
-        $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES . '/' . $languageFileName . '.xml';
+        $languageFileNames = is_array($languageFileName) ? $languageFileName : array($languageFileName);
 
         if (isset($formData['btn_create'])) {
             $mode = 'create';
@@ -55,18 +55,22 @@ class RemoveGenderLanguageService
         switch ($mode) {
 
             case 'create':
-                $languageBackupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $languageFileName . '_' . ADMIDIO_VERSION_TEXT . '_' . DATE_NOW . '.xml';
+                foreach ($languageFileNames as $langName) {
+                    $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES . '/' . $langName . '.xml';
+                    if (!file_exists($languageFilePath)) {
+                        continue;
+                    }
+                    $languageBackupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $langName . '_' . ADMIDIO_VERSION_TEXT . '_' . DATE_NOW . '.xml';
 
-                try {
-                    FileSystemUtils::copyFile($languageFilePath, $languageBackupFilePath, array(
-                        'overwrite' => true
-                    ));
-                } catch (\RuntimeException $exception) {
-                    $gMessage->show($exception->getMessage());
-                    // => EXIT
-                } catch (\UnexpectedValueException $exception) {
-                    $gMessage->show($exception->getMessage());
-                    // => EXIT
+                    try {
+                        FileSystemUtils::copyFile($languageFilePath, $languageBackupFilePath, array(
+                            'overwrite' => true
+                        ));
+                    } catch (\RuntimeException $exception) {
+                        $gMessage->show($exception->getMessage());
+                    } catch (\UnexpectedValueException $exception) {
+                        $gMessage->show($exception->getMessage());
+                    }
                 }
                 $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_CREATED');
                 break;
@@ -75,16 +79,17 @@ class RemoveGenderLanguageService
                 $backupFile = $formData['backup_file'];
                 $backupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $backupFile;
 
+                $langName = explode('_', $backupFile)[0];
+                $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES . '/' . $langName . '.xml';
+
                 try {
                     FileSystemUtils::copyFile($backupFilePath, $languageFilePath, array(
                         'overwrite' => true
                     ));
                 } catch (\RuntimeException $exception) {
                     $gMessage->show($exception->getMessage());
-                    // => EXIT
                 } catch (\UnexpectedValueException $exception) {
                     $gMessage->show($exception->getMessage());
-                    // => EXIT
                 }
                 $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_RESTORED');
                 break;
@@ -94,13 +99,11 @@ class RemoveGenderLanguageService
                 $backupFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $backupFile;
 
                 try {
-                    FileSystemUtils::deleteFileIfExists($backupFilePath); // Rückgabe true or false auswerten
+                    FileSystemUtils::deleteFileIfExists($backupFilePath);
                 } catch (\RuntimeException $exception) {
                     $gMessage->show($exception->getMessage());
-                    // => EXIT
                 } catch (\UnexpectedValueException $exception) {
                     $gMessage->show($exception->getMessage());
-                    // => EXIT
                 }
                 $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_BACKUP_FILE_DELETED');
                 break;
@@ -109,13 +112,21 @@ class RemoveGenderLanguageService
                 include (ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/replacements.php');
 
                 $use_errors = libxml_use_internal_errors(true);
-                try {
-                    $xmlLanguageObjects = new \SimpleXMLElement($languageFilePath, 0, true);
-                } catch (Exception $e) {
-                    $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN');
-                }
+                $anyError = false;
 
-                if ($result !== $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_OPEN')) {
+                foreach ($languageFileNames as $langName) {
+                    $languageFilePath = ADMIDIO_PATH . FOLDER_LANGUAGES . '/' . $langName . '.xml';
+                    if (!file_exists($languageFilePath)) {
+                        continue;
+                    }
+
+                    try {
+                        $xmlLanguageObjects = new \SimpleXMLElement($languageFilePath, 0, true);
+                    } catch (\Exception $e) {
+                        $anyError = true;
+                        continue;
+                    }
+
                     for ($i = 0; $i < count($xmlLanguageObjects->string); $i ++) {
                         $textId = (string) $xmlLanguageObjects->string[$i]['name'];
 
@@ -131,19 +142,19 @@ class RemoveGenderLanguageService
                         }
                     }
 
-                    if (! is_writable($languageFilePath)) {
-                        $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE');
-                    } else {
-                        if ($xmlLanguageObjects->asXML($languageFilePath) === false) {
-                            $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE');
-                        } else {
-                            $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_UPDATED');
-                        }
+                    if (!is_writable($languageFilePath) || $xmlLanguageObjects->asXML($languageFilePath) === false) {
+                        $anyError = true;
                     }
                 }
 
                 libxml_clear_errors();
                 libxml_use_internal_errors($use_errors);
+
+                if ($anyError) {
+                    $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_REPLACE_ERROR_SAVE');
+                } else {
+                    $result = $gL10n->get('PLG_REMOVE_GENDER_LANGUAGE_UPDATED');
+                }
                 break;
         }
 

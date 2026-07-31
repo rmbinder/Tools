@@ -9,6 +9,6 @@
  ***********************************************************************************************
  */
 
-// The name of the language file in which the replacements are performed.
-// e.g. de or en (without .xml)
-$languageFileName =  'de';
+// The name(s) of the language file(s) in which the replacements are performed.
+// e.g. 'de' or array('de', 'de-DE') (without .xml)
+$languageFileName = array('de', 'de-DE');
