@@ -73,17 +73,23 @@ try {
                 'mode' => 'save'
             )), $page);
 
-            $languageBackupGlobFilePath = ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $languageFileName . '*.xml';
-
-            $backupFiles = glob($languageBackupGlobFilePath);
+            $languageFileNames = is_array($languageFileName) ? $languageFileName : array($languageFileName);
+            $backupFiles = array();
+            foreach ($languageFileNames as $lName) {
+                $files = glob(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $lName . '*.xml');
+                if (is_array($files)) {
+                    $backupFiles = array_merge($backupFiles, $files);
+                }
+            }
             $obsoleteBackupFile = '';
 
             $backupFilesNames = array();
             foreach ($backupFiles as $data) {
-                $fileName = strrchr($data, $languageFileName);
+                $fileName = basename($data);
                 $backupFilesNames[] = $fileName;
 
-                if (ADMIDIO_VERSION_TEXT !== substr($fileName, strlen($languageFileName) + 1, - 15)) {
+                $parts = explode('_', $fileName);
+                if (count($parts) >= 2 && ADMIDIO_VERSION_TEXT !== $parts[1]) {
                     $obsoleteBackupFile = $fileName;
                 }
             }
