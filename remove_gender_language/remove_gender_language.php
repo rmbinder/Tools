@@ -21,7 +21,6 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\UI\Presenter\FormPresenter;
 use Admidio\UI\Presenter\PagePresenter;
-
 use Plugins\Tools\remove_gender_language\classes\Service\RemoveGenderLanguageService;
 
 try {
@@ -73,7 +72,9 @@ try {
                 'mode' => 'save'
             )), $page);
 
-            $languageFileNames = is_array($languageFileName) ? $languageFileName : array($languageFileName);
+            $languageFileNames = is_array($languageFileName) ? $languageFileName : array(
+                $languageFileName
+            );
             $backupFiles = array();
             foreach ($languageFileNames as $lName) {
                 $files = glob(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . PLUGIN_SUBFOLDER . '/' . $lName . '*.xml');
@@ -81,6 +82,7 @@ try {
                     $backupFiles = array_merge($backupFiles, $files);
                 }
             }
+            $backupFiles = array_unique($backupFiles);
             $obsoleteBackupFile = '';
 
             $backupFilesNames = array();
