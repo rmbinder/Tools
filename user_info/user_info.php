@@ -153,7 +153,7 @@ try {
 
         // 2. spalte
         // Add "Loginname"
-        if (strlen($row['usr_login_name']) > 0) {
+        if (strlen((string) $row['usr_login_name']) > 0) {
             $columnValues[] = $row['usr_login_name'];
         } else {
             $columnValues[] = '';
@@ -161,7 +161,7 @@ try {
 
         // 3. spalte
         // Add icon for "gender"
-        if (strlen($row['gender']) > 0) {
+        if (strlen((string) $row['gender']) > 0) {
             $arrListValues = $gProfileFields->getProperty('GENDER', 'ufo_usf_options', '', false);
             $columnValues[] = $arrListValues[$row['gender']];
         } else {
@@ -170,7 +170,7 @@ try {
 
         // 4. spalte
         // Add "birthday"
-        if (strlen($row['birthday']) > 0) {
+        if (strlen((string) $row['birthday']) > 0) {
             // date must be formated
             $date = \DateTime::createFromFormat('Y-m-d', $row['birthday']);
             $columnValues[] = $date->format($gSettingsManager->getString('system_date'));
@@ -180,7 +180,7 @@ try {
 
         // 5. spalte
         // number logins
-        if (strlen($row['usr_number_login']) > 0) {
+        if (strlen((string) $row['usr_number_login']) > 0) {
             $columnValues[] = $row['usr_number_login'];
         } else {
             $columnValues[] = '';
@@ -204,7 +204,7 @@ try {
 
         // 7. spalte
         // creation date
-        if (strlen($row['usr_timestamp_create']) > 0) {
+        if (strlen((string) $row['usr_timestamp_create']) > 0) {
             // date must be formated
             $date = \DateTime::createFromFormat('Y-m-d H:i:s', $row['usr_timestamp_create']);
             $columnValues[] = $date->format($gSettingsManager->getString('system_date') . ' ' . $gSettingsManager->getString('system_time'));
@@ -214,7 +214,7 @@ try {
 
         // 8. spalte
         // change
-        if (strlen($row['usr_timestamp_change']) > 0) {
+        if (strlen((string) $row['usr_timestamp_change']) > 0) {
             // date must be formated
             $date = \DateTime::createFromFormat('Y-m-d H:i:s', $row['usr_timestamp_change']);
             $columnValues[] = $date->format($gSettingsManager->getString('system_date') . ' ' . $gSettingsManager->getString('system_time'));
@@ -243,7 +243,9 @@ try {
         ++ $listRowNumber;
     }
 
-    $table->disableColumnsSort(array(9));
+    $table->disableColumnsSort(array(
+        9
+    ));
     $table->createJavascript(count($data['rows']), count($data['headers']));
     $table->setColumnAlignByArray($data['column_align']);
 
