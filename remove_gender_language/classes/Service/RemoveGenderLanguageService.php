@@ -158,9 +158,9 @@ class RemoveGenderLanguageService
                 break;
         }
 
-        return $result;
-
         // clean up
         $gCurrentSession->reloadAllSessions();
+
+        return $result;
     }
 }
